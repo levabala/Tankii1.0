@@ -1,0 +1,153 @@
+#ServersList{
+      position: absolute;
+      box-shadow: 0 0 10px rgba(0,0,0,0.5);
+      padding: 10px;
+      background: white;
+      right:0px;
+      top:0px;
+      bottom:0px;
+      width: 30%;
+      padding-right:1px;
+      padding-top: 10px;
+      overflow: hidden;
+      font-family: cursive;
+      z-index: 1;
+    }
+    input[type='button'] {
+      color: #FF0000;
+      font-weight: bold;
+      padding: 4px 5px 5px 2px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.7);
+      background: rgb(255,245,245);
+      border-radius: 20px;
+      transition: background 0.5s ease;
+      height: 35px;
+    }
+    input[type='button']:hover{
+      background: rgb(210,200,200);
+    }
+    #ToggleButton {
+      position: absolute;
+      right: 10px;
+      top: 10px;
+      padding-left: 3px;
+      padding-top: 6px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.7);
+      background: rgb(255,245,245);
+      border-radius: 15px;
+      transition: background 0.5s ease;
+      z-index: 2;
+    }
+
+    #ToggleButton:hover {
+      background: rgb(255,180,180);
+    }
+
+    /* The Modal (background) */
+    .modal {
+      display: none; /* Hidden by default */
+      position: fixed; /* Stay in place */
+      z-index: 1; /* Sit on top */
+      left: 0;
+      top: 0;
+      width: 100%; /* Full width */
+      height: 100%; /* Full height */
+      overflow: auto; /* Enable scroll if needed */
+      background-color: rgb(0,0,0); /* Fallback color */
+      background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    }
+
+    /* Modal Content/Box */
+    .modal-content {
+      background-color: #fefefe;
+      margin: 15% auto; /* 15% from the top and centered */
+      padding: 20px;
+      border: 1px solid #888;
+      width: 80%; /* Could be more or less, depending on screen size */
+    }
+    .button {
+      display: inline-block;
+      margin: 40px;
+      width: 80px;
+      height: 80px;
+      background: rgba(0,0,0,0.50);
+      cursor: pointer;
+      border-radius: 50%;
+
+      box-shadow: 0 3px 20px rgba(0,0,0,.25),
+      inset 0 2px 0 rgba(255,255,255,.6),
+      0 2px 0 rgba(0,0,0,.1),
+      inset 0 0 20px rgba(0,0,0,.1);
+    }
+    .button:active{
+      background: rgba(0,0,0,0.80);
+    }
+    .beads {
+      list-style: none;
+      background: #EEE3DB;
+      margin: 0;
+      padding-left: 40px;
+      border-radius: 5px;
+      margin-top: 5px
+    }
+    .beads:hover{
+      transition: background 0.5s ease;
+      background: #ead3c2
+    }
+    .beads:active{
+      transition: background 0.1s ease;
+      background: #bf865d
+    }
+    .beads li {
+      text-transform: uppercase;
+      font-family: 'Montserrat', sans-serif;
+      line-height: 40px;
+      border-bottom: 1px solid #D4D7D6;
+      position: relative;
+    }
+    .beads a {
+      text-decoration: none;
+      color: #464643;
+      display: block;
+      line-height: 40px;
+      position: relative;
+    }
+    .beads a:before {
+      content:"";
+      position: absolute;
+      left: -20px;
+      top: 6px;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #A58063;
+    }
+    .beads li:last-child {
+      border-bottom: none;
+    }
+    .beads li:before, .beads li:after {
+      content:"";
+      position: absolute;
+      border-radius: 50%;
+    }
+    .beads li:before {
+      top: calc(50% - 5px);
+      background: #E0926E;
+      left: -22px;
+      width: 10px;
+      height: 10px;
+      transition: 0.5s linear;
+    }
+    .beads li:after {
+      bottom: 6px;
+      left: -20px;
+      width: 6px;
+      height: 6px;
+      background: #A58063;
+    }
+    .beads li:hover:before {
+      background: #FFCE08;
+    }body {
+    background: #333;
+    color: #fc0;
+}
