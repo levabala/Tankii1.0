@@ -40,11 +40,6 @@
       modal.style.display = "none";
     }
 
-    $('#ShootButton')[0].ontouchstart = function (e){
-      if (mytank) mytank.shoot()
-      e.preventDefault();
-    }
-
     //in case of using mobile devices
     if (MODILE_DEVICE) {
       setAttr($('#DownloadRoomButton')[0],"display","none")
