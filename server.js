@@ -12,10 +12,10 @@ var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var countplayers = 0;
 app.get('/', function(req, res) {
-  res.sendfile(__dirname + '/Client/index.html');
+  res.sendfile(__dirname + '/ClientSide/index.html');
 });
 
-app.use('/', express.static(__dirname + '/Client'))
+app.use('/', express.static(__dirname + '/ClientSide'))
 
 http.listen(PORT, function() {
   console.log('listening on *:' + PORT);
@@ -101,7 +101,7 @@ io.sockets.on('connection', function(socket) {
       'should_create_offer': true,
       'userdata': channels[channel].creator.userdata,
       'roomName': channel
-    });    
+    });
 
     for (id in channels[channel].peers) {
       channels[channel].peers[id].emit('addPeer', {
