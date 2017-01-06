@@ -22,7 +22,7 @@ var creators = {};
 var sockets = {};
 
 io.sockets.on('connection', function (socket) {
-    console.log(channels)
+    //console.log(channels)
     socket.channels = {};
     sockets[socket.id] = socket;
     sendServersList();
@@ -66,10 +66,10 @@ io.sockets.on('connection', function (socket) {
 
         if (!(channel in channels)) {
             channels[channel] = {peers: {}, creator: socket.id};
-            socket.emit('NowYouAreHost');
+            socket.emit('joinedRoom');
             console.log('New Channel Created. Creator: ', socket.id)
         }
-        else socket.emit('JoinedToTheRoom', {hostId: channels[channel].creator});
+        else socket.emit('joinedRoom', {hostId: channels[channel].creator});
 
         for (id in channels[channel].peers) {
             channels[channel].peers[id].emit('addPeer', {'peer_id': socket.id, 'should_create_offer': false});
