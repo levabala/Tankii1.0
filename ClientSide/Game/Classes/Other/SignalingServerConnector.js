@@ -16,41 +16,44 @@ function SignalingServerConnector(ip,userdata,constantRooms){
   this.signaling_socket = io.connect(ip)
   this.userdata = userdata || {};
   this.constantRooms = constantRooms;
+  this.myid;
 
   this.peers = {};
   this.host = null;
 
   var ss = this.signaling_socket;
   //default listeners
-  ss.on('connect', function(){
+  ss.on('connect', function(myid){
     console.log('Connected to',ip);
+    console.log('My id:', ss.id);
     console.log('Rooms to join:',ssc.constantRooms)
     for (var r in ssc.constantRooms)
       ssc.joinRoom(ssc.constantRooms[r])
   });
   ss.on('disconnect', function(){
     console.log('Disconnected from',ip);
-    
     ssc.peers = {};
     ssc.host = null;
   });
   ss.on('joinedRoom', function(config){
-    console.log(config)
-    console.log('Joined room',config.roomName)
+    console.warn('Joined room',config.roomName,'by',config.peer_id)
     var host = ssc.connectToPeer(config);
+    if (!host) return;
     ssc.host = host;
-    var opened = 0;
+    var opened = host.peerConnection.opened;
     host.peerConnection.addEventListener('datachannel', function(e){
       opened++;
+      console.warn('datachannel',opened)
       if (opened == 2) ssc.dispatchEvent('adoptedByHost',host)
     })
     host.sendDataChannel.addEventListener('open', function(e){
       opened++;
+      console.warn('open',opened)
       if (opened == 2) ssc.dispatchEvent('adoptedByHost',host)
     })
   });
   ss.on('roomCreated', function(config){
-    console.log('Room', config.roomName, 'created')
+    console.warn('Room', config.roomName, 'created')
     ssc.dispatchEvent('initializedAsHost')
   });
   ss.on('error', function(err){
@@ -59,6 +62,12 @@ function SignalingServerConnector(ip,userdata,constantRooms){
   ss.on('addPeer', function(config){
     ssc.connectToPeer(config)
   })
+  ss.on('removePeer', function(config){
+    if (config.peer_id in ssc.peers) {
+      console.log('Disconnected from',config.peer_id,Object.keys(ssc.peers).length)
+      delete ssc.peers[config.peer_id];
+    }
+  });
 
   this.connectToPeer = function(config){
     var peer_id = config.peer_id;
@@ -82,11 +91,12 @@ function SignalingServerConnector(ip,userdata,constantRooms){
       //activePeers.push(sdchannel.label)
     };
     ssc.peers[peer_id].peerConnection.ondatachannel = function(rdchannel) {
+      console.warn('ondatachannel')
       ssc.peers[peer_id].recevingDataChannel = rdchannel.channel;
     }
     ssc.peers[peer_id].sendDataChannel = sdchannel;
 
-    console.log('Connected with',peer_id,JSON.stringify(userdata))
+    console.log('Connected to',peer_id,JSON.stringify(userdata),Object.keys(ssc.peers).length)
 
     peer_connection.onicecandidate = function(event) {
       if (event.candidate)
@@ -117,7 +127,6 @@ function SignalingServerConnector(ip,userdata,constantRooms){
         function(error) {
           console.error("Error sending offer: ", error);
         });
-    console.log(ssc.peers,peer_id)
     return ssc.peers[peer_id];
   }
 

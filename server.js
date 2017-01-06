@@ -10,7 +10,6 @@ var express = require('express')
 var app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
-var countplayers = 0;
 app.get('/', function(req, res) {
   res.sendfile(__dirname + '/ClientSide/index.html');
 });
@@ -78,7 +77,11 @@ io.sockets.on('connection', function(socket) {
     console.log(userdata)
 
     console.log("Player [" + socket.id + "](" + userdata.nick + ") joined ");
-    console.log("Count of players: " + (countplayers + 1));
+
+    var str = '';
+    for (var c in channels)
+      str += c + ': ' + Object.keys(sockets).length + "\n";
+    console.log('---\n',str,'\n---');
 
     if (channel in socket.channels) {
       console.log("[" + socket.id + "] ERROR: already joined ", channel);
@@ -102,7 +105,6 @@ io.sockets.on('connection', function(socket) {
       'userdata': channels[channel].creator.userdata,
       'roomName': channel
     });
-
     for (id in channels[channel].peers) {
       channels[channel].peers[id].emit('addPeer', {
         'peer_id': socket.id,
@@ -131,16 +133,6 @@ io.sockets.on('connection', function(socket) {
     delete socket.channels[channel];
     delete channels[channel].peers[socket.id];
 
-    if (socket.id == channels[channel].creator) {
-      console.log('Channel [', channel, '] has been closed')
-      for (id in channels[channel].peers) {
-        channels[channel].peers[id].emit('RoomClosed');
-        delete sockets[id].channels[channel];
-      }
-      delete channels[channel];
-      return;
-    }
-
     for (id in channels[channel].peers) {
       channels[channel].peers[id].emit('removePeer', {
         'peer_id': socket.id
@@ -148,6 +140,15 @@ io.sockets.on('connection', function(socket) {
       socket.emit('removePeer', {
         'peer_id': id
       });
+    }
+
+    if (socket.id == channels[channel].creator) {
+      console.log('Channel [', channel, '] has been closed')
+      for (id in channels[channel].peers) {
+        channels[channel].peers[id].emit('RoomClosed');
+        delete sockets[id].channels[channel];
+      }
+      delete channels[channel];
       return;
     }
 
