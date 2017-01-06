@@ -30,7 +30,7 @@ function SignalingServerConnector(ip,userdata,constantRooms){
   });
   ss.on('disconnect', function(){
     console.log('Disconnected from',ip);
-    
+
     ssc.peers = {};
     ssc.host = null;
   });
@@ -42,10 +42,12 @@ function SignalingServerConnector(ip,userdata,constantRooms){
     var opened = 0;
     host.peerConnection.addEventListener('datachannel', function(e){
       opened++;
+      console.warn('datachannel')
       if (opened == 2) ssc.dispatchEvent('adoptedByHost',host)
     })
     host.sendDataChannel.addEventListener('open', function(e){
       opened++;
+      console.warn('open')
       if (opened == 2) ssc.dispatchEvent('adoptedByHost',host)
     })
   });
