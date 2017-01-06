@@ -68,16 +68,53 @@ function SignalingServerConnector(ip,userdata,constantRooms){
       delete ssc.peers[config.peer_id];
     }
   });
+  ss.on('sessionDescription', function(config) {
+    var peer_id = config.peer_id;
+    var peerConnection = ssc.peers[peer_id].peerConnection;
+    var remote_description = config.session_description;
+    var desc = new RTCSessionDescription(remote_description);
+    var stuff = peerConnection.setRemoteDescription(desc,
+      function() {
+        if (remote_description.type == "offer") {
+          peerConnection.createAnswer(
+            function(local_description) {
+              peerConnection.setLocalDescription(local_description,
+                function() {
+                  ss.emit('relaySessionDescription', {
+                    'peer_id': peer_id,
+                    'session_description': local_description
+                  });
+                },
+                function() {
+                  Alert("Answer setLocalDescription failed!");
+                }
+              );
+            },
+            function(error) {
+              console.error("Error creating answer: ", error);
+              console.warn(peerConnection);
+            });
+        }
+      },
+      function(error) {
+        console.error("setRemoteDescription error: ", error);
+      }
+    );
+  });
+  ss.on('iceCandidate', function(config) {
+    var peer = ssc.peers[config.peer_id];
+    var ice_candidate = config.ice_candidate;
+    peer.peerConnection.addIceCandidate(new RTCIceCandidate(ice_candidate));
+  });
 
   this.connectToPeer = function(config){
     var peer_id = config.peer_id;
     var userdata = config.userdata
     if (!userdata.nick) userdata.nick = peer_id
 
-    if (peer_id in ssc.peers) {
-        console.log("Already connected to peerConnection ", peer_id);
+    if (peer_id in ssc.peers)
         return false;
-    }
+
     var peer_connection = new RTCPeerConnection(
         {"iceServers": ICE_SERVERS},
         {"optional": [{"DtlsSrtpKeyAgreement": true}]}
@@ -88,10 +125,8 @@ function SignalingServerConnector(ip,userdata,constantRooms){
 
     sdchannel.onopen = function() {
       sdchannel.send(JSON.stringify({type: 'notification', value:'Hi!'}));
-      //activePeers.push(sdchannel.label)
-    };
+    };    
     ssc.peers[peer_id].peerConnection.ondatachannel = function(rdchannel) {
-      console.warn('ondatachannel')
       ssc.peers[peer_id].recevingDataChannel = rdchannel.channel;
     }
     ssc.peers[peer_id].sendDataChannel = sdchannel;
@@ -109,7 +144,7 @@ function SignalingServerConnector(ip,userdata,constantRooms){
         });
     }
 
-    if (config.should_create_offer)
+    if (config.should_create_offer){
       peer_connection.createOffer(
         function(local_description) {
           peer_connection.setLocalDescription(local_description,
@@ -127,6 +162,7 @@ function SignalingServerConnector(ip,userdata,constantRooms){
         function(error) {
           console.error("Error sending offer: ", error);
         });
+    }
     return ssc.peers[peer_id];
   }
 

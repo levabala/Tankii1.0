@@ -25,8 +25,11 @@ var channels = {};
 var creators = {};
 var sockets = {};
 
+var waitTime = 1000;
+
 io.sockets.on('connection', function(socket) {
   socket.channels = {};
+  socket.createdChannels = [];
   sockets[socket.id] = socket;
   sendServersList();
 
@@ -69,6 +72,11 @@ io.sockets.on('connection', function(socket) {
     };
   });
 
+  socket.on('iAmHere', function(){
+    clearTimeout(socket.hereTimeout)
+    socket.hereTimeout = setTimeout(part())
+  });
+
   socket.on('join', function(config) {
     var channel = config.channel;
     var userdata = config.userdata || {};
@@ -98,6 +106,7 @@ io.sockets.on('connection', function(socket) {
         creator: socket
       };
       socket.emit('roomCreated', {roomName: channel});
+      socket.createdChannels.push(channel)
       console.log('New Channel Created. Creator: ', socket.id)
     } else socket.emit('joinedRoom', {
       'peer_id': channels[channel].creator.id,
@@ -105,12 +114,15 @@ io.sockets.on('connection', function(socket) {
       'userdata': channels[channel].creator.userdata,
       'roomName': channel
     });
+
     for (id in channels[channel].peers) {
       channels[channel].peers[id].emit('addPeer', {
         'peer_id': socket.id,
         'should_create_offer': false,
         'userdata': userdata
       });
+
+      //if (channels[channel].creator.id != id)
       socket.emit('addPeer', {
         'peer_id': id,
         'should_create_offer': true,
