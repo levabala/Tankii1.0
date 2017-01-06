@@ -26,6 +26,7 @@ var channels = {};
 var creators = {};
 var sockets = {};
 
+<<<<<<< HEAD
 io.sockets.on('connection', function(socket) {
   socket.channels = {};
   sockets[socket.id] = socket;
@@ -41,6 +42,12 @@ io.sockets.on('connection', function(socket) {
   });
 
   socket.on('getServers', function() {
+=======
+io.sockets.on('connection', function (socket) {
+    console.log(channels)
+    socket.channels = {};
+    sockets[socket.id] = socket;
+>>>>>>> parent of 9a2e64d... v0.1.2
     sendServersList();
   });
 
@@ -85,6 +92,7 @@ io.sockets.on('connection', function(socket) {
       return;
     }
 
+<<<<<<< HEAD
     if (!(channel in channels)) {
       if (channel in sockets) {
         socket.emit('error', ERRORS[1])
@@ -114,6 +122,69 @@ io.sockets.on('connection', function(socket) {
         'should_create_offer': true,
         'userdata': channels[channel].peers[id].userdata
       });
+=======
+    socket.on('getPlayersCount', function(){
+      socket.emit('PlayersCount', Object.keys(sockets).length);
+    });
+
+    socket.on('join', function (config) {
+        console.log("Player [" + socket.id + "] join ");
+
+        console.log("Count of players: " + countplayers);
+        var channel = config.channel;
+        var userdata = config.userdata;
+
+        if (channel in socket.channels) {
+            console.log("["+ socket.id + "] ERROR: already joined ", channel);
+            return;
+        }
+
+        if (!(channel in channels)) {
+            channels[channel] = {peers: {}, creator: socket.id};
+            socket.emit('NowYouAreHost');
+            console.log('New Channel Created. Creator: ', socket.id)
+        }
+        else socket.emit('JoinedToTheRoom', {hostId: channels[channel].creator});
+
+        for (id in channels[channel].peers) {
+            channels[channel].peers[id].emit('addPeer', {'peer_id': socket.id, 'should_create_offer': false});
+            socket.emit('addPeer', {'peer_id': id, 'should_create_offer': true, 'creator': channels[channel].creator});
+        }
+
+        channels[channel].peers[socket.id] = socket;
+        socket.channels[channel] = channel;
+    });
+
+    function part(channel) {
+        console.log("["+ socket.id + "] part ");
+
+        if (!(channel in socket.channels)) {
+            console.log("["+ socket.id + "] ERROR: not in ", channel);
+            return;
+        }
+
+        delete socket.channels[channel];
+        delete channels[channel].peers[socket.id];
+
+        if (socket.id == channels[channel].creator){
+          console.log('Channel [',channel,'] has been closed')
+          for (id in channels[channel].peers) {
+              channels[channel].peers[id].emit('RoomClosed');
+              delete sockets[id].channels[channel];
+            }
+          delete channels[channel];
+          return;
+        }
+
+        for (id in channels[channel].peers) {
+            channels[channel].peers[id].emit('removePeer', {'peer_id': socket.id});
+            socket.emit('removePeer', {'peer_id': id});
+            return;
+        }
+
+        if (Object.keys(channels[channel].peers).length == 0)
+          delete channels[channel];
+>>>>>>> parent of 9a2e64d... v0.1.2
     }
 
     channels[channel].peers[socket.id] = socket;
