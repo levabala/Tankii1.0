@@ -125,7 +125,7 @@
             <h4>Свободное программное обеспечение</h4>
 
             <!-- Description -->
-            <p>Весь исходный код можно найти в репозитории <a href="SiteResources/WelcomePage/https://github.com/levabala/Tankii0.2">по ссылке</a></p>
+            <p>Весь исходный код можно найти в репозитории <a href="SiteResources/WelcomePage/https://github.com/levabala/Tankii1.0">по ссылке</a></p>
 
           </div> <!-- /.col-md-4 -->
 
@@ -171,7 +171,7 @@
     <!-- Features -->
     <section class="features-section" id="section-2">
 
-      <div class="container">
+      <div class="container" id='movetxt'>
 
         <div class="row">
 
@@ -201,7 +201,7 @@
 
         <div class="row media-screen-800">
 
-          <div class="col-md-7 col-features features-content">
+          <div id='shoottxt' class="col-md-7 col-features features-content">
             
             <!-- Title -->
             <h3 id="title-2">Стрельба</h3>
@@ -215,7 +215,12 @@
             
             <!-- Images showcase -->
             <figure>
-              <img class="img-iPhone margin-top margin-screen-800" style = 'margin-top: -120px;'src="SiteResources/WelcomePage/images/tank.jpg" alt="">
+              <img id = 'tankimg'class="img-iPhone margin-top margin-screen-800" style='margin-top:-120px;' src="SiteResources/WelcomePage/images/tank.jpg" alt="">
+			  <script>if(MODILE_DEVICE==true){
+			  document.getElementById('shoottxt').style.top='200px';
+			  document.getElementById('movetxt').style.bottom='40px';
+			}
+			</script>
             </figure>
 
           </div> <!-- /.col-md-5 -->
