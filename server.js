@@ -60,7 +60,11 @@ io.sockets.on('connection', function(socket) {
   socket.on('createRoom', function(config) {
     var roomName = config.roomName;
     if (channels[roomName]) {
-      socket.emit('error', ERRORS[0])
+      socket.emit('serverError', ERRORS[0])
+      return;
+    }
+    if (roomName in sockets) {
+      socket.emit('serverError', ERRORS[1])
       return;
     }
 
@@ -119,14 +123,16 @@ io.sockets.on('connection', function(socket) {
       channels[channel].peers[id].emit('addPeer', {
         'peer_id': socket.id,
         'should_create_offer': false,
-        'userdata': userdata
+        'userdata': userdata,
+        'roomName': channel
       });
 
       //if (channels[channel].creator.id != id)
       socket.emit('addPeer', {
         'peer_id': id,
         'should_create_offer': true,
-        'userdata': channels[channel].peers[id].userdata
+        'userdata': channels[channel].peers[id].userdata,
+        'roomName': channel
       });
     }
 
@@ -154,7 +160,7 @@ io.sockets.on('connection', function(socket) {
       });
     }
 
-    if (socket.id == channels[channel].creator) {
+    if (socket.id == channels[channel].creator.id) {
       console.log('Channel [', channel, '] has been closed')
       for (id in channels[channel].peers) {
         channels[channel].peers[id].emit('RoomClosed');

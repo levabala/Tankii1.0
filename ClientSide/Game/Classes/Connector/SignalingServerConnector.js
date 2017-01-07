@@ -7,10 +7,9 @@ var ICE_SERVERS = [
 
 function SignalingServerConnector(ip,userdata,constantRooms){
   Reactor.apply(this,[]); //events adding ability
-
-  this.registerEvent('newPeer');
-  this.registerEvent('adoptedByHost');
-  this.registerEvent('initializedAsHost');
+  this.registerEvent('joinedRoom');
+  this.registerEvent('roomInstanceCreated');
+  this.registerEvent('peerMessage');
 
   var ssc = this;
   this.signaling_socket = io.connect(ip)
@@ -18,8 +17,8 @@ function SignalingServerConnector(ip,userdata,constantRooms){
   this.constantRooms = constantRooms;
   this.myid;
 
-  this.peers = {};
-  this.host = null;
+  this.rooms = {}; //{roomName}
+  this.allPeers = {};
 
   var ss = this.signaling_socket;
   //default listeners
@@ -32,45 +31,42 @@ function SignalingServerConnector(ip,userdata,constantRooms){
   });
   ss.on('disconnect', function(){
     console.log('Disconnected from',ip);
-    ssc.peers = {};
-    ssc.host = null;
+    ssc.allPeers = {};
+    ssc.host = {};
   });
   ss.on('joinedRoom', function(config){
     console.warn('Joined room',config.roomName,'by',config.peer_id)
-    var host = ssc.connectToPeer(config);
+    var hostId = ssc.connectToPeer(config);
+    var host = ssc.allPeers[hostId];
     if (!host) return;
-    ssc.host = host;
-    var opened = host.peerConnection.opened;
-    host.peerConnection.addEventListener('datachannel', function(e){
-      opened++;
-      console.warn('datachannel',opened)
-      if (opened == 2) ssc.dispatchEvent('adoptedByHost',host)
-    })
-    host.sendDataChannel.addEventListener('open', function(e){
-      opened++;
-      console.warn('open',opened)
-      if (opened == 2) ssc.dispatchEvent('adoptedByHost',host)
-    })
+
+    var room = new Room(config.roomName,host);
+    ssc.rooms[config.roomName] = room;
+    ssc.dispatchEvent('roomInstanceCreated',room)
   });
   ss.on('roomCreated', function(config){
     console.warn('Room', config.roomName, 'created')
-    ssc.dispatchEvent('initializedAsHost')
+
+    var room = new Room(config.roomName);
+    ssc.rooms[config.roomName] = room;
+    ssc.dispatchEvent('roomInstanceCreated',room)
   });
-  ss.on('error', function(err){
+  ss.on('serverError', function(err){
     console.warn(err)
   });
   ss.on('addPeer', function(config){
     ssc.connectToPeer(config)
   })
   ss.on('removePeer', function(config){
-    if (config.peer_id in ssc.peers) {
-      console.log('Disconnected from',config.peer_id,Object.keys(ssc.peers).length)
-      delete ssc.peers[config.peer_id];
+    if (config.peer_id in ssc.allPeers) {
+      console.log('Disconnected from',config.peer_id,Object.keys(ssc.allPeers).length)
+      delete ssc.allPeers[config.peer_id];
     }
   });
+  //<editor-fold>Two things whick I don't understand (sessionDescription&iceCandidate)
   ss.on('sessionDescription', function(config) {
     var peer_id = config.peer_id;
-    var peerConnection = ssc.peers[peer_id].peerConnection;
+    var peerConnection = ssc.allPeers[peer_id].peerConnection;
     var remote_description = config.session_description;
     var desc = new RTCSessionDescription(remote_description);
     var stuff = peerConnection.setRemoteDescription(desc,
@@ -102,36 +98,40 @@ function SignalingServerConnector(ip,userdata,constantRooms){
     );
   });
   ss.on('iceCandidate', function(config) {
-    var peer = ssc.peers[config.peer_id];
+    var peer = ssc.allPeers[config.peer_id];
     var ice_candidate = config.ice_candidate;
     peer.peerConnection.addIceCandidate(new RTCIceCandidate(ice_candidate));
   });
+  //</editor-fold>
 
   this.connectToPeer = function(config){
     var peer_id = config.peer_id;
     var userdata = config.userdata
+    var roomName = config.roomName;
     if (!userdata.nick) userdata.nick = peer_id
 
-    if (peer_id in ssc.peers)
-        return false;
+    if (peer_id in ssc.allPeers)
+        return peer_id;
 
     var peer_connection = new RTCPeerConnection(
         {"iceServers": ICE_SERVERS},
         {"optional": [{"DtlsSrtpKeyAgreement": true}]}
     );
-    ssc.peers[peer_id] = {id: peer_id, userdata: userdata};
-    ssc.peers[peer_id].peerConnection = peer_connection;
+    var peer = {id: peer_id, userdata: userdata};
+    peer.peerConnection = peer_connection;
+
     var sdchannel = peer_connection.createDataChannel(peer_id);
 
     sdchannel.onopen = function() {
       sdchannel.send(JSON.stringify({type: 'notification', value:'Hi!'}));
-    };    
-    ssc.peers[peer_id].peerConnection.ondatachannel = function(rdchannel) {
-      ssc.peers[peer_id].recevingDataChannel = rdchannel.channel;
+    };
+    peer.peerConnection.ondatachannel = function(rdchannel) {
+      peer.recevingDataChannel = rdchannel.channel;
+      peer.recevingDataChannel.addEventListener('message', function(e){
+        ssc.dispatchEvent('peerMessage',ssc.allPeers[peer_id],Message.fromJSON(e.data))
+      });
     }
-    ssc.peers[peer_id].sendDataChannel = sdchannel;
-
-    console.log('Connected to',peer_id,JSON.stringify(userdata),Object.keys(ssc.peers).length)
+    peer.sendDataChannel = sdchannel;
 
     peer_connection.onicecandidate = function(event) {
       if (event.candidate)
@@ -163,7 +163,13 @@ function SignalingServerConnector(ip,userdata,constantRooms){
           console.error("Error sending offer: ", error);
         });
     }
-    return ssc.peers[peer_id];
+
+    ssc.allPeers[peer_id] = peer;
+    if (ssc.rooms[roomName]) ssc.rooms[roomName].addPeer(peer)
+
+    console.log('Connected to',peer_id,JSON.stringify(userdata),Object.keys(ssc.allPeers).length)
+
+    return peer_id;
   }
 
   this.joinRoom = function(room){
