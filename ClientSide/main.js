@@ -1,4 +1,4 @@
-var connector = new SignalingServerConnector(SIGNALING_SERVER, {nick: 'anonymous'}, ['ChatRoom', 'OfficialRoom'])
+var connector = new Connector(SIGNALING_SERVER, {nick: 'anonymous'}, ['ChatRoom', 'OfficialRoom'])
 
 connector.addEventListener('roomInstanceCreated', function(room){
   //console.warn('Room instance created:', room)
@@ -17,7 +17,7 @@ connector.addEventListener('roomInstanceCreated', function(room){
     console.warn(prefix, 'HostMessage:', message.value)
   })
 
-  room.addEventListener('peerMessage', function(config){    
+  room.addEventListener('peerMessage', function(config){
     console.warn(prefix, 'PeerMessage from', config.peer.id, '(' + config.peer.userdata.nick + '):',config.message.value)
   })
 })

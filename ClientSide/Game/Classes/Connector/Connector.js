@@ -5,7 +5,7 @@ var ICE_SERVERS = [
   {url:"stun:stun.l.google.com:19302"}
 ];
 
-function SignalingServerConnector(ip,userdata,constantRooms){
+function Connector(ip,userdata,constantRooms){
   Reactor.apply(this,[]); //events adding ability
   this.registerEvent('joinedRoom');
   this.registerEvent('roomInstanceCreated');
