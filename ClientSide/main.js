@@ -1,8 +1,11 @@
 var connector = new Connector(SIGNALING_SERVER, {nick: 'anonymous'}, ['ChatRoom', 'OfficialRoom'])
+var svg = $('#SVGRoom');
+var contatiner = document.createElementNS("http://www.w3.org/2000/svg",'g');
+var jqcontatiner = $(contatiner)
+svg.append(contatiner);
 
 connector.addEventListener('roomInstanceCreated', function(room){
-  //console.warn('Room instance created:', room)
-
+  console.log('rr')
   var prefix = '|'+room.name+'|';
   room.addEventListener('adoptedByHost', function(host){
     room.sendToHost(new Message('request','roomsnap'))
@@ -10,7 +13,11 @@ connector.addEventListener('roomInstanceCreated', function(room){
   })
 
   room.addEventListener('initializedAsHost', function(){
-    console.warn(prefix, 'Initializaed as host', host.id, '(' + host.userdata.nick + ')')
+    console.warn(prefix, 'Initializaed as host')
+    if (room.name == 'ChatRoom') return;
+
+    var map = new Map(30,10);
+    var gameroom = new GameRoom(jqcontatiner,map)
   })
 
   room.addEventListener('hostMessage', function(message){
@@ -21,16 +28,3 @@ connector.addEventListener('roomInstanceCreated', function(room){
     console.warn(prefix, 'PeerMessage from', config.peer.id, '(' + config.peer.userdata.nick + '):',config.message.value)
   })
 })
-
-/*connector.addEventListener('adoptedByHost', function(host){
-  connector.sendToHost(new Message('request','roomsnap'))
-  console.warn('Adopted by Host', host.id, '(' + host.userdata.nick + ')')
-})
-
-connector.addEventListener('hostMessage', function(message){
-  console.warn('HostMessage from', host.id, '(' + host.userdata.nick + '):',message)
-})
-
-connector.addEventListener('peerMessage', function(peer,message){
-  console.warn('PeerMessage from', peer.id, '(' + peer.userdata.nick + '):',message)
-})*/

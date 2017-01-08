@@ -40,9 +40,10 @@ function Connector(ip,userdata,constantRooms){
     var host = ssc.allPeers[hostId];
     if (!host) return;
 
-    var room = new Room(config.roomName,host);
+    var room = new Room(config.roomName);
     ssc.rooms[config.roomName] = room;
     ssc.dispatchEvent('roomInstanceCreated',room)
+    room.setHost(host)
   });
   ss.on('roomCreated', function(config){
     console.warn('Room', config.roomName, 'created')
@@ -50,6 +51,7 @@ function Connector(ip,userdata,constantRooms){
     var room = new Room(config.roomName);
     ssc.rooms[config.roomName] = room;
     ssc.dispatchEvent('roomInstanceCreated',room)
+    room.setHost(null)
   });
   ss.on('serverError', function(err){
     console.warn(err)

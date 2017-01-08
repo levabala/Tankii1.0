@@ -1,4 +1,4 @@
-function Room(name,host){
+function Room(name){
   Reactor.apply(this,[]); //events adding ability
   this.registerEvent('newPeer');
   this.registerEvent('adoptedByHost');
@@ -9,27 +9,33 @@ function Room(name,host){
   var room = this;
 
   this.name = name;
-  this.host = host;
+  this.host = null;
   this.peers = {};
 
-  if (host){
-    var opened = 0;
-    host.peerConnection.ondatachannel = function(rdchannel){
-      host.recevingDataChannel = rdchannel.channel;
-      host.recevingDataChannel.addEventListener('message', function(e){
-        var m = Message.fromJSON(e.data)
-        room.dispatchEvent('hostMessage',m)
-      });
-      opened++;
-      if (opened == 2) room.dispatchEvent('adoptedByHost',host)
-    }
+  this.setHost = function(host){
+    room.host = host;
+    if (host){
+      var opened = 0;
+      host.peerConnection.ondatachannel = function(rdchannel){
+        host.recevingDataChannel = rdchannel.channel;
+        host.recevingDataChannel.addEventListener('message', function(e){
+          var m = Message.fromJSON(e.data)
+          room.dispatchEvent('hostMessage',m)
+        });
+        opened++;
+        if (opened == 2) room.dispatchEvent('adoptedByHost',host)
+      }
 
-    host.sendDataChannel.onopen = function(e){
-      opened++;
-      if (opened == 2) room.dispatchEvent('adoptedByHost',host)
+      host.sendDataChannel.onopen = function(e){
+        opened++;
+        if (opened == 2) room.dispatchEvent('adoptedByHost',host)
+      }
+    }
+    else {
+      console.log('initializedAsHost')
+      room.dispatchEvent('initializedAsHost')
     }
   }
-  else room.dispatchEvent('initializedAsHost')
 
   this.addPeer = function(peer){
     room.peers[peer.id] = peer;
