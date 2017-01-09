@@ -17,11 +17,7 @@ function GameObject(pos,width,height,rotation,hp,other){
   this.maxHp = this.hp;
   this.mortal = (hp == 'immortal') ? 0 : 1;
   this.svgBody = document.createElementNS("http://www.w3.org/2000/svg",'g');
-  this.animationTag = document.createElementNS("http://www.w3.org/2000/svg",'animate');
-  this.svgBody.appendChild(this.animationTag)
-  this.oneCellMoveDuration = 0;
-  setAttr(this.animationTag, 'attributeType', 'XML');
-  setAttr(this.animationTag, 'begin', 'indefinite');
+  this.oneCellMoveDuration = 0;  
   for (var o in other) this[o] = other[o];
 
   this.actions = {

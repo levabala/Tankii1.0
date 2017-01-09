@@ -1,8 +1,6 @@
 var connector = new Connector(SIGNALING_SERVER, {nick: 'anonymous'}, ['ChatRoom', 'OfficialRoom'])
 var svg = $('#SVGRoom');
-var contatiner = document.createElementNS("http://www.w3.org/2000/svg",'g');
-var jqcontatiner = $(contatiner)
-svg.append(contatiner);
+var snap = Snap('#SVGRoom');
 
 connector.addEventListener('roomInstanceCreated', function(room){
   var prefix = '|'+room.name+'|';
@@ -17,7 +15,7 @@ connector.addEventListener('roomInstanceCreated', function(room){
 
     var map = new Map(30,10);
     map.fitToContainer(svg.width(),svg.height())
-    var gameroom = new GameRoom(jqcontatiner,map)
+    var gameroom = new GameRoom(snap,map)
 
     var ago1 = new ActiveGameObject(new Pos(5,5),3,3,[0,1,0,0],5,{
       speed: 0.032

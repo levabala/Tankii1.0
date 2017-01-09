@@ -1,24 +1,22 @@
-function GameRoom(jqcontainer,map){
+function GameRoom(snap,map){
   Reactor.apply(this,[]); //events adding ability
 
   var groom = this;
 
   this.gameInterval = 16;
-  this.jqcontainer = jqcontainer;
+  this.snap = snap;
   this.map = map;
   this.objects = {};
   this.players = {};
   this.changes = {};
 
   //background
-  this.ground = document.createElementNS("http://www.w3.org/2000/svg",'rect');
-  setAttr(this.ground, 'x', 0);
-  setAttr(this.ground, 'y', 0);
-  setAttr(this.ground, 'width', this.map.width);
-  setAttr(this.ground, 'height', this.map.height);
-  setAttr(this.ground, 'fill', 'lightgreen');
-  setAttr(this.ground, 'style', 'fill-opacity: 0.3');
-  jqcontainer.append(this.ground)
+  this.ground = this.snap.rect(0,0,this.map.width,this.map.height)
+  this.ground.attr({
+    fill: "#lightgreen",
+    'fill-opacity': 0.3
+  });
+  snap.Matrix().scale(this.map.xcoeff,this.map.ycoeff)
 
   //this.map scaling
   setAttr(jqcontainer[0], 'transform','scale('+this.map.xcoeff+','+this.map.ycoeff+')');
