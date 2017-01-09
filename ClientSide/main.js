@@ -5,7 +5,6 @@ var jqcontatiner = $(contatiner)
 svg.append(contatiner);
 
 connector.addEventListener('roomInstanceCreated', function(room){
-  console.log('rr')
   var prefix = '|'+room.name+'|';
   room.addEventListener('adoptedByHost', function(host){
     room.sendToHost(new Message('request','roomsnap'))
@@ -17,7 +16,15 @@ connector.addEventListener('roomInstanceCreated', function(room){
     if (room.name == 'ChatRoom') return;
 
     var map = new Map(30,10);
+    map.fitToContainer(svg.width(),svg.height())
     var gameroom = new GameRoom(jqcontatiner,map)
+
+    var ago1 = new ActiveGameObject(new Pos(5,5),3,3,[0,1,0,0],5,{
+      speed: 0.032
+    })
+    gameroom.addObject(ago1)
+
+    setInterval(function(){ago1.actions.toRight()}, 800);
   })
 
   room.addEventListener('hostMessage', function(message){

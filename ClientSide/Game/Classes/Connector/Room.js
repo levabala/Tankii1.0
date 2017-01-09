@@ -31,8 +31,7 @@ function Room(name){
         if (opened == 2) room.dispatchEvent('adoptedByHost',host)
       }
     }
-    else {
-      console.log('initializedAsHost')
+    else {      
       room.dispatchEvent('initializedAsHost')
     }
   }
