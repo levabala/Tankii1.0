@@ -10,16 +10,22 @@ function GameRoom(snap,map){
   this.players = {};
   this.changes = {};
 
+  this.RoomSvgGroup = snap.group();
+
   //background
   this.ground = this.snap.rect(0,0,this.map.width,this.map.height)
   this.ground.attr({
-    fill: "#lightgreen",
-    'fill-opacity': 0.3
+    fill: "lightgreen",
+    'fill-opacity': 0.4
   });
-  snap.Matrix().scale(this.map.xcoeff,this.map.ycoeff)
+  this.ground.appendTo(this.RoomSvgGroup)
+
 
   //this.map scaling
-  setAttr(jqcontainer[0], 'transform','scale('+this.map.xcoeff+','+this.map.ycoeff+')');
+  var matrix = new Snap.Matrix();
+  matrix.scale(this.map.xcoeff, this.map.ycoeff);
+
+  this.RoomSvgGroup.transform(matrix);
 
   var counter = 0;
   this.addObject = function(obj){
@@ -30,7 +36,8 @@ function GameRoom(snap,map){
       groom.updateObjectPosition(obj,pos);
     })
     groom.objects[counter] = obj;
-    groom.jqcontainer.append(obj.svgBody)
+    obj.snapGroup.appendTo(groom.RoomSvgGroup)
+    console.log(groom.RoomSvgGroup)
     map.setObject(obj)
 
     counter++;
@@ -64,7 +71,7 @@ function GameRoom(snap,map){
   //this.gameLoopInterval = setInterval(groom.gameLoop, this.gameLoopInterval);
 
   //log interval
-  setInterval(function(){
+  /*setInterval(function(){
     console.log(map.generateTextView());
-  },500)
+  },500)*/
 }

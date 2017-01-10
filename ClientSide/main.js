@@ -17,12 +17,12 @@ connector.addEventListener('roomInstanceCreated', function(room){
     map.fitToContainer(svg.width(),svg.height())
     var gameroom = new GameRoom(snap,map)
 
-    var ago1 = new ActiveGameObject(new Pos(5,5),3,3,[0,1,0,0],5,{
-      speed: 0.032
+    var ago1 = new Tank(new Pos(5,5),3,3,[0,0,1,0],5,snap,{
+      speed: 0.08
     })
     gameroom.addObject(ago1)
-
-    setInterval(function(){ago1.actions.toRight()}, 800);
+    ago1.actions.toRight()
+    //setInterval(function(){ago1.actions.toRight()}, 800);
   })
 
   room.addEventListener('hostMessage', function(message){

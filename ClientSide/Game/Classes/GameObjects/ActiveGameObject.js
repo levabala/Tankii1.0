@@ -6,11 +6,6 @@ function ActiveGameObject(){
   this.nextAction = '';
   this.moveOn = 0;
   this.nextPos = this.pos.clone();
-  ago.animationTag.addEventListener('endEvent', function(){
-    console.log('end')
-    ago.moveOn = 0;
-    ago.pos = ago.nextPos;
-  });
 
   var checkCollisionFuns = {
     //key is rotation.indexOf(1), so 0 = top, 1 = right, 2 = bottom, 3 = left, -1 = invalid rotation.
@@ -84,14 +79,17 @@ function ActiveGameObject(){
 
   function moveToRight(){
     ago.nextPos = ago.pos.clone();
-    ago.nextPos.X + 1;
-    setAttr(ago.animationTag,'attributeName','x');
-    setAttr(ago.animationTag,'to',ago.nextPos.X);
+    ago.nextPos.X += 1;
+    console.log(ago.pos)
+    console.log(ago.nextPos)
+    ago.groupMatrix.translate(1,0);
+    ago.snapGroup.animate({transform: ago.groupMatrix}, ago.oneCellMoveDuration, mina.lineral, function(){
+      moveToRight()
+      console.warn('end')
+      ago.moveOn = 0;
+    })
     ago.moveOn = 1;
     ago.rotation = [0,1,0,0]
-    console.log(ago.animationTag.beginElement)
-    ago.animationTag.beginElement();
-    console.log(ago.animationTag)
   }
 
   function moveToTop(){
