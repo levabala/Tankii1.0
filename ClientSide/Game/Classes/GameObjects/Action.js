@@ -129,7 +129,7 @@ function MoveAction(obj,rotation,speed,distance,tickFunction,startCallback){
     //console.log(obj.pos,{x:tx,y:ty})
     //console.log(currentPos,tx,ty)
     delta = speed * milliseconds / 1000 * (right + bottom);
-    action.completed = false;
+    action.completed = false;    
     startCallback();
     move();
   }

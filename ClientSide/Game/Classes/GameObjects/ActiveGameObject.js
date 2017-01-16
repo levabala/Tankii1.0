@@ -94,25 +94,25 @@ function ActiveGameObject(){
 
   function moveToLeft(){
     ago.moveOn = 1;
-    ago.rotation = [0,0,0,1];
+    ago.actions.setRotation([0,0,0,1])
     initMovingAction(-1,0)
   }
 
   function moveToRight(){
     ago.moveOn = 1;
-    ago.rotation = [0,1,0,0]
+    ago.actions.setRotation([0,1,0,0])
     initMovingAction(1,0)
   }
 
   function moveToTop(){
     ago.moveOn = 1;
-    ago.rotation = [1,0,0,0]
+    ago.actions.setRotation([1,0,0,0])
     initMovingAction(0,-1)
   }
 
   function moveToBottom(){
-    ago.moveOn = 1;
-    ago.rotation = [0,0,1,0]
+    ago.moveOn = 1;    
+    ago.actions.setRotation([0,0,1,0])
     initMovingAction(0,1)
   }
 }

@@ -46,9 +46,12 @@ function GameObject(pos,width,height,rotation,hp,snap,other){
     },
     setRotation: function(r){
       gobj.rotation = r;
+      gobj.RotateMatrix.rotate(-gobj.rotationAngle, gobj.width / 2, gobj.height / 2);
       gobj.rotationAngle = (r) ? r[0] * 180 + r[1] * 270 + r[3] * 90 : 0;
-      obj.RotateMatrix.rotate(obj.rotationAngle, obj.width / 2, obj.height / 2);
-      obj.RotateGroup.transform(obj.RotateMatrix);
+      gobj.RotateMatrix.rotate(gobj.rotationAngle, gobj.width / 2, gobj.height / 2);
+      requestAnimationFrame(function(){
+        gobj.RotateGroup.transform(gobj.RotateMatrix);
+      })
     },
     setHp: function(hp){
       gobj.hp = hp;

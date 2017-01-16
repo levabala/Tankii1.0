@@ -18,8 +18,7 @@ function GameRoom(snap,map){
     fill: "lightgreen",
     'fill-opacity': 0.4
   });
-  this.ground.appendTo(this.RoomSvgGroup)
-
+  this.ground.appendTo(this.RoomSvgGroup)  
 
   //this.map scaling
   var matrix = new Snap.Matrix();
