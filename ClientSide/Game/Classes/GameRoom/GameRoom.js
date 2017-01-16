@@ -3,6 +3,25 @@ function GameRoom(snap,map){
 
   var groom = this;
 
+  var counter = 0;
+  this.addObject = function(obj){
+    obj.id = counter;
+    obj.map = groom.map;
+    obj.addEventListener('move',function(pos){
+      groom.updateObjectPosition(obj,pos);
+    })
+    groom.objects[counter] = obj;
+    obj.MoveGroup.appendTo(groom.RoomSvgGroup)
+    map.setObject(obj)
+
+    counter++;
+  }
+
+  this.addObjects = function(objs){
+    for (var o in objs)
+      groom.addObject(objs[o])
+  }
+
   this.gameInterval = 16;
   this.snap = snap;
   this.map = map;
@@ -18,7 +37,7 @@ function GameRoom(snap,map){
     fill: "lightgreen",
     'fill-opacity': 0.4
   });
-  this.ground.appendTo(this.RoomSvgGroup)  
+  this.ground.appendTo(this.RoomSvgGroup)
 
   //this.map scaling
   var matrix = new Snap.Matrix();
@@ -26,20 +45,12 @@ function GameRoom(snap,map){
 
   this.RoomSvgGroup.transform(matrix);
 
-  var counter = 0;
-  this.addObject = function(obj){
-    obj.id = counter;
-    obj.map = groom.map;
-    obj.addEventListener('move',function(pos){
-      groom.updateObjectPosition(obj,pos);
-    })
-    groom.objects[counter] = obj;
-    obj.MoveGroup.appendTo(groom.RoomSvgGroup)
-    console.log(groom.RoomSvgGroup)
-    map.setObject(obj)
-
-    counter++;
-  }
+  //borders
+  var topB = new Wall(new Pos(0,0),map.width,1,[1,0,0,0],5,snap)
+  var rightB = new Wall(new Pos(map.width-2,0),1,map.height,[1,0,0,0],5,snap)
+  var bottomB = new Wall(new Pos(0,map.height-1),map.width-1,1,[1,0,0,0],5,snap)
+  var leftB = new Wall(new Pos(0,0),1,map.height-1,[1,0,0,0],5,snap)
+  this.addObjects([topB,rightB,bottomB,leftB])
 
   this.removeObject = function(obj){
     map.removeObject(obj)

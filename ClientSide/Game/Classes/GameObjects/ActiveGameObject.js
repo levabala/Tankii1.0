@@ -44,6 +44,7 @@ function ActiveGameObject(){
   }
   this.actions['toTop'] = function(){
     if (!ago.moveOn){
+      ago.actions.setRotation([1,0,0,0])
       var collResult = checkCollisionFuns[0]();
       if (!collResult)
         moveToTop();
@@ -51,6 +52,7 @@ function ActiveGameObject(){
   }
   this.actions['toRight'] = function(){
     if (!ago.moveOn){
+      ago.actions.setRotation([0,1,0,0])
       var collResult = checkCollisionFuns[1]();
       if (!collResult)
         moveToRight();
@@ -58,6 +60,7 @@ function ActiveGameObject(){
   }
   this.actions['toBottom'] = function(){
     if (!ago.moveOn){
+      ago.actions.setRotation([0,0,1,0])
       var collResult = checkCollisionFuns[2]();
       if (!collResult)
         moveToBottom();
@@ -65,6 +68,7 @@ function ActiveGameObject(){
   }
   this.actions['toLeft'] = function(){
     if (!ago.moveOn){
+      ago.actions.setRotation([0,0,0,1])
       var collResult = checkCollisionFuns[3]();
       if (!collResult)
         moveToLeft();
@@ -94,25 +98,21 @@ function ActiveGameObject(){
 
   function moveToLeft(){
     ago.moveOn = 1;
-    ago.actions.setRotation([0,0,0,1])
     initMovingAction(-1,0)
   }
 
   function moveToRight(){
     ago.moveOn = 1;
-    ago.actions.setRotation([0,1,0,0])
     initMovingAction(1,0)
   }
 
   function moveToTop(){
     ago.moveOn = 1;
-    ago.actions.setRotation([1,0,0,0])
     initMovingAction(0,-1)
   }
 
   function moveToBottom(){
-    ago.moveOn = 1;    
-    ago.actions.setRotation([0,0,1,0])
+    ago.moveOn = 1;
     initMovingAction(0,1)
   }
 }

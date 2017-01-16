@@ -13,7 +13,7 @@ connector.addEventListener('roomInstanceCreated', function(room){
     console.warn(prefix, 'Initializaed as host')
     if (room.name == 'ChatRoom') return;
 
-    var map = new Map(30,10);
+    var map = new Map(50,40);
     window.getMap = function(){
       console.log(map.generateTextView())
     }
@@ -24,7 +24,7 @@ connector.addEventListener('roomInstanceCreated', function(room){
     //setInterval(function(){console.log(map.generateTextView())},100);
 
     var ago1 = new Tank(new Pos(5,5),3,3,[0,0,1,0],5,snap,{
-      speed: 5
+      speed: 8
     })
     gameroom.addObject(ago1)
 
