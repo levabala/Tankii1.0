@@ -24,11 +24,10 @@ connector.addEventListener('roomInstanceCreated', function(room){
     //setInterval(function(){console.log(map.generateTextView())},100);
 
     var ago1 = new Tank(new Pos(5,5),3,3,[0,0,1,0],5,snap,{
-      speed: 8
+      speed: 14,
+      color: 'brown'
     })
     gameroom.addObject(ago1)
-
-    //setInterval(function(){ago1.actions.toLeft();},16);
 
     var mActioner = new ActionManager();
     var rActioner = new ActionManager(mActioner);
