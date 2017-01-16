@@ -5,7 +5,10 @@ function Tank(){
 
   this.generateView = function(obj){
     var rect = obj.snap.rect(0,0,obj.width,obj.height)
-    rect.appendTo(obj.snapGroup);
+    var rect2 = obj.snap.rect(0,0,1,1).attr({fill: 'red'});
+    rect.appendTo(obj.RotateGroup);
+    rect2.appendTo(obj.RotateGroup);
+    //rect2.appendTo(obj.RotateGroup);
   }
   this.generateView(this)
 }
