@@ -31,11 +31,12 @@ function GameRoom(snap,map){
   this.addObject = function(obj){
     obj.id = counter;
     obj.map = groom.map;
+    obj.actions.setOneCellMoveDuration((obj.speed) ? groom.gameInterval / obj.speed : 0);
     obj.addEventListener('move',function(pos){
       groom.updateObjectPosition(obj,pos);
     })
     groom.objects[counter] = obj;
-    obj.MoveGroup.appendTo(groom.RoomSvgGroup)
+    obj.snapGroup.appendTo(groom.RoomSvgGroup)
     console.log(groom.RoomSvgGroup)
     map.setObject(obj)
 
@@ -66,8 +67,6 @@ function GameRoom(snap,map){
   this.acceptChanges = function(){
     groom.changes = {};
   }
-
-  //setInterval(function(){forcePageRefreshing()},16)
 
   //this.gameLoopInterval = setInterval(groom.gameLoop, this.gameLoopInterval);
 

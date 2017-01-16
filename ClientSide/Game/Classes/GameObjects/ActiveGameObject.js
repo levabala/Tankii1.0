@@ -6,10 +6,6 @@ function ActiveGameObject(){
   this.nextAction = '';
   this.moveOn = 0;
   this.nextPos = this.pos.clone();
-  this.actioners = {};
-  this.actioners['mActioner'] = new ActionManager();
-  this.actioners['mActioner'].addEventListener('end', function(){ago.moveOn = 0;});
-  this.actioners['rActioner'] = new ActionManager(this.actioners['mActioner']);
 
   var checkCollisionFuns = {
     //key is rotation.indexOf(1), so 0 = top, 1 = right, 2 = bottom, 3 = left, -1 = invalid rotation.
@@ -44,7 +40,7 @@ function ActiveGameObject(){
   }
   this.actions['toTop'] = function(){
     if (!ago.moveOn){
-      var collResult = checkCollisionFuns[0]();
+      var collResult = checkCollisionFuns[0];
       if (!collResult)
         moveToTop();
     }
@@ -52,67 +48,65 @@ function ActiveGameObject(){
   this.actions['toRight'] = function(){
     if (!ago.moveOn){
       var collResult = checkCollisionFuns[1]();
+      console.log(collResult)
       if (!collResult)
         moveToRight();
     }
   }
   this.actions['toBottom'] = function(){
     if (!ago.moveOn){
-      var collResult = checkCollisionFuns[2]();
+      var collResult = checkCollisionFuns[0];
       if (!collResult)
         moveToBottom();
     }
   }
   this.actions['toLeft'] = function(){
     if (!ago.moveOn){
-      var collResult = checkCollisionFuns[3]();
+      var collResult = checkCollisionFuns[0];
       if (!collResult)
         moveToLeft();
     }
   }
-  this.actions['moveViewByDelta'] = function(dx,dy){
-    if (dx) ago.MoveMatrix.translate(dx,0);
-    else ago.MoveMatrix.translate(0,dy);
-    requestAnimationFrame(function(){
-      ago.MoveGroup.transform(ago.MoveMatrix)
-    })
-  }
-
-  function initMovingAction(dx,dy){
-    ago.nextPos = ago.pos.clone();
-    var ma = new MoveAction(ago,ago.rotation,ago.speed,1,function(deltaX, deltaY){
-      //console.log(deltaX, deltaY)
-      ago.actions.moveViewByDelta(deltaX,deltaY)
-    }, function(){
-      ago.nextPos.X += dx;
-      ago.nextPos.Y += dy;
-      ago.actions.setMapPosition(ago.nextPos)
-    })
-
-    ago.actioners['mActioner'].initAction(ma);
-  }
 
   function moveToLeft(){
+    ago.nextPos = ago.pos.clone();
+    ago.nextPos.X - 1;
+    setAttr(ago.animationTag,'attributeName','x');
+    setAttr(ago.animationTag,'to',ago.nextPos.X);
     ago.moveOn = 1;
-    ago.rotation = [0,0,0,1];
-    initMovingAction(-1,0)
+    ago.rotation = [1,0,0,0]
   }
 
   function moveToRight(){
+    ago.nextPos = ago.pos.clone();
+    ago.nextPos.X += 1;
+    console.log(ago.pos)
+    console.log(ago.nextPos)
+    ago.groupMatrix.translate(1,0);
+    ago.snapGroup.animate({transform: ago.groupMatrix}, ago.oneCellMoveDuration, mina.lineral, function(){
+      moveToRight()
+      console.warn('end')
+      ago.moveOn = 0;
+    })
     ago.moveOn = 1;
     ago.rotation = [0,1,0,0]
-    initMovingAction(1,0)
   }
 
   function moveToTop(){
+    ago.nextPos = ago.pos.clone();
+    ago.nextPos.Y - 1;
+    setAttr(ago.animationTag,'attributeName','y');
+    setAttr(ago.animationTag,'to',ago.nextPos.Y);
     ago.moveOn = 1;
-    ago.rotation = [1,0,0,0]
-    initMovingAction(0,-1)
+    ago.rotation = [0,0,1,0]
   }
 
   function moveToBottom(){
+    ago.nextPos = ago.pos.clone();
+    ago.nextPos.Y + 1;
+    setAttr(ago.animationTag,'attributeName','y');
+    setAttr(ago.animationTag,'to',ago.nextPos.Y);
     ago.moveOn = 1;
-    ago.rotation = [0,0,1,0]
-    initMovingAction(0,1)
+    ago.rotation = [0,0,0,1]
   }
 }

@@ -17,46 +17,32 @@ function GameObject(pos,width,height,rotation,hp,snap,other){
   this.hpPercentage = 1;
   this.maxHp = this.hp;
   this.mortal = (hp == 'immortal') ? 0 : 1;
-  this.MoveGroup = snap.group();
-  this.RotateGroup = snap.group();
-  this.RotateGroup.appendTo(this.MoveGroup)
-  this.MoveMatrix = new Snap.Matrix();
-  this.RotateMatrix = new Snap.Matrix();
-  this.speed = 0;
+  this.snapGroup = snap.group();
+  this.groupMatrix = new Snap.Matrix();
+  this.oneCellMoveDuration = 0;
   for (var o in other) this[o] = other[o];
 
   this.actions = {
     setPosition: function(p){
-      //p.X = Math.round(p.X)
-      //p.Y = Math.round(p.Y)
       gobj.dispatchEvent('move', p); //GameRoom'll move us
-      var spl = gobj.MoveMatrix.split();
-      //console.log(spl.dx,spl.dy)
-      gobj.MoveMatrix.translate(-spl.dx, -spl.dy) //reset translation
-      gobj.MoveMatrix.translate(gobj.pos.X, gobj.pos.Y)
-      requestAnimationFrame(function(){
-        gobj.MoveGroup.transform(gobj.MoveMatrix);
-      });
-      gobj.pos = p.clone();
-    },
-    setMapPosition: function(p){
-      //p.X = Math.round(p.X)
-      //p.Y = Math.round(p.Y)
-      gobj.dispatchEvent('move', p); //GameRoom'll move us
+      obj.groupMatrix.translate(obj.pos.X, obj.pos.Y)
+      obj.snapGroup.transform(obj.groupMatrix);
     },
     setRotation: function(r){
       gobj.rotation = r;
       gobj.rotationAngle = (r) ? r[0] * 180 + r[1] * 270 + r[3] * 90 : 0;
-      obj.RotateMatrix.rotate(obj.rotationAngle, obj.width / 2, obj.height / 2);
-      obj.RotateGroup.transform(obj.RotateMatrix);
+      obj.groupMatrix.rotate(obj.rotationAngle, obj.width / 2, obj.height / 2);
+      obj.snapGroup.transform(obj.groupMatrix);
     },
     setHp: function(hp){
       gobj.hp = hp;
       gobj.hpPerc = gobj.hp / gobj.maxhp;
-      gobj.MoveGroup.attr({'fill-opacity': gobj.hpPerc})
+      gobj.snapGroup.attr({'fill-opacity': gobj.hpPerc})
     },
-    setSpeed: function(speed){
-      gobj.speed = speed;
+    setOneCellMoveDuration: function(duration){
+      console.log('oneCellMoveDuration:', duration + 'ms')
+      gobj.oneCellMoveDuration = duration;
+      //setAttr(gobj.animationTag, 'dur', '1s');//duration + 'ms');
     }
   }
 
@@ -74,17 +60,16 @@ function GameObject(pos,width,height,rotation,hp,snap,other){
   }
 
   //generate and set "body" tag
-  this.createSVGView = function(obj){
+  this.createSnapGroup = function(obj){
     obj.rotationAngle = (obj.rotation) ? obj.rotation[0] * 180 + obj.rotation[1] * 270 + obj.rotation[3] * 90 : 0;
-    obj.MoveMatrix.translate(obj.pos.X, obj.pos.Y)
-    obj.RotateMatrix.rotate(obj.rotationAngle, obj.width / 2, obj.height / 2);
+    obj.groupMatrix.translate(obj.pos.X, obj.pos.Y)    
+    obj.groupMatrix.rotate(obj.rotationAngle, obj.width / 2, obj.height / 2);
 
-    obj.MoveGroup.transform(obj.MoveMatrix);
-    obj.RotateGroup.transform(obj.RotateMatrix);
+    obj.snapGroup.transform(obj.groupMatrix);
     /*setAttr(obj.snapGroup, 'width', obj.width);
     setAttr(obj.snapGroup, 'height', obj.height);*/
   }
-  this.createSVGView(this)
+  this.createSnapGroup(this)
 
   //custom view
   this.generateView = function(obj){

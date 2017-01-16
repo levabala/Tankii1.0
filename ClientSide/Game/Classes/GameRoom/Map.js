@@ -18,15 +18,12 @@ function Map(width,height){
     for (var dx = 0; dx < obj.width; dx++)
       for (var dy = 0; dy < obj.height; dy++)
         map.field[obj.pos.X + dx][obj.pos.Y + dy].obj = obj;
-    //console.log(map.generateTextView())
   }
 
   this.removeObject = function(obj){
-    //console.log('remove obj',obj)
     for (var dx = 0; dx < obj.width; dx++)
       for (var dy = 0; dy < obj.height; dy++)
         map.field[obj.pos.X + dx][obj.pos.Y + dy].obj = {physical: false};
-    //console.log(map.generateTextView())
   }
 
   this.fitToContainer = function(width,height){
@@ -65,7 +62,7 @@ function Map(width,height){
     var str = '';
     for (var y = 0; y < map.field[0].length; y++){
       for (var x = 0; x < map.field.length; x++)
-        str += (map.field[x][y].obj.physical) ? 1 : 0 ;
+        str += ((map.field[x][y].obj.physical) ? 1 : 0) + ' ';
       str += '\n';
     }
     return str;

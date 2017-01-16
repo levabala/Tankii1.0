@@ -1,7 +1,3 @@
-var jqwindow = $(window);
-function forcePageRefreshing(){
-  jqwindow.hide().show(0);
-}
 //<editor-fold> Custom Event
 function Event(name){
   this.name = name;
