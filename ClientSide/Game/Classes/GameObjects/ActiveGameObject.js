@@ -10,8 +10,9 @@ function ActiveGameObject(){
   this.actioners['mActioner'] = new ActionManager();
   this.actioners['mActioner'].addEventListener('end', function(){ago.moveOn = 0;});
   this.actioners['rActioner'] = new ActionManager(this.actioners['mActioner']);
+  this.movings = {};
 
-  var checkCollisionFuns = {
+  this.checkCollisionFuns = {
     //key is rotation.indexOf(1), so 0 = top, 1 = right, 2 = bottom, 3 = left, -1 = invalid rotation.
     //results:
     //"false" - all is okay
@@ -42,36 +43,44 @@ function ActiveGameObject(){
       return false;
     }
   }
+  this.collisionCaseAction = function(obj){
+
+  }
+
   this.actions['toTop'] = function(){
     if (!ago.moveOn){
       ago.actions.setRotation([1,0,0,0])
-      var collResult = checkCollisionFuns[0]();
+      var collResult = ago.checkCollisionFuns[0]();
       if (!collResult)
-        moveToTop();
+        ago.movings.moveToTop();
+      else ago.collisionCaseAction(collResult)
     }
   }
   this.actions['toRight'] = function(){
     if (!ago.moveOn){
       ago.actions.setRotation([0,1,0,0])
-      var collResult = checkCollisionFuns[1]();
+      var collResult = ago.checkCollisionFuns[1]();
       if (!collResult)
-        moveToRight();
+        ago.movings.moveToRight();
+      else ago.collisionCaseAction(collResult)
     }
   }
   this.actions['toBottom'] = function(){
     if (!ago.moveOn){
       ago.actions.setRotation([0,0,1,0])
-      var collResult = checkCollisionFuns[2]();
+      var collResult = ago.checkCollisionFuns[2]();
       if (!collResult)
-        moveToBottom();
+        ago.movings.moveToBottom();
+      else ago.collisionCaseAction(collResult)
     }
   }
   this.actions['toLeft'] = function(){
     if (!ago.moveOn){
       ago.actions.setRotation([0,0,0,1])
-      var collResult = checkCollisionFuns[3]();
+      var collResult = ago.checkCollisionFuns[3]();
       if (!collResult)
-        moveToLeft();
+        ago.movings.moveToLeft();
+      else ago.collisionCaseAction(collResult)
     }
   }
   this.actions['moveViewByDelta'] = function(dx,dy){
@@ -96,22 +105,22 @@ function ActiveGameObject(){
     ago.actioners['mActioner'].initAction(ma);
   }
 
-  function moveToLeft(){
+  this.movings.moveToLeft = function(){
     ago.moveOn = 1;
     initMovingAction(-1,0)
   }
 
-  function moveToRight(){
+  this.movings.moveToRight = function(){
     ago.moveOn = 1;
     initMovingAction(1,0)
   }
 
-  function moveToTop(){
+  this.movings.moveToTop = function(){
     ago.moveOn = 1;
     initMovingAction(0,-1)
   }
 
-  function moveToBottom(){
+  this.movings.moveToBottom = function(){
     ago.moveOn = 1;
     initMovingAction(0,1)
   }

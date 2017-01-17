@@ -1,6 +1,7 @@
 function GameObject(pos,width,height,rotation,hp,snap,other){
   Reactor.apply(this,[]); //events adding ability
   this.registerEvent('move')
+  this.registerEvent('createObject')
   this.registerEvent('destructed')
   this.registerEvent('kill')
 
@@ -63,7 +64,8 @@ function GameObject(pos,width,height,rotation,hp,snap,other){
     }
   }
 
-  this.damaged = function(damage, damager){
+  this.damage = function(damage, damager){
+    if (gobj.mortal) return;
     gobj.hp -= gobj.mortal * damage;
     if (gobj.hp <= 0){
       damager.dispatchEvent('kill', gobj);
@@ -73,7 +75,8 @@ function GameObject(pos,width,height,rotation,hp,snap,other){
 
   this.destructSelf = function(){
     gobj.hp = 0;
-    gobj.dispatchEvent('destructed')
+    gobj.MoveGroup.remove();
+    gobj.dispatchEvent('destructed',gobj)
   }
 
   //generate and set "body" tag

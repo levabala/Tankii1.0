@@ -1,4 +1,4 @@
-function KeyboardController(element, keymapdown, keymapup){
+function KeyboardController(element, keymapdown, keymapup, keyslistonedown){
   var elements = {};
   var buffer = [];
   element.addEventListener('keydown', keydown);
@@ -13,11 +13,11 @@ function KeyboardController(element, keymapdown, keymapup){
       if (buffer[b] != e.keyCode)
         bnew[bnew.length] = buffer[b];
     buffer = bnew;
-  } 
+  }
 
   function keydown(e){
-    if (typeof keymapdown[e.keyCode] != 'undefined' || typeof keymapup[e.keyCode] != 'undefined')
-      buffer[buffer.length] = e.keyCode;
+    if (typeof keymapdown[e.keyCode] != 'undefined')
+      buffer.push(e.keyCode);
   }
 
   var interval = setInterval(function(){

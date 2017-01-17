@@ -1,7 +1,7 @@
 function Map(width,height){
   var map = this;
-  this.width = width;
-  this.height = height;
+  this.width = width-1;
+  this.height = height-1;
   this.field = [];
   this.xcoeff = 1;
   this.ycoeff = 1;

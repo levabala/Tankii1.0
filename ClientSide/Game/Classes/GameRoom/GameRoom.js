@@ -10,6 +10,12 @@ function GameRoom(snap,map){
     obj.addEventListener('move',function(pos){
       groom.updateObjectPosition(obj,pos);
     })
+    obj.addEventListener('createObject',function(object){
+      groom.addObject(object)
+    })
+    obj.addEventListener('destructed',function(object){
+      groom.removeObject(object)
+    })
     groom.objects[counter] = obj;
     obj.MoveGroup.appendTo(groom.RoomSvgGroup)
     map.setObject(obj)
@@ -47,7 +53,7 @@ function GameRoom(snap,map){
 
   //borders
   var topB = new Wall(new Pos(0,0),map.width,1,[1,0,0,0],5,snap)
-  var rightB = new Wall(new Pos(map.width-2,0),1,map.height,[1,0,0,0],5,snap)
+  var rightB = new Wall(new Pos(map.width-1,0),1,map.height,[1,0,0,0],5,snap)
   var bottomB = new Wall(new Pos(0,map.height-1),map.width-1,1,[1,0,0,0],5,snap)
   var leftB = new Wall(new Pos(0,0),1,map.height-1,[1,0,0,0],5,snap)
   this.addObjects([topB,rightB,bottomB,leftB])
@@ -82,7 +88,5 @@ function GameRoom(snap,map){
   //this.gameLoopInterval = setInterval(groom.gameLoop, this.gameLoopInterval);
 
   //log interval
-  /*setInterval(function(){
-    console.log(map.generateTextView());
-  },500)*/
+  //setInterval(function(){console.log(map.generateTextView());},100)
 }

@@ -13,46 +13,61 @@ connector.addEventListener('roomInstanceCreated', function(room){
     console.warn(prefix, 'Initializaed as host')
     if (room.name == 'ChatRoom') return;
 
-    var map = new Map(50,40);
+    var map = new Map(50,240);
     window.getMap = function(){
       console.log(map.generateTextView())
     }
     map.fitToContainer(svg.width(),svg.height())
-    svg.append(map.generateMesh());
+    //svg.append(map.generateMesh());
     var gameroom = new GameRoom(snap,map)
 
     //setInterval(function(){console.log(map.generateTextView())},100);
 
-    var ago1 = new Tank(new Pos(5,5),3,3,[0,0,1,0],5,snap,{
-      speed: 14,
-      color: 'brown'
-    })
-    gameroom.addObject(ago1)
+
+    var agos = [];
+    for (var i = 5; i < map.height; i += 5){
+      var ago = new Tank(new Pos(5,i),3,3,[0,0,1,0],5,snap,{
+        speed: 14,
+        color: 'brown'
+      })
+      agos.push(ago)
+      gameroom.addObject(ago)
+    }
+    console.warn('agos.length:',agos.length)
+
 
     var mActioner = new ActionManager();
     var rActioner = new ActionManager(mActioner);
-    mActioner.addEventListener('end',function(){console.warn('move end. pos:',tank.pos)});
 
     var keyMapDownTemplate = function(obj){
       return {
         38: function(){
-          ago1.actions.toTop();
+          for (var a in agos)
+            agos[a].actions.toTop();
         },
         39: function(){
-          ago1.actions.toRight();
+          for (var a in agos)
+            agos[a].actions.toRight();
         },
         40: function(){
-          ago1.actions.toBottom();
+          for (var a in agos)
+            agos[a].actions.toBottom();
         },
         37: function(){
-          ago1.actions.toLeft();
+          for (var a in agos)
+            agos[a].actions.toLeft();
         }
       }
     }
 
-    var keymapdown1 = keyMapDownTemplate(ago1);
+    var keymapdown1 = keyMapDownTemplate(ago);
 
-    var k = new KeyboardController(window,keymapdown1,{})
+    var k = new KeyboardController(window,keymapdown1,{
+      32: function(){
+        for (var a in agos)
+          agos[a].actions.shoot();
+      }
+    })
 
     /*var action1 = new MoveToRightAction(obj.pos,1,1)
     action1.id = 1;

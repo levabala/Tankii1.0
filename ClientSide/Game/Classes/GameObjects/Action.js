@@ -14,11 +14,12 @@ function ActionManager(triggeringActionManager){
     triggeringActionManager.addEventListener('start', function(){am.allowed = false;})
     triggeringActionManager.addEventListener('end', function(){am.allowed = true; if (!nextAction.completed) startAction(nextAction)})
   }
+  else
+    this.addEventListener('end', function(){am.allowed = true; if (!nextAction.completed) startAction(nextAction)})
 
   this.initAction = function(action){
     action.addEventListener('end', function(){
       am.dispatchEvent('end');
-      //console.log('end. completedAction:', action, 'nextAction:', nextAction)
       if (!nextAction.completed)
         startAction(nextAction);
       else {
@@ -27,7 +28,7 @@ function ActionManager(triggeringActionManager){
       }
     });
 
-    if (am.actionOn) return;
+    //if (am.actionOn) return;
     if (!am.allowed){
       nextAction = action;
       return;
@@ -74,7 +75,7 @@ function MoveAction(obj,rotation,speed,distance,tickFunction,startCallback){
       setTimeout(move,milliseconds);
     },
     function(){
-      currentPos.X += delta;
+      currentPos.X += delta;      
       tickFunction(delta,0)
       if (currentPos.X >= tx){
         tickFunction(tx-currentPos.X,0)
@@ -123,13 +124,10 @@ function MoveAction(obj,rotation,speed,distance,tickFunction,startCallback){
   this.start = function(){
     var right = rotation[1] - rotation[3];
     var bottom = rotation[2] - rotation[0];
-    //console.warn('start',rotation,right,bottom)
     tx = obj.pos.X + distance * right;
     ty = obj.pos.Y + distance * bottom;
-    //console.log(obj.pos,{x:tx,y:ty})
-    //console.log(currentPos,tx,ty)
     delta = speed * milliseconds / 1000 * (right + bottom);
-    action.completed = false;    
+    action.completed = false;
     startCallback();
     move();
   }
