@@ -28,16 +28,13 @@ function GameObject(pos,width,height,rotation,hp,snap,other){
 
   this.actions = {
     setPosition: function(p){
-      //p.X = Math.round(p.X)
-      //p.Y = Math.round(p.Y)
       gobj.dispatchEvent('move', p); //GameRoom'll move us
-      var spl = gobj.MoveMatrix.split();
-      //console.log(spl.dx,spl.dy)
+      var spl = gobj.MoveMatrix.split();      
       gobj.MoveMatrix.translate(-spl.dx, -spl.dy) //reset translation
       gobj.MoveMatrix.translate(gobj.pos.X, gobj.pos.Y)
-      requestAnimationFrame(function(){
+      //requestAnimationFrame(function(){
         gobj.MoveGroup.transform(gobj.MoveMatrix);
-      });
+      //});
       gobj.pos = p.clone();
     },
     setMapPosition: function(p){

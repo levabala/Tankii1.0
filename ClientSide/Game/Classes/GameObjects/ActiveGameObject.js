@@ -86,23 +86,31 @@ function ActiveGameObject(){
   this.actions['moveViewByDelta'] = function(dx,dy){
     if (dx) ago.MoveMatrix.translate(dx,0);
     else ago.MoveMatrix.translate(0,dy);
-    requestAnimationFrame(function(){
+    //requestAnimationFrame(function(){
       ago.MoveGroup.transform(ago.MoveMatrix)
-    })
+    //})
   }
 
   function initMovingAction(dx,dy){
-    ago.nextPos = ago.pos.clone();
-    var ma = new MoveAction(ago,ago.rotation,ago.speed,1,function(deltaX, deltaY){
+    function tickFunction(deltaX, deltaY){
+      ago.actions.moveViewByDelta(deltaX,deltaY)
+    }
+    function startCallback(){
+      ago.nextPos.X += dx;
+      ago.nextPos.Y += dy;
+      ago.actions.setMapPosition(ago.nextPos)
+    }
+    ago.nextPos = ago.pos.clone();    
+    ago.actioners['mActioner'].initFunction(MoveHorizontal,[ago,1,{start: startCallback, tick: tickFunction}]);
+
+    /*var ma = new MoveAction(ago,ago.rotation,ago.speed,1,function(deltaX, deltaY){
       //console.log(deltaX, deltaY)
       ago.actions.moveViewByDelta(deltaX,deltaY)
     }, function(){
       ago.nextPos.X += dx;
       ago.nextPos.Y += dy;
       ago.actions.setMapPosition(ago.nextPos)
-    })
-
-    ago.actioners['mActioner'].initAction(ma);
+    })*/
   }
 
   this.movings.moveToLeft = function(){

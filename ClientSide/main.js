@@ -13,7 +13,7 @@ connector.addEventListener('roomInstanceCreated', function(room){
     console.warn(prefix, 'Initializaed as host')
     if (room.name == 'ChatRoom') return;
 
-    var map = new Map(50,240);
+    var map = new Map(30,253);
     window.getMap = function(){
       console.log(map.generateTextView())
     }
@@ -25,9 +25,9 @@ connector.addEventListener('roomInstanceCreated', function(room){
 
 
     var agos = [];
-    for (var i = 5; i < map.height; i += 5){
+    for (var i = 5; i < map.height-3; i += 5){
       var ago = new Tank(new Pos(5,i),3,3,[0,0,1,0],5,snap,{
-        speed: 14,
+        speed: 4,
         color: 'brown'
       })
       agos.push(ago)
@@ -64,6 +64,7 @@ connector.addEventListener('roomInstanceCreated', function(room){
 
     var k = new KeyboardController(window,keymapdown1,{
       32: function(){
+        console.log('shoot')
         for (var a in agos)
           agos[a].actions.shoot();
       }

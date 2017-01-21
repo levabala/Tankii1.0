@@ -83,6 +83,9 @@ function GameRoom(snap,map){
     groom.changes = {};
   }
 
+  setInterval(function(){
+    requestAnimationFrame(function(){});
+  },8)
   //setInterval(function(){forcePageRefreshing()},16)
 
   //this.gameLoopInterval = setInterval(groom.gameLoop, this.gameLoopInterval);

@@ -4,7 +4,7 @@ function ActionManager(triggeringActionManager){
   this.registerEvent('end')
 
   var am = this;
-  var nextAction = {completed: true};
+  var nextFun = {completed: true};
 
   this.actionOn = false;
   this.allowed = true;
@@ -12,13 +12,30 @@ function ActionManager(triggeringActionManager){
   if (triggeringActionManager){
     this.allowed = !triggeringActionManager.actionOn;
     triggeringActionManager.addEventListener('start', function(){am.allowed = false;})
-    triggeringActionManager.addEventListener('end', function(){am.allowed = true; if (!nextAction.completed) startAction(nextAction)})
+    triggeringActionManager.addEventListener('end', function(){am.allowed = true; if (!nextFun.completed) startAction(nextFun.fun, nextFun.args)})
   }
   else
-    this.addEventListener('end', function(){am.allowed = true; if (!nextAction.completed) startAction(nextAction)})
+    this.addEventListener('end', function(){am.allowed = true; if (!nextFun.completed) startAction(nextFun.fun, nextFun.args)})
+
+  this.initFunction = function(fun,args){
+    function endEvent(){          
+      am.dispatchEvent('end');
+      if (!nextFun.completed)
+        startAction(nextFun.fun, nextFun.args);
+    }
+    args[2].end = endEvent; //adding 'end' callback
+
+    if (!am.allowed){
+      nextFun = {fun: fun, args: args, completed: false};
+      return;
+    }
+
+    startAction(fun,args);
+  }
 
   this.initAction = function(action){
     action.addEventListener('end', function(){
+      console.log('end')
       am.dispatchEvent('end');
       if (!nextAction.completed)
         startAction(nextAction);
@@ -37,12 +54,12 @@ function ActionManager(triggeringActionManager){
     startAction(action);
   }
 
-  function startAction(action){
+  function startAction(fun,args){
     am.dispatchEvent('start');
 
     am.actionOn = true;
     am.allowed = false;
-    action.start();
+    fun.apply(this,args)
   }
 }
 
@@ -57,6 +74,32 @@ function RotateAction(obj,rotation){
     obj.rotation = rotation;
     action.completed = true;
     action.dispatchEvent('end')
+  }
+}
+
+var milliseconds = 16;
+function MoveHorizontal(obj,distance,callbacks){
+  var x = obj.pos.X;
+  var sign = obj.rotation[1] + (-1) * obj.rotation[3];
+  var tx = obj.pos.X + distance * sign;
+  var dx = obj.speed * milliseconds / 1000 * sign;
+
+  function rightMovingCondition(){return x < tx;}
+  function leftMovingCondition(){return x > tx;}
+
+  var condition = (sign > 0) ? rightMovingCondition : leftMovingCondition;
+
+  callbacks.start();
+  move();
+  function move(){
+    x += dx;
+    if (!condition()){
+      dx = tx - x;
+      callbacks.end();
+      return;
+    }
+    callbacks.tick(dx);
+    setTimeout(move,milliseconds);
   }
 }
 
@@ -75,7 +118,7 @@ function MoveAction(obj,rotation,speed,distance,tickFunction,startCallback){
       setTimeout(move,milliseconds);
     },
     function(){
-      currentPos.X += delta;      
+      currentPos.X += delta;
       tickFunction(delta,0)
       if (currentPos.X >= tx){
         tickFunction(tx-currentPos.X,0)
@@ -122,6 +165,7 @@ function MoveAction(obj,rotation,speed,distance,tickFunction,startCallback){
   this.completed = false;
 
   this.start = function(){
+    //console.log('start')
     var right = rotation[1] - rotation[3];
     var bottom = rotation[2] - rotation[0];
     tx = obj.pos.X + distance * right;
