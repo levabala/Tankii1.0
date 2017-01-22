@@ -65,7 +65,7 @@ function GameRoom(snap,map){
 
   this.updateObjectPosition = function(obj,pos){
     map.removeObject(obj);
-    obj.pos = pos.clone();
+    obj.mapPos = pos.clone();
     map.setObject(obj);
   }
 
@@ -83,9 +83,7 @@ function GameRoom(snap,map){
     groom.changes = {};
   }
 
-  setInterval(function(){
-    requestAnimationFrame(function(){});
-  },8)
+  //function update(){requestAnimationFrame(update);}
   //setInterval(function(){forcePageRefreshing()},16)
 
   //this.gameLoopInterval = setInterval(groom.gameLoop, this.gameLoopInterval);

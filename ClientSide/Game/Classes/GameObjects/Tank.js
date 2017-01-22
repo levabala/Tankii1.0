@@ -3,19 +3,31 @@ function Tank(){
 
   var tank = this;
 
-  this.aliveShells = 0;
+  this.maxAmmo = 30;
+  this.ammunition = [];
+  for (var i = 0; i < this.maxAmmo; i++)
+    this.ammunition.push(new Shell(new Pos(0,0),1,1,tank.rotation,1,snap,{speed: 15, color: 'black', owner: tank}));
+
   this.actioners['sActiner'] = new ActionManager();
   this.actions['shoot'] = function(){
-    var x = tank.pos.X+tank.rotation[3]*-1+tank.rotation[1]*tank.width+(1-(tank.rotation[1]+tank.rotation[3]))*Math.floor(tank.width/2);
-    var y = tank.pos.Y+tank.rotation[0]*-1+tank.rotation[2]*tank.height+(1-(tank.rotation[0]+tank.rotation[2]))*Math.floor(tank.height/2);
-    //console.log(x,y)    
-    var shell = new Shell(new Pos(x,y),1,1,tank.rotation,1,snap,{
-      speed: 25,
-      color: 'black'
-    })
-    shell.owner = tank;
+    var x = tank.mapPos.X+tank.rotation[3]*-1+tank.rotation[1]*tank.width+(1-(tank.rotation[1]+tank.rotation[3]))*Math.floor(tank.width/2);
+    var y = tank.mapPos.Y+tank.rotation[0]*-1+tank.rotation[2]*tank.height+(1-(tank.rotation[0]+tank.rotation[2]))*Math.floor(tank.height/2);    
+    if (!tank.ammunition.length){
+      console.warn('Out of ammo')
+      return;
+    }
+    if (tank.map.isPhysical(x,y)) {
+      console.warn('Can\'t shoot')
+      return;
+    }
+    var shell = tank.ammunition[tank.ammunition.length-1];
+    shell.mapPos = new Pos(x,y)
+    shell.actions.setPosition(new Pos(x,y));
+    shell.actions.setRotation(tank.rotation);
+    shell.rotationIndex = tank.rotation.indexOf(1);
     tank.dispatchEvent('createObject', shell)
     shell.fly();
+    tank.ammunition.pop();
   }
 
   this.generateView = function(obj){

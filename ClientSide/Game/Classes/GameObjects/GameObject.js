@@ -7,7 +7,8 @@ function GameObject(pos,width,height,rotation,hp,snap,other){
 
   var gobj = this;
 
-  this.pos = pos;
+  this.pos = pos.clone();
+  this.mapPos = pos.clone();
   this.width = width;
   this.height = height;
   this.physical = 1;
@@ -26,12 +27,15 @@ function GameObject(pos,width,height,rotation,hp,snap,other){
   this.speed = 0;
   for (var o in other) this[o] = other[o];
 
+  var ppp = performance.now();
+  var lastx = this.pos.X;
   this.actions = {
     setPosition: function(p){
       gobj.dispatchEvent('move', p); //GameRoom'll move us
-      var spl = gobj.MoveMatrix.split();      
+      var spl = gobj.MoveMatrix.split();
+      //console.log(gobj.pos.X - spl.dx, gobj.pos.Y - spl.dy)
       gobj.MoveMatrix.translate(-spl.dx, -spl.dy) //reset translation
-      gobj.MoveMatrix.translate(gobj.pos.X, gobj.pos.Y)
+      gobj.MoveMatrix.translate(p.X, p.Y)
       //requestAnimationFrame(function(){
         gobj.MoveGroup.transform(gobj.MoveMatrix);
       //});
@@ -47,9 +51,9 @@ function GameObject(pos,width,height,rotation,hp,snap,other){
       gobj.RotateMatrix.rotate(-gobj.rotationAngle, gobj.width / 2, gobj.height / 2);
       gobj.rotationAngle = (r) ? r[0] * 180 + r[1] * 270 + r[3] * 90 : 0;
       gobj.RotateMatrix.rotate(gobj.rotationAngle, gobj.width / 2, gobj.height / 2);
-      requestAnimationFrame(function(){
+      //requestAnimationFrame(function(){
         gobj.RotateGroup.transform(gobj.RotateMatrix);
-      })
+      //})
     },
     setHp: function(hp){
       gobj.hp = hp;
@@ -92,5 +96,9 @@ function GameObject(pos,width,height,rotation,hp,snap,other){
   //custom view
   this.generateView = function(obj){
 
+  }
+
+  this.clearGroup = function(){
+    gobj.RotateGroup.clear();
   }
 }

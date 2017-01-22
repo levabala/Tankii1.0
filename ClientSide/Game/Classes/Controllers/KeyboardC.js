@@ -1,6 +1,7 @@
 function KeyboardController(element, keymapdown, keymapup, keyslistonedown){
   var elements = {};
   var buffer = [];
+  var enabled = true;
   element.addEventListener('keydown', keydown);
   element.addEventListener('keyup', keyup);
 
@@ -20,14 +21,22 @@ function KeyboardController(element, keymapdown, keymapup, keyslistonedown){
       buffer.push(e.keyCode);
   }
 
-  var interval = setInterval(function(){
+  /*var interval = setInterval(function(){
     if (buffer.length > 0)
       if (typeof keymapdown[buffer[buffer.length-1]] != 'undefined')
         keymapdown[buffer[buffer.length-1]]();
-  }, 16);
+  }, 16);*/
+
+  function tick(){if (buffer.length > 0)
+    if (typeof keymapdown[buffer[buffer.length-1]] != 'undefined')
+      keymapdown[buffer[buffer.length-1]]();
+    requestAnimationFrame(tick);
+  }
+  tick();
 
   this.disable = function(){
-    clearInterval(interval);
+    //clearInterval(interval);
+    enabled = false;
     element.removeEventListener('keydown', keydown);
     element.removeEventListener('keyup', keyup);
   }

@@ -1,3 +1,10 @@
+/*var w1 = new Worker("../../../Game/Classes/Connector/ConnectorWebWorker.js")
+var w2 = new Worker("../../../Game/Classes/Connector/ConnectorWebWorker.js")
+var w3 = new Worker("../../../Game/Classes/Connector/ConnectorWebWorker.js")
+var w4 = new Worker("../../../Game/Classes/Connector/ConnectorWebWorker.js")
+var w5 = new Worker("../../../Game/Classes/Connector/ConnectorWebWorker.js")*/
+
+
 var connector = new Connector(SIGNALING_SERVER, {nick: 'anonymous'}, ['ChatRoom', 'OfficialRoom'])
 var svg = $('#SVGRoom');
 var snap = Snap('#SVGRoom');
@@ -13,7 +20,7 @@ connector.addEventListener('roomInstanceCreated', function(room){
     console.warn(prefix, 'Initializaed as host')
     if (room.name == 'ChatRoom') return;
 
-    var map = new Map(30,253);
+    var map = new Map(23,13);
     window.getMap = function(){
       console.log(map.generateTextView())
     }
@@ -27,7 +34,7 @@ connector.addEventListener('roomInstanceCreated', function(room){
     var agos = [];
     for (var i = 5; i < map.height-3; i += 5){
       var ago = new Tank(new Pos(5,i),3,3,[0,0,1,0],5,snap,{
-        speed: 4,
+        speed: 3,//1.5,
         color: 'brown'
       })
       agos.push(ago)
@@ -64,25 +71,12 @@ connector.addEventListener('roomInstanceCreated', function(room){
 
     var k = new KeyboardController(window,keymapdown1,{
       32: function(){
-        console.log('shoot')
+        //console.log('shoot')
         for (var a in agos)
           agos[a].actions.shoot();
+        //requestAnimationFrame(function(){});
       }
     })
-
-    /*var action1 = new MoveToRightAction(obj.pos,1,1)
-    action1.id = 1;
-    var action2 = new MoveToRightAction(obj.pos,1,1)
-    action2.id = 2;
-    var action3 = new MoveToRightAction(obj.pos,1,1)
-    action3.id = 3;
-    var rotateAction1 = new RotateAction(obj,[1,0,0,0])
-    var rotateAction2 = new RotateAction(obj,[0,0,1,0])
-    mActioner.initAction(action1);
-    rActioner.initAction(rotateAction1);
-    mActioner.initAction(action2);
-    setTimeout(function(){mActioner.initAction(action3);},4000);
-    setTimeout(function(){rActioner.initAction(rotateAction2);},3000);*/
   })
 
   room.addEventListener('hostMessage', function(message){

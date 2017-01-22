@@ -12,25 +12,25 @@ function Shell(){
   }
 
   var funs = [
-    function(){
+    function moveToTop(){
       var collResult = shell.checkCollisionFuns[0]();
       if (collResult)
         damageAndDestructSelf(collResult)
       else shell.movings.moveToTop();
     },
-    function(){
+    function moveToRight(){
       var collResult = shell.checkCollisionFuns[1]();
       if (collResult)
         damageAndDestructSelf(collResult)
       else shell.movings.moveToRight();
     },
-    function(){
+    function moveToBottom(){
       var collResult = shell.checkCollisionFuns[2]();
       if (collResult)
         damageAndDestructSelf(collResult)
         else shell.movings.moveToBottom();
     },
-    function(){
+    function moveToLeft(){
       var collResult = shell.checkCollisionFuns[3]();
       if (collResult)
         damageAndDestructSelf(collResult)
@@ -38,11 +38,11 @@ function Shell(){
     }
   ]
 
-  var r = this.rotation.indexOf(1);
+  this.rotationIndex = this.rotation.indexOf(1);
   this.fly = function(){
-    funs[r]();
+    funs[shell.rotationIndex]();
   }
-  this.actioners.mActioner.addEventListener('end',function(){        
+  this.actioners.mActioner.addEventListener('end',function(){
     shell.fly();
   })
 

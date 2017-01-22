@@ -8,7 +8,7 @@ function ActiveGameObject(){
   this.nextPos = this.pos.clone();
   this.actioners = {};
   this.actioners['mActioner'] = new ActionManager();
-  this.actioners['mActioner'].addEventListener('end', function(){ago.moveOn = 0;});
+  this.actioners['mActioner'].addEventListener('end', function(){ago.moveOn = 0;})// ago.actions.setPosition(ago.pos)});
   this.actioners['rActioner'] = new ActionManager(this.actioners['mActioner']);
   this.movings = {};
 
@@ -17,26 +17,26 @@ function ActiveGameObject(){
     //results:
     //"false" - all is okay
     //else - return object with which the collision occurred
-    0: function(){
+    0: function topCollisionCheck(){
       for (var x = 0; x < ago.width; x++){
-        var obj = ago.map.field[ago.pos.X+x][ago.pos.Y-1].obj;
+        var obj = ago.map.field[ago.mapPos.X+x][ago.mapPos.Y-1].obj;
         if (obj.physical) return obj; // && obj.id != ago.id
       }
       return false;
     },
-    1: function(){
+    1: function rightCollisionCheck(){
       for (var y = 0; y < ago.height; y++)
-        if (ago.map.field[ago.pos.X+ago.width][ago.pos.Y+y].obj.physical) return ago.map.field[ago.pos.X+ago.width][ago.pos.Y+y].obj;
+        if (ago.map.field[ago.mapPos.X+ago.width][ago.mapPos.Y+y].obj.physical) return ago.map.field[ago.mapPos.X+ago.width][ago.mapPos.Y+y].obj;
       return false;
     },
-    2: function(){
+    2: function bottomCollisionCheck(){
       for (var x = 0; x < ago.width; x++)
-        if (ago.map.field[ago.pos.X+x][ago.pos.Y+ago.height].obj.physical) return ago.map.field[ago.pos.X+x][ago.pos.Y+ago.height].obj;
+        if (ago.map.field[ago.mapPos.X+x][ago.mapPos.Y+ago.height].obj.physical) return ago.map.field[ago.mapPos.X+x][ago.mapPos.Y+ago.height].obj;
       return false;
     },
-    3: function(){
+    3: function leftCollisionCheck(){
       for (var y = 0; y < ago.height; y++)
-        if (ago.map.field[ago.pos.X-1][ago.pos.Y+y].obj.physical) return ago.map.field[ago.pos.X-1][ago.pos.Y+y].obj;
+        if (ago.map.field[ago.mapPos.X-1][ago.mapPos.Y+y].obj.physical) return ago.map.field[ago.mapPos.X-1][ago.mapPos.Y+y].obj;
       return false;
     },
     '-1': function(){
@@ -84,10 +84,16 @@ function ActiveGameObject(){
     }
   }
   this.actions['moveViewByDelta'] = function(dx,dy){
-    if (dx) ago.MoveMatrix.translate(dx,0);
-    else ago.MoveMatrix.translate(0,dy);
+    ago.pos.X += dx;
+    ago.pos.Y += dy;
+    ago.MoveMatrix.translate(dx,dy);
+    ago.MoveGroup.transform(ago.MoveMatrix)
+    //requestAnimationFrame(function(){ago.MoveGroup.transform(ago.MoveMatrix)});
+
+    //if (dx) ago.MoveMatrix.translate(dx,0);
+    //else ago.MoveMatrix.translate(0,dy);
     //requestAnimationFrame(function(){
-      ago.MoveGroup.transform(ago.MoveMatrix)
+
     //})
   }
 
@@ -95,22 +101,13 @@ function ActiveGameObject(){
     function tickFunction(deltaX, deltaY){
       ago.actions.moveViewByDelta(deltaX,deltaY)
     }
+    ago.nextMapPos = ago.mapPos.clone();
     function startCallback(){
-      ago.nextPos.X += dx;
-      ago.nextPos.Y += dy;
-      ago.actions.setMapPosition(ago.nextPos)
+      ago.nextMapPos.X += dx;
+      ago.nextMapPos.Y += dy;
+      ago.actions.setMapPosition(ago.nextMapPos)
     }
-    ago.nextPos = ago.pos.clone();    
-    ago.actioners['mActioner'].initFunction(MoveHorizontal,[ago,1,{start: startCallback, tick: tickFunction}]);
-
-    /*var ma = new MoveAction(ago,ago.rotation,ago.speed,1,function(deltaX, deltaY){
-      //console.log(deltaX, deltaY)
-      ago.actions.moveViewByDelta(deltaX,deltaY)
-    }, function(){
-      ago.nextPos.X += dx;
-      ago.nextPos.Y += dy;
-      ago.actions.setMapPosition(ago.nextPos)
-    })*/
+    ago.actioners['mActioner'].initFunction((dy == 0) ? MoveHorizontal : MoveVertical,[ago,1,{start: startCallback, tick: tickFunction}]);
   }
 
   this.movings.moveToLeft = function(){

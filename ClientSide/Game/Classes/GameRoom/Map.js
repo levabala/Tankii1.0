@@ -14,10 +14,14 @@ function Map(width,height){
     }
   }
 
+  this.isPhysical = function(x,y){
+    return map.field[x][y].obj.physical;
+  }
+
   this.setObject = function(obj){
     for (var dx = 0; dx < obj.width; dx++)
       for (var dy = 0; dy < obj.height; dy++)
-        map.field[obj.pos.X + dx][obj.pos.Y + dy].obj = obj;
+        map.field[obj.mapPos.X + dx][obj.mapPos.Y + dy].obj = obj;
     //console.log(map.generateTextView())
   }
 
@@ -25,7 +29,7 @@ function Map(width,height){
     //console.log('remove obj',obj)
     for (var dx = 0; dx < obj.width; dx++)
       for (var dy = 0; dy < obj.height; dy++)
-        map.field[obj.pos.X + dx][obj.pos.Y + dy].obj = {physical: false};
+        map.field[obj.mapPos.X + dx][obj.mapPos.Y + dy].obj = {physical: false};
     //console.log(map.generateTextView())
   }
 
