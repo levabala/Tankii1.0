@@ -8,7 +8,7 @@ function ActiveGameObject(){
   this.nextPos = this.pos.clone();
   this.actioners = {};
   this.actioners['mActioner'] = new ActionManager();
-  this.actioners['mActioner'].addEventListener('end', function(){ago.moveOn = 0;})// ago.actions.setPosition(ago.pos)});
+  this.actioners['mActioner'].addEventListener('end', function(){ago.moveOn = 0;})
   this.actioners['rActioner'] = new ActionManager(this.actioners['mActioner']);
   this.movings = {};
 
@@ -88,13 +88,6 @@ function ActiveGameObject(){
     ago.pos.Y += dy;
     ago.MoveMatrix.translate(dx,dy);
     ago.MoveGroup.transform(ago.MoveMatrix)
-    //requestAnimationFrame(function(){ago.MoveGroup.transform(ago.MoveMatrix)});
-
-    //if (dx) ago.MoveMatrix.translate(dx,0);
-    //else ago.MoveMatrix.translate(0,dy);
-    //requestAnimationFrame(function(){
-
-    //})
   }
 
   function initMovingAction(dx,dy){
