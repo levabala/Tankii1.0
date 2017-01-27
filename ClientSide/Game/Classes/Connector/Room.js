@@ -10,7 +10,7 @@ function Room(name){
 
   this.name = name;
   this.host = null;
-  this.peers = {};
+  this.peers = {}; 
 
   this.setHost = function(host){
     room.host = host;
@@ -31,7 +31,7 @@ function Room(name){
         if (opened == 2) room.dispatchEvent('adoptedByHost',host)
       }
     }
-    else {      
+    else {
       room.dispatchEvent('initializedAsHost')
     }
   }
