@@ -12,7 +12,7 @@ function GameModel(map){
   this.objects = {};
   this.map = map;
 
-  var checkCollisionFuns = [
+  var checkCollisionFuns = [ 
     function topCollisionCheck(pos,width,height){
       for (var x = 0; x < width; x++){
         if (model.map.field[pos.X+x][pos.Y-1].obj.physical) return obj; // && obj.id != model.id
