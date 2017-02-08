@@ -1,7 +1,7 @@
-var jqwindow = $(window);
+/*var jqwindow = $(window);
 function forcePageRefreshing(){
   jqwindow.hide().show(0);
-}
+}*/
 //<editor-fold> Custom Event
 function Event(name){
   this.name = name;
@@ -71,6 +71,12 @@ function randomInteger(min, max) {
 function rotationToString(rotation){
   var rotations = ['top','right','bottom','left'];
   return rotations[rotation.indexOf(1)] || 'none';
+}
+
+function directionToRotation(dir){
+  var rotation = [0,0,0,0];
+  rotation[dir] = 1;
+  return rotation;
 }
 
 function setAttr(obj,attr,value){
