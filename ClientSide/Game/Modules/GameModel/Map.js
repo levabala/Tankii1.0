@@ -21,7 +21,7 @@ function Map(width,height){
   this.setObject = function(obj){
     for (var dx = 0; dx < obj.width; dx++)
       for (var dy = 0; dy < obj.height; dy++)
-        map.field[obj.mapPos.X + dx][obj.mapPos.Y + dy].obj = obj;
+        map.field[obj.pos.X + dx][obj.pos.Y + dy].obj = obj;
     //console.log(map.generateTextView())
   }
 
@@ -29,9 +29,36 @@ function Map(width,height){
     //console.log('remove obj',obj)
     for (var dx = 0; dx < obj.width; dx++)
       for (var dy = 0; dy < obj.height; dy++)
-        map.field[obj.mapPos.X + dx][obj.mapPos.Y + dy].obj = {physical: false};
+        map.field[obj.pos.X + dx][obj.pos.Y + dy].obj = {physical: false};
     //console.log(map.generateTextView())
   }
+
+  this.moveObjectByOneCell = [
+    function toTop(obj){
+      for (var dx = 0; dx < obj.width; dx++){
+        map.field[obj.pos.X + dx][obj.pos.Y + obj.height].obj = {physical: false};
+        map.field[obj.pos.X + dx][obj.pos.Y - 1].obj = obj;
+      }
+    },
+    function toRight(obj){
+      for (var dy = 0; dy < obj.height; dy++){
+        map.field[obj.pos.X][obj.pos.Y + dy].obj = {physical: false};
+        map.field[obj.pos.X + obj.width][obj.pos.Y + dy].obj = obj;
+      }
+    },
+    function toBottom(obj){
+      for (var dx = 0; dx < obj.width; dx++){
+        map.field[obj.pos.X + dx][obj.pos.Y].obj = {physical: false};
+        map.field[obj.pos.X + dx][obj.pos.Y + obj.height].obj = obj;
+      }
+    },
+    function toLeft(obj){
+      for (var dy = 0; dy < obj.height; dy++){
+        map.field[obj.pos.X + obj.width - 1][obj.pos.Y + dy].obj = {physical: false};
+        map.field[obj.pos.X - 1][obj.pos.Y + dy].obj = obj;
+      }
+    }
+  ]
 
   this.fitToContainer = function(width,height){
     map.xcoeff = width / map.field[map.field.length-1][0].pos.X;

@@ -20,7 +20,7 @@ connector.addEventListener('roomInstanceCreated', function(room){
     console.warn(prefix, 'Initializaed as host')
     if (room.name == 'ChatRoom') return;
 
-    var map = new Map(23,13);
+    var map = new Map(223,123);
     window.getMap = function(){
       console.log(map.generateTextView())
     }

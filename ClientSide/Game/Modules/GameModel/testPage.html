@@ -1,0 +1,35 @@
+<html>
+  <head>
+    <script src='Map.js'></script>
+    <script src='GameModel.js'></script>
+    <script src='GameObjects/GameObject.js'></script>
+    <script src='../../common.js'></script>
+  <body>
+    <script>
+      console.warn('Loaded');
+      var map = new Map(10,10);
+      var model = new GameModel(map);
+
+      var startTime, endTime;
+      model.addEventListener('objectChanged', function(config){
+        //console.log('object(id',config.obj.id+')','change:',config.property,'->',config.value)
+      })
+      model.addEventListener('objectMoveStart', function(){
+        startTime = performance.now();
+        //console.log('start move animation')
+      })
+      model.addEventListener('objectMoveEnd', function(){
+        endTime = performance.now();
+        //console.log('move animation finished:',endTime-startTime+'ms')
+      });
+
+      var simpleObject = new GameObject(new Pos(1,1),3,3,[1,0,0,0],1,{speed: 2})
+      model.addObject(simpleObject)
+      simpleObject.actions.rotate([0,1,0,0]);
+
+      var path = [1,1,1,2,2,3,3,2];
+      simpleObject.actions.setPath(path);
+      simpleObject.actions.followPath(path);
+    </script>
+  </body>
+</html>
