@@ -59,7 +59,8 @@ function GameObject(pos,width,height,rotation,hp,other){
       rotate(directionToRotation(path[0]));
     },
     'followPath': function(){
-      gobj.pathProps.isFollowing = true;
+      gobj.pathProps.isFollowing = gobj.pathProps.path.length > 1;
+      gobj.pathProps.index++;
       move();
     },
     'stop': function(){
@@ -73,6 +74,11 @@ function GameObject(pos,width,height,rotation,hp,other){
 
   this.collisionAction = function(obj){
 
+  }
+
+  this.createSnap = function(){
+    var snap = [gobj.pos,gobj.width,gobj.height,gobj.rotation,gobj.hp,other]
+    return snap;
   }
 
   //there are some native funs
