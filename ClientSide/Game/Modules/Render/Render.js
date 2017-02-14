@@ -11,6 +11,7 @@ function Render(outputDOM,core){
   this.snap = new Snap(outputDOM)
   this.totalGroup = this.snap.group();
   this.totalGroupMatrix = new Snap.Matrix();
+  this.InMoving = {};
 
   this.rebuild = function(){
     render.instances = {};
@@ -53,7 +54,8 @@ function Render(outputDOM,core){
   }
 
   this.redraw = function(){
-
+    for (var m in render.InMoving) 
+      render.InMoving[m].animateMoving();
   }
 
   function ObjectCreated(obj){
@@ -63,16 +65,20 @@ function Render(outputDOM,core){
     render.removeGraphicalInstance(id)
   }
   function ObjectMoveStart(config){
-    render.onObjectMoveStart(config)
+    console.log('move start')
+    render.InMoving[config.id] = render.instances[config.id];
+    //render.onObjectMoveStart(config)
   }
-  function ObjectMoveEnd(obj){
-
+  function ObjectMoveEnd(config){
+    console.log('move end')
+    delete render.InMoving[config.id];
+    if (config.id in render.instances) render.instances[config.id].moveEnd(config);
   }
   function ObjectChanged(obj){
 
   }
 
-  this.onObjectCreated = function(obj){
+  /*this.onObjectCreated = function(obj){
     render.createGraphicalInstance(obj)
   }
   this.onObjectRemoved = function(id){
@@ -86,7 +92,7 @@ function Render(outputDOM,core){
   }
   this.onObjectChanged = function(obj){
 
-  }
+  }*/
 
   core.addEventListener('objectAdded',ObjectCreated)
   core.addEventListener('objectRemoved',ObjectRemoved)
@@ -94,7 +100,7 @@ function Render(outputDOM,core){
   core.addEventListener('objectMoveEnd',ObjectMoveEnd)
   core.addEventListener('objectChanged',ObjectChanged)
 
-  delete core;
+  //delete core;
 
   function update(){
     render.redraw();

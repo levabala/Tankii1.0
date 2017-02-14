@@ -86,7 +86,7 @@ function ActiveGameObject(){
   this.actions['moveViewByDelta'] = function(dx,dy){
     ago.pos.X += dx;
     ago.pos.Y += dy;
-    ago.MoveMatrix.translate(dx,dy);
+    ago.MoveMatrix.translate(dx,dy); 
     ago.MoveGroup.transform(ago.MoveMatrix)
   }
 

@@ -2,7 +2,7 @@ function GameModel(map){
   Reactor.apply(this,[]); //events adding ability
   this.registerEvent('objectAdded'); //obj
   this.registerEvent('objectRemoved'); //obj_id
-  this.registerEvent('objectMoveStart'); //{id: obj_id, direction: obj.rotationIndex}
+  this.registerEvent('objectMoveStart'); //{id: obj_id, direction: obj.rotationIndex, time: time_ms}
   this.registerEvent('objectMoveEnd'); //{id: obj_id, direction: obj.rotationIndex}
   this.registerEvent('objectChanged'); //{id: obj_id, property: property, value: value}
 
@@ -38,7 +38,7 @@ function GameModel(map){
 
   this.addObject = function(obj){
     obj.id = counter;
-    obj.moveOnMap = function(){
+    obj.moveOnMap = function(time){
       var collRes = checkCollisionFuns[obj.rotationIndex](obj.pos,obj.width,obj.height);
       if (collRes){ //bumped to smth
         return collRes;
@@ -48,12 +48,12 @@ function GameModel(map){
         obj.pos.X += obj.rotation[1] - obj.rotation[3];
         obj.pos.Y += obj.rotation[2] - obj.rotation[0];
         //console.log(model.map.generateTextView());
-        model.dispatchEvent('objectMoveStart', {id: obj.id, direction: obj.rotationIndex});
+        model.dispatchEvent('objectMoveStart', {id: obj.id, direction: obj.rotationIndex, time: time});
       }
       return false;
     }
     obj.addEventListener('moved', function(){
-      model.dispatchEvent('objectMoveEnd', {id: obj.id, direction: obj.rotationIndex})
+      model.dispatchEvent('objectMoveEnd', {id: obj.id, direction: obj.rotationIndex, pos: obj.pos})
     });
     obj.addEventListener('change', function(config){
       config.obj = obj;

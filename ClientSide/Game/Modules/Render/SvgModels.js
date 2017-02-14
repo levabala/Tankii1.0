@@ -9,6 +9,8 @@ var SVG_MODELS = {
      return {
       moveGroup: mgroup,
       rotateGroup: rgroup,
+      moveMatrix: new Snap.Matrix(),
+      rotateMatrix: new Snap.Matrix(),
       rect1: rect1 
      };
    },
@@ -32,7 +34,9 @@ function CreateSvgModel(createFun,moveStartFun,moveEndFun,changeFun){
      rgroup.appendTo(mgroup)   
      return {
       rotateGroup: rgroup,    
-      moveGroup: mgroup 
+      moveGroup: mgroup,
+      moveMatrix: new Snap.Matrix(),
+      rotateMatrix: new Snap.Matrix()
      };
    },
    moveStart: moveStartFun || function(){

@@ -93,11 +93,11 @@ function GameObject(pos,width,height,rotation,hp,other){
   }
 
   function move(){
-    var bumpedObject = gobj.moveOnMap();
+    var bumpedObject = gobj.moveOnMap(performance.now());
     if (!bumpedObject) {
       //console.log('native move to',gobj.pos)
       gobj.moveOn = 1;
-      gobj.dispatchEvent('move')
+      //gobj.dispatchEvent('move',performance.now())
       var moveTime = 1 / (gobj.speed / 1000);
       setTimeout(afterMove,moveTime);
     }
