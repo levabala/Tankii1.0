@@ -1,26 +1,27 @@
 <html>
   <head>
+    <script src='../../ExternalLibs/jquery.js'></script>
+    <script src='../../ExternalLibs/snap.svg.js'></script>
     <script src='./Core/Core.js'></script>
-    <script src='./Interface/Interface.js'></script>
-    <script src='./Network/Network.js'></script>
+    <!--<script src='./Interface/Interface.js'></script>
+    <script src='./Network/Network.js'></script>-->
     <script src='./Render/Render.js'></script>
-    <script src='./Render/TextRender.js'></script>
-    <script src='./Render/ViewInstance.js'></script>
+    <script src='./Render/GraphicalInstance.js'></script>
+    <script src='./Render/SvgModels.js'></script>
+    <!--<script src='./Render/TextRender.js'></script>
+    <script src='./Render/ViewInstance.js'></script>-->
     <script src='./GameModel/Map.js'></script>
     <script src='./GameModel/GameModel.js'></script>
     <script src='./GameModel/GameObjects/GameObject.js'></script>
     <script src='../common.js'></script>
   <body>
-    <textarea id='outputDOM' rows=40 cols=100></textarea>
+    <svg id='outputDOM' width=500 height=500 style='border: solid black 1px'></svg>
     <script>
       var outputDOM = document.getElementById('outputDOM');
 
-      var core = new Core();
-      var interface = core.createInterfaceModule();
-      var gameModel = core.initGameModel();
-      var netModule = core.initNetworkModule();
-      var render = core.createRender(outputDOM, TextRender);
-      console.log(core,'\n',interface,'\n',gameModel,'\n',netModule,'\n',render)
+      var core = new Core();      
+      var gameModel = core.initGameModel();      
+      var render = core.createRender(outputDOM, Render);      
 
       var simpleObject = new GameObject(new Pos(1,1),3,3,[1,0,0,0],1,{speed: 1})
       gameModel.addObject(simpleObject)

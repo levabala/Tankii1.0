@@ -7,6 +7,10 @@ function Render(outputDOM,core){
   this.instances = {}; //object_id:instance
   this.map = [];
   this.outputDOM = outputDOM;
+  this.jqDOM = $(outputDOM)
+  this.snap = new Snap(outputDOM)
+  this.totalGroup = this.snap.group();
+  this.totalGroupMatrix = new Snap.Matrix();
 
   this.rebuild = function(){
     render.instances = {};
@@ -14,12 +18,12 @@ function Render(outputDOM,core){
     render.dispatchEvent('rebuild');
   }
 
-  this.createViewInstance = function(obj){
-    var instance = new ViewInstance(obj);
+  this.createGraphicalInstance = function(obj){
+    var instance = new GraphicalInstance(obj,render.snap,render.totalGroup);
     render.addToDOM(instance)
     render.instances[obj.id] = instance;
   }
-  this.removeViewInstance = function(id){
+  this.removeGraphicalInstance = function(id){
     render.removeFromDOM(render.instances[id])
     render.instances[id].remove();
     delete render.instances[id];
@@ -33,7 +37,11 @@ function Render(outputDOM,core){
   }
 
   this.setMap = function(map){
-    render.map = map;
+    map.fitToContainer(render.jqDOM.width(),render.jqDOM.height() )
+    render.map = map;    
+    console.log('map scale:',map.xcoeff, map.ycoeff)
+    render.totalGroupMatrix.scale(map.xcoeff, map.ycoeff);
+    render.totalGroup.transform(render.totalGroupMatrix);
     render.onMapSet(map);
   }
   this.onMapSet = function(){
@@ -41,7 +49,7 @@ function Render(outputDOM,core){
   }
   this.setObjects = function(arr){
     for (var o in arr)
-      render.createViewInstance(arr[o]);
+      render.createGraphicalInstance(arr[o]);
   }
 
   this.redraw = function(){
@@ -49,10 +57,10 @@ function Render(outputDOM,core){
   }
 
   function ObjectCreated(obj){
-    render.createViewInstance(obj)
+    render.createGraphicalInstance(obj)
   }
   function ObjectRemoved(id){
-    render.removeViewInstance(id)
+    render.removeGraphicalInstance(id)
   }
   function ObjectMoveStart(config){
     render.onObjectMoveStart(config)
@@ -65,10 +73,10 @@ function Render(outputDOM,core){
   }
 
   this.onObjectCreated = function(obj){
-    render.createViewInstance(obj)
+    render.createGraphicalInstance(obj)
   }
   this.onObjectRemoved = function(id){
-    render.removeViewInstance(id)
+    render.removeGraphicalInstance(id)
   }
   this.onObjectMoveStart = function(obj){
     console.log()

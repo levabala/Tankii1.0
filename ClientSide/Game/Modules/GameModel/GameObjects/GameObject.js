@@ -7,6 +7,8 @@ function GameObject(pos,width,height,rotation,hp,other){
 
   var gobj = this;
 
+  this.skin = 'GameObject'
+
   this.pos = pos.clone();
   this.width = width;
   this.height = height;
