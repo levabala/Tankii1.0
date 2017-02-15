@@ -36,7 +36,7 @@ function Reactor(){
   };
 
   this.dispatchEvent = function(eventName, eventArgs){
-    console.log('event:',eventName);
+    //console.log('event:',eventName);
     for (var c in this.events[eventName].callbacks)
       this.events[eventName].callbacks[c](eventArgs);
   };

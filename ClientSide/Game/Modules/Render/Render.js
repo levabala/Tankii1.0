@@ -11,7 +11,7 @@ function Render(outputDOM,core){
   this.snap = new Snap(outputDOM)
   this.totalGroup = this.snap.group();
   this.totalGroupMatrix = new Snap.Matrix();
-  this.InMoving = {};
+  this.animating = {};
 
   this.rebuild = function(){
     render.instances = {};
@@ -38,11 +38,14 @@ function Render(outputDOM,core){
   }
 
   this.setMap = function(map){
-    map.fitToContainer(render.jqDOM.width(),render.jqDOM.height() )
+    map.fitToContainer(render.jqDOM.width(),render.jqDOM.height());    
     render.map = map;    
     console.log('map scale:',map.xcoeff, map.ycoeff)
     render.totalGroupMatrix.scale(map.xcoeff, map.ycoeff);
     render.totalGroup.transform(render.totalGroupMatrix);
+    console.log(map)
+    render.snap.rect(0,0,map.width,map.height).attr({'fill-opacity': 0.3, fill: 'darkgreen'}).appendTo(render.totalGroup)    
+    map.generateMesh(render.snap,render.totalGroup);
     render.onMapSet(map);
   }
   this.onMapSet = function(){
@@ -54,8 +57,9 @@ function Render(outputDOM,core){
   }
 
   this.redraw = function(){
-    for (var m in render.InMoving) 
-      render.InMoving[m].animateMoving();
+    var nowTime = performance.now();
+    for (var m in render.animating) 
+      render.animating[m].animate(nowTime);
   }
 
   function ObjectCreated(obj){
@@ -65,13 +69,14 @@ function Render(outputDOM,core){
     render.removeGraphicalInstance(id)
   }
   function ObjectMoveStart(config){
-    console.log('move start')
-    render.InMoving[config.id] = render.instances[config.id];
+    //console.log('move start')
+    render.animating[config.id] = render.instances[config.id];
+    render.instances[config.id].moveStart(config);
     //render.onObjectMoveStart(config)
   }
   function ObjectMoveEnd(config){
-    console.log('move end')
-    delete render.InMoving[config.id];
+    //console.log('move end')
+    delete render.animating[config.id];
     if (config.id in render.instances) render.instances[config.id].moveEnd(config);
   }
   function ObjectChanged(obj){
@@ -101,10 +106,23 @@ function Render(outputDOM,core){
   core.addEventListener('objectChanged',ObjectChanged)
 
   //delete core;
-
+  
+  var lastTime = performance.now();
+  var times = [];
   function update(){
-    render.redraw();
-    requestAnimationFrame(update)
-  }
+    var time = performance.now();
+    times.push(time - lastTime);
+    lastTime = time;      
+    render.redraw();    
+    requestAnimationFrame(update);
+  }  
+  setInterval(function(){
+    var fps = 0;
+    for (var t in times)
+      fps += times[t];
+    fps /= times.length;
+    times = []
+    console.log('ms:',fps)
+  },1000)
   update();
 }

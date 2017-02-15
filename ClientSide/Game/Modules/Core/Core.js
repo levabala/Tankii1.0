@@ -16,7 +16,7 @@ function Core(){
   this.history = [];
 
   this.initGameModel = function(config){
-    core.modules.GameModel = new GameModel(new Map(10,10));
+    core.modules.GameModel = new GameModel(new Map(12,12));
     if (config) core.modules.GameModel.setConfig(config);
 
     core.modules.GameModel.addEventListener('objectAdded',core.onObjectCreated)

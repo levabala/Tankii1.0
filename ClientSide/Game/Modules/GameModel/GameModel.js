@@ -45,10 +45,20 @@ function GameModel(map){
       }
       else {
         model.map.moveObjectByOneCell[obj.rotationIndex](obj);
+        var lastPos = obj.pos.clone();
         obj.pos.X += obj.rotation[1] - obj.rotation[3];
         obj.pos.Y += obj.rotation[2] - obj.rotation[0];
         //console.log(model.map.generateTextView());
-        model.dispatchEvent('objectMoveStart', {id: obj.id, direction: obj.rotationIndex, time: time});
+        model.dispatchEvent('objectMoveStart', {
+          id: obj.id, 
+          direction: obj.rotationIndex, 
+          time: time, 
+          axis: (obj.rotation[1] || obj.rotation[3]) ? 'X' : 'Y',
+          startPosition: lastPos,
+          targetPosition: obj.pos,
+          sign: (obj.rotation[1] || obj.rotation[2]) ? 1 : -1,
+          speed: obj.speed
+        });
       }
       return false;
     }
