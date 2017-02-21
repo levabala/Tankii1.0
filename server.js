@@ -16,6 +16,10 @@ app.get('/', function(req, res) {
 
 app.use('/', express.static(__dirname + '/ClientSide'))
 
+var directory = require('serve-index');
+app.use('/Game/Modules/Render/Models',directory(__dirname + '/ClientSide/Game/Modules/Render/Models'));
+
+
 http.listen(PORT, function() {
   console.log('listening on *:' + PORT);
 });
