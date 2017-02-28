@@ -8,10 +8,31 @@ function Render(outputDOM,core){
   this.map = [];
   this.outputDOM = outputDOM;
   this.jqDOM = $(outputDOM)
-  this.snap = new Snap(outputDOM)
-  this.totalGroup = this.snap.group();
-  this.totalGroupMatrix = new Snap.Matrix();
-  this.InMoving = {};
+  this.InAnimating = {};
+  this.two = new Two({type: Two.Types.svg,width: $(outputDOM).width(), height: $(outputDOM).height()}).appendTo(outputDOM).play();    
+  this.totalGroup = this.two.makeGroup();  
+  this.totalMatrix = this.totalGroup._matrix;
+  this.availableModels = {};
+
+  for (var type in SVG_MODELS){
+    this.availableModels[type] = []
+    for (var i in SVG_MODELS[type]){
+      var model = this.two.interpret(SVG_MODELS[type][i], false, false);
+      model.noStroke();
+      for (var c in model._collection)      
+        model._collection[c].linewidth = 0;
+      model._matrix = new Two.Matrix();       
+      //var container = SVG_MODELS[type][i].querySelector('[data-name=Container]') || SVG_MODELS[type][i].querySelector('[id=Container]');                  
+      //model.mask = container;
+      /*model.width = parseFloat(container.getAttribute('width'));
+      model.height = parseFloat(container.getAttribute('height'));
+      model.baseOffsetX = parseFloat(container.getAttribute('x')) || 0;
+      model.baseOffsetY = parseFloat(container.getAttribute('y')) || 0;*/
+      this.availableModels[type].push(model);
+    }
+  }
+  console.log(this.availableModels)
+  //this.totalGroup.add(this.availableModels.GameObject[0])
 
   this.rebuild = function(){
     render.instances = {};
@@ -20,7 +41,7 @@ function Render(outputDOM,core){
   }
 
   this.createGraphicalInstance = function(obj){
-    var instance = new GraphicalInstance(obj,render.snap,render.totalGroup);
+    var instance = new GraphicalInstance(obj,render.availableModels,render.totalGroup);
     render.addToDOM(instance)
     render.instances[obj.id] = instance;
   }
@@ -38,11 +59,19 @@ function Render(outputDOM,core){
   }
 
   this.setMap = function(map){
-    map.fitToContainer(render.jqDOM.width(),render.jqDOM.height() )
+    map.fitToContainer(render.jqDOM.width(),render.jqDOM.height());
     render.map = map;    
-    console.log('map scale:',map.xcoeff, map.ycoeff)
-    render.totalGroupMatrix.scale(map.xcoeff, map.ycoeff);
-    render.totalGroup.transform(render.totalGroupMatrix);
+    console.log('map scale:',map.xcoeff, map.ycoeff)    
+    render.totalGroup.scale = map.xcoeff;
+    /*var littleCirclesGroup = render.two.makeGroup();
+    for (var x = 0; x < map.width+1; x++)
+      for (var y = 0; y < map.height+1; y++){
+        var circle = render.two.makeCircle(x,y,0.05);
+        circle.noStroke();
+        circle.fill = 'red';
+        littleCirclesGroup.add(circle);
+      }    
+    render.totalGroup.add(littleCirclesGroup)*/
     render.onMapSet(map);
   }
   this.onMapSet = function(){
@@ -54,9 +83,10 @@ function Render(outputDOM,core){
   }
 
   this.redraw = function(){
-    for (var m in render.InMoving) 
-      render.InMoving[m].animateMoving();
+    for (var m in render.InAnimating) 
+      render.InAnimating[m].animate();
   }
+  this.two.bind('update',render.redraw);
 
   function ObjectCreated(obj){
     render.createGraphicalInstance(obj)
@@ -65,17 +95,19 @@ function Render(outputDOM,core){
     render.removeGraphicalInstance(id) 
   }
   function ObjectMoveStart(config){
-    console.log('move start')
-    render.InMoving[config.id] = render.instances[config.id];
+    //console.log('move start')
+    render.InAnimating[config.id] = render.instances[config.id];
+    render.instances[config.id].moveStart(config);
     //render.onObjectMoveStart(config)
   }
   function ObjectMoveEnd(config){
-    console.log('move end')
-    delete render.InMoving[config.id];
-    if (config.id in render.instances) render.instances[config.id].moveEnd(config);
+    //console.log('move end')
+    delete render.InAnimating[config.id];
+    //if (config.id in render.instances) 
+    render.instances[config.id].moveEnd(config);
   }
-  function ObjectChanged(obj){
-
+  function ObjectChanged(config){
+    render.instances[config.id].change(config.property,config.value)
   }
 
   /*this.onObjectCreated = function(obj){
@@ -101,10 +133,4 @@ function Render(outputDOM,core){
   core.addEventListener('objectChanged',ObjectChanged)
 
   //delete core;
-
-  function update(){
-    render.redraw();
-    requestAnimationFrame(update)
-  }
-  update();
 }

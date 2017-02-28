@@ -61,9 +61,11 @@ function GameObject(pos,width,height,rotation,hp,other){
       rotate(directionToRotation(path[0]));
     },
     'followPath': function(){
-      gobj.pathProps.isFollowing = gobj.pathProps.path.length > 1;
-      gobj.pathProps.index++;
-      move();
+      //setTimeout(function(){
+        gobj.pathProps.isFollowing = gobj.pathProps.path.length > 1;
+        gobj.pathProps.index++;
+        move();
+      //},Math.random() * 1000);
     },
     'stop': function(){
       gobj.moveOn = 0;

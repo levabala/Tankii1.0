@@ -13,11 +13,12 @@ function Core(){
     Render: null,
     Interface: null
   }
+  this.players = {};
   this.history = [];
 
   this.initGameModel = function(config){
-    core.modules.GameModel = new GameModel(new Map(12,12));
-    if (config) core.modules.GameModel.setConfig(config);
+    core.modules.GameModel = new GameModel(config.map || new Map(12,12));
+    //if (config) core.modules.GameModel.setConfig(config);
 
     core.modules.GameModel.addEventListener('objectAdded',core.onObjectCreated)
     core.modules.GameModel.addEventListener('objectRemoved',core.onObjectRemoved)

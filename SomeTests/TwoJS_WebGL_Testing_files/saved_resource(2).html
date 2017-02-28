@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<!-- saved from url=(0035)https://fiddle.jshell.net/_display/ -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="googlebot" content="noindex, nofollow">
+
+  
+  
+
+  
+  
+  
+
+  
+
+  <script type="text/javascript" src="./dummy.js.download"></script>
+
+  
+
+  
+
+  
+
+  
+    <link rel="stylesheet" type="text/css" href="./result-light.css">
+  
+
+  
+    
+      <script type="text/javascript" src="./two.min.js.download"></script>
+    
+  
+    
+      <script type="text/javascript" src="./jquery.min.js.download"></script>
+    
+  
+
+  <style type="text/css">
+    
+  </style>
+
+  <title></title>
+
+  
+    
+
+
+
+
+<script type="text/javascript">//<![CDATA[
+window.onload=function(){
+console.clear();
+
+var drawDiv = $('#drawArea')
+var two = new Two({width: drawDiv.width(), height: drawDiv.height(), type: Two.Types.webgl}).appendTo(drawDiv[0])
+
+var circles = [];
+for (var i = 0; i < 2050; i++)
+	addCircle();
+  
+function addCircle(){
+	var basePos = [Math.random() * 150 - 75, Math.random() * 150 - 75]
+  var circle = two.makeCircle(basePos[0], basePos[1], 50)  
+  circle.fill = '#FF8000';
+  circle.stroke = 'orangered'; // Accepts all valid css color
+  circle.linewidth = 5;
+  circles.push({circle: circle, basePos: basePos})
+}
+
+function removeCircle(){
+	var index = Math.floor(Math.random() * (circles.length-1));
+	two.remove(circles[index].circle);
+  circles.splice(index,1);
+}
+
+var mousepos = {x: 0, y: 0}
+drawDiv[0].addEventListener('mousemove', function(e){	
+	var offset = drawDiv.offset();
+	mousepos = {x: e.clientX - offset.left, y: e.clientY - offset.top};  
+})
+
+setInterval(function(){
+	for (var c = 0; c < circles.length; c++){
+		circles[c].basePos[0] += Math.random() * 10 - 5;
+    circles[c].basePos[1] += Math.random() * 10 - 5;
+   }
+},16)
+
+setInterval(function(){
+	console.log('Count:',circles.length,'Response time:', responseTime.toFixed(1) + 'ms')
+},500)
+
+setInterval(function(){
+	removeCircle();
+	addCircle();  
+},123);
+
+var lastTime = performance.now();
+var responseTime = 0;
+var lagggs = [];
+var lagggLimit = 16
+var responseTimeLimit = 23;
+two.bind('update', function(){
+	var nowTime = performance.now();
+  responseTime = nowTime - lastTime;
+  if (responseTime > responseTimeLimit) { 
+  	lagggs.push(responseTime)
+    if (lagggs.length > lagggLimit){
+      var count = Math.floor(circles.length / 50);
+      if (count == 0 && circles.length > 0) count = 1;
+      for (var i = 0; i < count; i++)
+        removeCircle();      
+      var averageRT = 0;
+      for (var l in lagggs)
+      	averageRT += lagggs[l];
+      averageRT /= lagggs.length;      
+      //lagggs = [];
+      console.log('Count:',circles.length,'Response time:',averageRT.toFixed(1) + 'ms (Average) KICK')
+      lastTime = performance.now();
+    }    
+  }
+  else lagggs = [];
+  lastTime = nowTime;
+	for (var c = 0; c < circles.length; c++)
+		circles[c].circle.translation.set(circles[c].basePos[0] + mousepos.x, circles[c].basePos[1] + mousepos.y)
+}).play();
+}//]]> 
+
+</script>
+
+  
+</head>
+
+<body>
+  <div id="drawArea" style="width: 500px; height: 500px; border: solid gray 1px">
+<canvas width="625" height="625" style="width: 500px; height: 500px;"></canvas></div>
+  
+  <script>
+  // tell the embed parent frame the height of the content
+  if (window.parent && window.parent.parent){
+    window.parent.parent.postMessage(["resultsFrame", {
+      height: document.body.getBoundingClientRect().height,
+      slug: "None"
+    }], "*")
+  }
+</script>
+
+
+
+
+
+</body></html>

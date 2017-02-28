@@ -2354,14 +2354,16 @@
 
         },
 
-        polygon: function(node, open) {
-
+        polygon: function(node, open) {          
           var points = node.getAttribute('points');
-
+          
           var verts = [];
-          points.replace(/(-?[\d\.?]+),(-?[\d\.?]+)/g, function(match, p1, p2) {
+          var buffer = points.split(' ');
+          for (var i = 0; i < buffer.length; i+=2)
+            verts.push(new Two.Anchor(parseFloat(buffer[i]), parseFloat(buffer[i+1])));
+          /*points.replace(/(-?[\d\.?]+),(-?[\d\.?]+)/g, function(match, p1, p2) {
             verts.push(new Two.Anchor(parseFloat(p1), parseFloat(p2)));
-          });
+          });*/
 
           var poly = new Two.Path(verts, !open).noStroke();
           poly.fill = 'black';
@@ -3671,7 +3673,7 @@
      * @param {Boolean} shallow - Don't create a top-most group but
      *                                    append all contents directly
      */
-    interpret: function(svgNode, shallow) {
+    interpret: function(svgNode, shallow, autoAdding) {
 
       var tag = svgNode.tagName.toLowerCase();
 
@@ -3680,6 +3682,8 @@
       }
 
       var node = Two.Utils.read[tag].call(this, svgNode);
+
+      if (!autoAdding) return node;
 
       if (shallow && node instanceof Two.Group) {
         this.add(node.children);
@@ -5032,6 +5036,7 @@
         }
 
         if (this._flagLinewidth) {
+          //console.log('lw:',this._linewidth)
           changed['stroke-width'] = this._linewidth;
         }
 
@@ -5154,6 +5159,7 @@
             ? 'url(#' + this._stroke.id + ')' : this._stroke;
         }
         if (this._flagLinewidth) {
+          console.log('flag lw:',this._linewidth)
           changed['stroke-width'] = this._linewidth;
         }
         if (this._flagOpacity) {
@@ -7427,6 +7433,7 @@
 
     noStroke: function() {
       this.stroke = 'transparent';
+      this.lineWidth = 0;
       return this;
     },
 
@@ -9209,15 +9216,23 @@
       parent = parent || this.parent;
 
       var group = new Group();
-      parent.add(group);
-
       var children = _.map(this.children, function(child) {
         return child.clone(group);
       });
 
+      group.add(children);
+
+      group.opacity = this.opacity;
+
+      if (this.mask) {
+        group.mask = this.mask;
+      }
+
       group.translation.copy(this.translation);
       group.rotation = this.rotation;
       group.scale = this.scale;
+
+      parent.add(group);
 
       return group;
 

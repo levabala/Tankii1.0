@@ -1,0 +1,1615 @@
+<!DOCTYPE html>
+<!-- saved from url=(0042)https://jsfiddle.net/levabala/zwd3vp1a/24/ -->
+<html slick-uniqueid="3"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="description" content="Test your JavaScript, CSS, HTML or CoffeeScript online with JSFiddle code editor.">
+    <meta name="keywords" content="online javascript editor, testing javascript online, online ide, online code editor, html, css, coffeescript, scss online editor">
+    <meta name="author" content="JSFiddle">
+    <meta name="copyright" content="share alike">
+    <!-- <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests"> -->
+
+    
+      <meta name="robots" content="index, follow">
+      <meta name="googlebot" content="index, follow">
+    
+
+    
+
+    
+      <meta name="google-site-verification" content="9m4aWTtDLfQ1kJNm3NtNsCrtpsOx_QoOPQRJ7jAwup8">
+    
+
+    <!--meta name="viewport" content="width=device-width, maximum-scale=0.5" /-->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-touch-fullscreen" content="yes">
+
+    
+      <script async="" src="./TwoJS_WebGL_Testing_files/analytics.js.download"></script><script type="text/javascript" src="./TwoJS_WebGL_Testing_files/_dist-editor.js.download"></script>
+
+    
+    
+    <link rel="stylesheet" type="text/css" href="./TwoJS_WebGL_Testing_files/_dist-editor.css">
+
+
+    
+      <link rel="stylesheet" type="text/css" href="./TwoJS_WebGL_Testing_files/light.css">
+
+    
+
+    
+      <script type="text/javascript">
+        var fiddleOptions = {
+          example_id: "293419266",
+          exampleURL: "//jsfiddle.net/levabala/zwd3vp1a/21/",
+          slug: "zwd3vp1a",
+          userId: "292664"
+        };
+        var csspath = "/css/",
+          jspath = "/js/",
+          imgpath = "/img/",
+          mediapath = "/mooshellmedia/",
+          codemirrorpath = "/codemirror/",
+          panel_html = 'html',
+          panel_css = 'css',
+          panel_js = 'javascript',
+          makefavouritepath = "/_make_favourite/",
+          example_server = "//jsfiddle.net",
+          username = "levabala",
+          static_hash = "update_15_02_2017_1",
+          csrfToken = Cookie.read('csrftoken'),
+          editor_save = "",
+          mooshell,
+          preload_resources;
+
+        
+
+        Layout.skin = "light";// "light"
+        window.addEvent('domready', function() {
+          if (panel_js != 'javascript' && $('jslint')) {
+            $('jslint').getParent('li').hide();
+          }
+
+          $extend(Layout, new Events());
+          mooshell = new MooShellActions({
+            example_id: fiddleOptions.example_id,
+            exampleURL: fiddleOptions.exampleURL,
+            exampleSaveUrl: '/_save/',
+            // sendCallbackURL: '',
+            loadDependenciesURL: '/_get_dependencies/{lib_id}/',
+            loadLibraryVersionsURL: '/_get_library_versions/{group_id}/'
+          });
+          new MooShellEditor.JS(document.id('id_code_js'), {
+            language: panel_js
+          }); // add user defined parameters
+          new MooShellEditor.HTML(document.id('id_code_html'), {
+            language: panel_html
+          }); // add user defined parameters
+          new MooShellEditor.CSS(document.id('id_code_css'), {
+            language: panel_css
+          }); // add user defined parameters
+          Layout.render();
+
+          
+
+          // show editors and content when the last editor loads
+          // this will prevent flickering, plus looks nice
+          document.id('content').setStyle('opacity', 1);
+
+          // always keep this at the bottom
+          $$('select.panelChoice').each(function(sel) {
+            this.switchLanguage(sel);
+          }, mooshell);
+        });
+      </script>
+
+      
+    
+
+    
+      <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  var GA_LOCAL_STORAGE_KEY = 'ga:clientId';
+  if (window.localStorage) {
+    ga('create', 'UA-366077-13', {
+      'storage': 'none',
+      'clientId': localStorage.getItem(GA_LOCAL_STORAGE_KEY)
+    });
+    ga(function(tracker) {
+      localStorage.setItem(GA_LOCAL_STORAGE_KEY, tracker.get('clientId'));
+    });
+    ga('send', 'pageview', '/[user]/[fiddle]/[revision]/'); // where `url_structure` is for example `/[user]/[fiddle]/[revision]/embedded/js,css/`
+  }
+</script>
+
+      
+
+      <!-- Hotjar Tracking Code for jsfiddle.net -->
+      <!-- <script>
+        (function(h,o,t,j,a,r){
+          h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
+          h._hjSettings={hjid:13981,hjsv:5};
+          a=o.getElementsByTagName('head')[0];
+          r=o.createElement('script');r.async=1;
+          r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
+          a.appendChild(r);
+        })(window,document,'//static.hotjar.com/c/hotjar-','.js?sv=');
+      </script> -->
+    
+
+    <script>
+      var HW_config = {
+        selector: ".changelog-badge",
+        account: "1xGMJQ"
+      };
+    </script>
+    <script async="" src="./TwoJS_WebGL_Testing_files/widget.js.download"></script>
+
+    <link rel="icon" href="https://jsfiddle.net/favicon.png">
+    <link href="./TwoJS_WebGL_Testing_files/css" rel="stylesheet" type="text/css">
+    <!-- <link href="//fonts.googleapis.com/css?family=Lato:400|Inconsolata" rel="stylesheet" type="text/css"> -->
+
+    <title>Edit fiddle - JSFiddle</title>
+  <script id="_carbonads_projs" type="text/javascript" src="./TwoJS_WebGL_Testing_files/C6AILKT.json"></script></head>
+  <body>
+    <h1>Test your JavaScript, CSS, HTML or CoffeeScript online with JSFiddle code editor.</h1>
+    <h2>online javascript editor, testing javascript online, online ide, online code editor, html, css, coffeescript, scss online editor</h2>
+    <form method="post" id="show-result" target="result" action="https://fiddle.jshell.net/_display/">
+      
+      <input type="hidden" name="username" value="levabala">
+      <div style="display:none"><input type="hidden" name="csrfmiddlewaretoken" value="YiotFtKzfpDLUHr1b8j15t04I8U3Q5YA"></div>
+      <div id="header">
+        <div id="branding">
+          <p id="name" class="changelog-badge"><a title="JSFiddle " href="https://jsfiddle.net/" id="home" class="drop-target">JSFiddle</a><span id="HW_badge_cont" class="HW_visible"><span id="HW_badge" class="HW_visible" data-count-unseen="4">4</span></span></p>
+        </div>
+        
+          <div id="actions">
+  <nav class="actionCont collapsed">
+    <div class="actionItem">
+      <a class="aiButton" id="run" title="Run (CTRL + Return)" href="https://jsfiddle.net/levabala/zwd3vp1a/24/#run"><i class="bts bt-play"></i>Run</a>
+    </div>
+
+    
+    
+
+    
+    
+      <div class="actionItem hidden">
+        <a class="aiButton" id="savenew" title="Save new Fiddle (CTRL + S)" href="https://jsfiddle.net/levabala/zwd3vp1a/24/#save"><i class="bts bt-pencil"></i>Save</a>
+      </div>
+      <div class="actionItem visible">
+        <a class="aiButton" id="update" title="Update (CTRL + S)" href="https://jsfiddle.net/levabala/zwd3vp1a/24/#update"><i class="bts bt-pencil"></i>Update</a>
+      </div>
+      <div class="actionItem visible">
+        <a class="aiButton" id="fork" title="Fork into a new Fiddle" href="https://jsfiddle.net/levabala/zwd3vp1a/24/#fork"><i class="bts bt-fork"></i>Fork</a>
+      </div>
+    
+
+    
+      <div class="actionItem visible">
+        <a class="aiButton" id="mark_favourite" title="Set as base version" href="https://jsfiddle.net/levabala/zwd3vp1a/24/#set-as-base"><i class="bts bt-label"></i>Set as base</a>
+        <!--
+        
+          <a class="aiButton" id="mark_favourite" title="Set as base version" href="#set-as-base"><i class="bts bt-label"></i>Set as base</a>
+        
+        -->
+      </div>
+    
+
+    <div class="actionItem">
+      <a class="aiButton" id="tidy" title="Tidy messy code" href="https://jsfiddle.net/levabala/zwd3vp1a/24/#tidy"><i class="bts bt-align-left"></i>Tidy</a>
+    </div>
+    <!-- <div class="actionItem">
+      <a class="aiButton" id="showjscode" title="Show JavaScript code" href="#showjs"><i class="bts bt-code"></i>Show JS</a>
+    </div -->
+    <div class="actionItem">
+      <a class="aiButton" id="collaborate" title="Collaborate on code" href="https://jsfiddle.net/levabala/zwd3vp1a/24/#collaborate"><i class="bts bt-commenting"></i>Collaborate</a>
+    </div>
+  </nav>
+
+  
+  
+
+  <ul class="actionCont dropdown">
+    <li class="actionItem visible">
+      <a class="aiButton dropdownTrigger" id="share" title="Embed this Fiddle" href="https://jsfiddle.net/levabala/zwd3vp1a/24/#embed">Embed<i class="bts bt-angle-down rightIcon"></i></a>
+      <div class="dropdownCont center">
+        <div class="dcWrapper embed">
+
+          <div id="creator">
+            <section>
+              <h3>Tabs:</h3>
+              <div class="inlineFields">
+                <label class="inputCont_checkbox checkboxCont">
+                  <input type="checkbox" name="tabs" value="js" checked="">
+                  <span class="checkbox"><i class="bts bt-check"></i></span> JavaScript
+                </label>
+                <label class="inputCont_checkbox checkboxCont">
+                  <input type="checkbox" name="tabs" value="html" checked="">
+                  <span class="checkbox"><i class="bts bt-check"></i></span> HTML
+                </label>
+                <label class="inputCont_checkbox checkboxCont">
+                  <input type="checkbox" name="tabs" value="css" checked="">
+                  <span class="checkbox"><i class="bts bt-check"></i></span> CSS
+                </label>
+                <label class="inputCont_checkbox checkboxCont">
+                  <input type="checkbox" name="tabs" value="result" checked="">
+                  <span class="checkbox"><i class="bts bt-check"></i></span> Result
+                </label>
+              </div> <!-- /inlineFields -->
+            </section>
+
+            <section class="noborder">
+              <h3>Visual:</h3>
+              <div class="inlineFields">
+                <label class="inputCont_checkbox checkboxCont">
+                  <input type="radio" name="skin" value="light" checked="">
+                  <span class="radio"></span> Light
+                </label>
+                <label class="inputCont_checkbox checkboxCont">
+                  <input type="radio" name="skin" value="dark">
+                  <span class="radio"></span> Dark
+                </label>
+              </div> <!-- /inlineFields -->
+              <label class="inputCont_text">
+                <input type="text" name="accentColor" maxlength="7" placeholder="Accent color">
+              </label>
+              <label class="inputCont_text">
+                <input type="text" name="fontColor" maxlength="7" placeholder="Font color">
+              </label>
+              <label class="inputCont_text">
+                <input type="text" name="menuColor" maxlength="7" placeholder="Menu background">
+              </label>
+              <label class="inputCont_text">
+                <input type="text" name="bodyColor" maxlength="7" placeholder="Code background">
+              </label>
+            </section>
+
+            <section class="noborder">
+              <h3>Embed code <a href="https://jsfiddle.net/levabala/zwd3vp1a/24/#" class="codeTypeToggle">Prefer iframe?</a>:</h3>
+              <div class="embedCodeWrap">
+<textarea class="embedCode" id="share_embedded_dropdown" data-view="embed" data-pattern-value="&lt;script async src=&quot;{embedSrc}&quot;&gt;&lt;/script&gt;">&lt;script async src="{embedSrc}"&gt;&lt;/script&gt;
+</textarea>
+              </div> <!-- /embedCodeWrap -->
+
+              <div class="embedCodeWrap hidden">
+<textarea class="embedCode" data-view="embedded" data-pattern-value="&lt;iframe width=&quot;100%&quot; height=&quot;300&quot; src=&quot;{embedSrc}&quot; allowfullscreen=&quot;allowfullscreen&quot; frameborder=&quot;0&quot;&gt;&lt;/iframe&gt;">&lt;iframe width="100%" height="300" src="{embedSrc}" allowfullscreen frameborder="0"&gt;&lt;/iframe&gt;
+</textarea>
+                <p><strong>No autoresizing</strong> to fit the code</p>
+                <p><strong>Render blocking</strong> of the parent page</p>
+              </div> <!-- /embedCodeWrap -->
+            </section>
+          </div> <!-- /creator -->
+
+          <div id="preview"><iframe width="100%" height="300" frameborder="0" sandbox="allow-modals allow-forms allow-scripts allow-same-origin allow-popups" src="./TwoJS_WebGL_Testing_files/saved_resource.html"></iframe></div> <!-- /preview -->
+
+        </div> <!-- /dcWrapper -->
+      </div> <!-- /dropdownCont -->
+    </li> <!-- /actionItem -->
+  </ul> <!-- /actionCont -->
+
+
+  
+<ul class="actionCont dropdown right">
+  <li class="actionItem hidden draftTriggerCont" style="display: none;">
+    <a class="aiButton dropdownTrigger applyDraft" href="https://jsfiddle.net/levabala/zwd3vp1a/24/#">
+      <i class="bts bt-flag"></i>Your fiddle has an unsaved draft
+    </a>
+    <div class="dropdownCont">
+      <div class="dcWrapper diffCont">
+        <h4>Diff between the <strong>saved</strong> and <strong>locally drafted</strong> fiddle:</h4>
+        <div class="diffPanels">
+          <div class="diffWrap" id="diff-html"><table class="diff inlinediff"><thead><tr><th></th><th></th><th class="texttitle">Base Text vs. New Text</th></tr></thead><tbody><tr><th>1</th><th>1</th><td class="equal">&lt;div id='drawArea' style='width: 500px; height: 500px; border: solid gray 1px'&gt;</td></tr><tr><th>2</th><th>2</th><td class="equal">&lt;/div&gt;</td></tr><th class="author" colspan="3">diff view generated by <a href="http://github.com/cemerick/jsdifflib">jsdifflib</a></th></tbody></table></div>
+          <div class="diffWrap" id="diff-js"><table class="diff inlinediff"><thead><tr><th></th><th></th><th class="texttitle">Base Text vs. New Text</th></tr></thead><tbody><tr><th>1</th><th>1</th><td class="equal">console.clear();</td></tr><tr><th>2</th><th>2</th><td class="equal"></td></tr><tr><th>3</th><th>3</th><td class="equal">var drawDiv = $('#drawArea')</td></tr><tr><th>4</th><th>4</th><td class="equal">var two = new Two({width: drawDiv.width(), height: drawDiv.height(), type: Two.Types.webgl}).appendTo(drawDiv[0])</td></tr><tr><th>5</th><th>5</th><td class="equal"></td></tr><tr><th>6</th><th>6</th><td class="equal">var circles = [];</td></tr><tr><th>7</th><th>7</th><td class="equal">for (var i = 0; i &lt; 2050; i++)</td></tr><tr><th>8</th><th>8</th><td class="equal">&nbsp;&nbsp;&nbsp;&nbsp;addCircle();</td></tr><tr><th>9</th><th>9</th><td class="equal">  </td></tr><tr><th>10</th><th>10</th><td class="equal">function addCircle(){</td></tr><tr><th>11</th><th>11</th><td class="equal">&nbsp;&nbsp;&nbsp;&nbsp;var basePos = [Math.random() * 150 - 75, Math.random() * 150 - 75]</td></tr><tr><th>12</th><th>12</th><td class="equal">  var circle = two.makeCircle(basePos[0], basePos[1], 50)  </td></tr><tr><th>13</th><th>13</th><td class="equal">  circle.fill = '#FF8000';</td></tr><tr><th>14</th><th>14</th><td class="equal">  circle.stroke = 'orangered'; // Accepts all valid css color</td></tr><tr><th>15</th><th>15</th><td class="equal">  circle.linewidth = 5;</td></tr><tr><th>16</th><th>16</th><td class="equal">  circles.push({circle: circle, basePos: basePos})</td></tr><tr><th>17</th><th>17</th><td class="equal">}</td></tr><tr><th>18</th><th>18</th><td class="equal"></td></tr><tr><th>19</th><th>19</th><td class="equal">function removeCircle(){</td></tr><tr><th>20</th><th>20</th><td class="equal">&nbsp;&nbsp;&nbsp;&nbsp;var index = Math.floor(Math.random() * (circles.length-1));</td></tr><tr><th>21</th><th>21</th><td class="equal">&nbsp;&nbsp;&nbsp;&nbsp;two.remove(circles[index].circle);</td></tr><tr><th>22</th><th>22</th><td class="equal">  circles.splice(index,1);</td></tr><tr><th>23</th><th>23</th><td class="equal">}</td></tr><tr><th>24</th><th>24</th><td class="equal"></td></tr><tr><th>25</th><th>25</th><td class="equal">var mousepos = {x: 0, y: 0}</td></tr><tr><th>26</th><th>26</th><td class="equal">drawDiv[0].addEventListener('mousemove', function(e){&nbsp;&nbsp;&nbsp;&nbsp;</td></tr><tr><th>27</th><th>27</th><td class="equal">&nbsp;&nbsp;&nbsp;&nbsp;var offset = drawDiv.offset();</td></tr><tr><th>28</th><th>28</th><td class="equal">&nbsp;&nbsp;&nbsp;&nbsp;mousepos = {x: e.clientX - offset.left, y: e.clientY - offset.top};  </td></tr><tr><th>29</th><th>29</th><td class="equal">})</td></tr><tr><th>30</th><th>30</th><td class="equal"></td></tr><tr><th>31</th><th>31</th><td class="equal">setInterval(function(){</td></tr><tr><th>32</th><th>32</th><td class="equal">&nbsp;&nbsp;&nbsp;&nbsp;for (var c = 0; c &lt; circles.length; c++){</td></tr><tr><th>33</th><th>33</th><td class="equal">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;circles[c].basePos[0] += Math.random() * 10 - 5;</td></tr><tr><th>34</th><th>34</th><td class="equal">    circles[c].basePos[1] += Math.random() * 10 - 5;</td></tr><tr><th>35</th><th>35</th><td class="equal">   }</td></tr><tr><th>36</th><th>36</th><td class="equal">},16)</td></tr><tr><th>37</th><th>37</th><td class="equal"></td></tr><tr><th>38</th><th>38</th><td class="equal">setInterval(function(){</td></tr><tr><th>39</th><th>39</th><td class="equal">&nbsp;&nbsp;&nbsp;&nbsp;console.log('Count:',circles.length,'Response time:', responseTime.toFixed(1) + 'ms')</td></tr><tr><th>40</th><th>40</th><td class="equal">},500)</td></tr><tr><th>41</th><th>41</th><td class="equal"></td></tr><tr><th>42</th><th>42</th><td class="equal">setInterval(function(){</td></tr><tr><th>43</th><th>43</th><td class="equal">&nbsp;&nbsp;&nbsp;&nbsp;removeCircle();</td></tr><tr><th>44</th><th>44</th><td class="equal">&nbsp;&nbsp;&nbsp;&nbsp;addCircle();  </td></tr><tr><th>45</th><th>45</th><td class="equal">},123);</td></tr><tr><th>46</th><th>46</th><td class="equal"></td></tr><tr><th></th><th>47</th><td class="insert">setInterval(function(){</td></tr><tr><th></th><th>48</th><td class="insert">&nbsp;&nbsp;&nbsp;&nbsp;console.clear();</td></tr><tr><th></th><th>49</th><td class="insert">  lastTime = performance.now();</td></tr><tr><th></th><th>50</th><td class="insert">},60000)</td></tr><tr><th></th><th>51</th><td class="insert"></td></tr><tr><th>47</th><th>52</th><td class="equal">var lastTime = performance.now();</td></tr><tr><th>48</th><th>53</th><td class="equal">var responseTime = 0;</td></tr><tr><th>49</th><th>54</th><td class="equal">var lagggs = [];</td></tr><tr><th>50</th><th></th><td class="delete">var lagggLimit = 7</td></tr><tr><th></th><th>55</th><td class="insert">var lagggLimit = 15</td></tr><tr><th>51</th><th>56</th><td class="equal">var responseTimeLimit = 23;</td></tr><tr><th>52</th><th>57</th><td class="equal">two.bind('update', function(){</td></tr><tr><th>53</th><th>58</th><td class="equal">&nbsp;&nbsp;&nbsp;&nbsp;var nowTime = performance.now();</td></tr><tr><th>54</th><th>59</th><td class="equal">  responseTime = nowTime - lastTime;</td></tr><tr><th>55</th><th>60</th><td class="equal">  if (responseTime &gt; responseTimeLimit) { </td></tr><tr><th>56</th><th>61</th><td class="equal">  &nbsp;&nbsp;&nbsp;&nbsp;lagggs.push(responseTime)</td></tr><tr><th>57</th><th>62</th><td class="equal">    if (lagggs.length &gt; lagggLimit){</td></tr><tr><th>58</th><th>63</th><td class="equal">      var count = Math.floor(circles.length / 50);</td></tr><tr><th>59</th><th>64</th><td class="equal">      for (var i = 0; i &lt; count; i++)</td></tr><tr><th>60</th><th>65</th><td class="equal">        removeCircle();      </td></tr><tr><th>61</th><th>66</th><td class="equal">      var averageRT = 0;</td></tr><tr><th>62</th><th>67</th><td class="equal">      for (var l in lagggs)</td></tr><tr><th>63</th><th>68</th><td class="equal">      &nbsp;&nbsp;&nbsp;&nbsp;averageRT += lagggs[l];</td></tr><tr><th>64</th><th>69</th><td class="equal">      averageRT /= lagggs.length;      </td></tr><tr><th>65</th><th></th><td class="delete">      lagggs = [];</td></tr><tr><th></th><th>70</th><td class="insert">      //lagggs = [];</td></tr><tr><th>66</th><th>71</th><td class="equal">      console.log('Count:',circles.length,'Response time:',averageRT.toFixed(1) + 'ms (Average) KICK')</td></tr><tr><th>67</th><th>72</th><td class="equal">      lastTime = performance.now();</td></tr><tr><th>68</th><th>73</th><td class="equal">    }    </td></tr><tr><th>69</th><th>74</th><td class="equal">  }</td></tr><tr><th>70</th><th>75</th><td class="equal">  else lagggs = [];</td></tr><tr><th>71</th><th>76</th><td class="equal">  lastTime = nowTime;</td></tr><tr><th>72</th><th>77</th><td class="equal">&nbsp;&nbsp;&nbsp;&nbsp;for (var c = 0; c &lt; circles.length; c++)</td></tr><tr><th>73</th><th>78</th><td class="equal">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;circles[c].circle.translation.set(circles[c].basePos[0] + mousepos.x, circles[c].basePos[1] + mousepos.y)</td></tr><tr><th>74</th><th>79</th><td class="equal">}).play();</td></tr><th class="author" colspan="3">diff view generated by <a href="http://github.com/cemerick/jsdifflib">jsdifflib</a></th></tbody></table></div>
+          <div class="diffWrap" id="diff-css"></div>
+        </div><!-- /diffCont -->
+        <p><a class="apply" href="https://jsfiddle.net/levabala/zwd3vp1a/24/#" id="apply-draft">Apply local draft version</a> or <a href="https://jsfiddle.net/levabala/zwd3vp1a/24/#" id="discard-draft">discard it</a></p>
+      </div><!-- /actionItem -->
+    </div><!-- /dcWrapper -->
+  </li> <!-- /actionItem -->
+
+  <li class="actionItem">
+    <a class="aiButton dropdownTrigger" href="https://jsfiddle.net/levabala/zwd3vp1a/24/#editor-options">
+      <i class="bts bt-gear"></i>Settings
+      <i class="bts bt-angle-down rightIcon"></i>
+    </a>
+    <div class="dropdownCont">
+      <div class="dcWrapper" id="editor-options">
+        <p>
+          <label class="checkboxCont">
+            <input type="checkbox" name="autoCloseTags" checked="">
+            <span class="checkbox"><i class="bts bt-check"></i></span>
+            Auto-close HTML tags
+          </label>
+        </p>
+        <p>
+          <label class="checkboxCont">
+            <input type="checkbox" name="lineNumbers" checked="">
+            <span class="checkbox"><i class="bts bt-check"></i></span>
+            Show line numbers
+          </label>
+        </p>
+        <p>
+          <label class="checkboxCont">
+            <input type="checkbox" name="lineWrapping" checked="">
+            <span class="checkbox"><i class="bts bt-check"></i></span>
+            Enable line wrapping
+          </label>
+        </p>
+        <p>
+          <label class="checkboxCont">
+            <input type="checkbox" name="indentWithTabs">
+            <span class="checkbox"><i class="bts bt-check"></i></span>
+            Indent with tabs
+          </label>
+        </p>
+
+        <div class="selectPair">
+          <span class="label">Indent size:</span>
+          <div class="selectCont">
+            <select name="indentUnit">
+              <option value="2">2 spaces</option>
+              <option value="3">3 spaces</option>
+              <option value="4">4 spaces</option>
+            </select>
+            <label><i class="bts bt-angle-down"></i></label>
+          </div> <!-- /selectCont -->
+        </div> <!-- /selectPair -->
+
+        <div class="selectPair">
+          <span class="label">Key map:</span>
+          <div class="selectCont">
+            <select name="keyMap">
+              <option value="default">Default</option>
+              <option value="sublime">Sublime Text</option>
+              <option value="vim">VIM</option>
+              <option value="emacs">EMACS</option>
+            </select>
+            <label><i class="bts bt-angle-down"></i></label>
+          </div> <!-- /selectCont -->
+        </div> <!-- /selectPair -->
+      </div>
+    </div>
+  </li> <!-- /actionItem -->
+  
+    <li class="actionItem">
+      <a class="aiButton dropdownTrigger" id="usermenu" title="You&#39;re logged in as levabala" href="https://jsfiddle.net/levabala/zwd3vp1a/24/#username">
+        <img src="./TwoJS_WebGL_Testing_files/saved_resource" height="32" width="32">levabala<i class="bts bt-angle-down rightIcon"></i>
+      </a>
+      <div class="dropdownCont">
+        <div class="dcWrapper menu">
+          <ul>
+            <li><a id="dashboard" title="Dashboard" href="https://jsfiddle.net/user/dashboard/">Dashboard</a></li>
+            <li><a id="fiddles" title="Your Public Dashboard" href="https://jsfiddle.net/user/levabala/fiddles/">Your public fiddles</a></li>
+            <li class="other"><a id="personal-settings" title="Personal Settings" href="https://jsfiddle.net/user/dashboard/edit/">Settings</a></li>
+            <li class="other"><a id="logout" title="Logout" href="https://jsfiddle.net/user/logout/">Logout</a></li>
+          </ul>
+        </div>
+      </div>
+    </li> <!-- /actionItem -->
+  
+</ul>
+
+</div>
+
+        
+        <div id="progressbar" class=" "><div class="pb"></div></div>
+      </div>
+
+      
+        <div id="sidebar">
+          <section id="s-cont">
+            
+  
+  <h3 id="author_toggler" class="toggler active">Fiddle Author</h3>
+  <div class="element">
+    <div class="elementBody" style="padding-top: 0px; border-top: none; padding-bottom: 0px; border-bottom: none; overflow: hidden; opacity: 1; height: auto;">
+      <div class="ebCont">
+        <div class="avatar">
+          <img src="./TwoJS_WebGL_Testing_files/saved_resource(1)" height="40" width="40">
+          <a title="See public fiddles" href="https://jsfiddle.net/user/levabala/fiddles/">
+            
+              Lev Balagurov
+            
+          </a>
+          
+            <div class="company">Dubna</div>
+          
+        </div> <!-- /avatar -->
+
+        <ul class="userDetails">
+          
+            <li><i class="bts bt-map-marker"></i>Dubna, Russia</li>
+          
+          
+          
+            <li><i class="fab fab-github"></i><a href="https://github.com/levabala" target="_blank">levabala</a></li>
+          
+        </ul> <!-- /userDetails -->
+      </div> <!-- /ebCont -->
+    </div> <!-- /elementBody -->
+  </div> <!-- /element -->
+
+
+            <h3 id="about_toggler" class="toggler" title="Posted on 21 Feb 2017">Fiddle Meta</h3>
+<div class="element">
+  <div class="elementBody" style="padding-top: 0px; border-top: none; padding-bottom: 0px; border-bottom: none; overflow: hidden; opacity: 0; height: 0px;">
+    <div class="ebCont">
+      <p>
+        <label>
+          <input id="id_title" type="text" name="title" maxlength="255" value="" placeholder="Untitled fiddle">
+        </label>
+      </p>
+      <p>
+        <label>
+          <textarea id="id_description" rows="10" cols="40" name="description" placeholder="No description"></textarea>
+        </label>
+      </p>
+      <p class="metaInfo">Add title to make the fiddle public.</p>
+    </div>
+  </div>
+</div>
+
+            
+
+<h3 class="toggler filled" id="resources_toggler">
+  External Resources <em>2</em>
+</h3>
+
+
+<div class="element" id="resources_element">
+  <div class="elementBody" style="padding-top: 0px; border-top: none; padding-bottom: 0px; border-bottom: none; overflow: hidden; opacity: 0; height: 0px;">
+    <div class="ebCont">
+      <div id="external-resources-form">
+        <input id="external_resource" type="text" value="" placeholder="JavaScript/CSS URI">
+        <a id="add_external_resource" class="submit" href="https://jsfiddle.net/levabala/zwd3vp1a/24/#" title="Add resource"><i class="bts bt-plus-circle"></i></a>
+      </div>
+      <input type="hidden" value="1697443,2098575" id="external_resources_id" name="add_external_resources">
+
+      <ul id="external_resources_list">
+      <script type="text/javascript">var resources = [];</script>
+      
+        <li id="external_resource_1697443">
+          <a class="filename" target="_blank" href="https://cdnjs.cloudflare.com/ajax/libs/two.js/0.6.0/two.min.js" title="https://cdnjs.cloudflare.com/ajax/libs/two.js/0.6.0/two.min.js">
+            two.min.js
+          </a>
+          <a onclick="remove_resource(1697443)" class="remove">
+            <i class="bts bt-minus-circle"></i>
+          </a>
+        </li>
+        <script type="text/javascript">resources.push(1697443)</script>
+      
+        <li id="external_resource_2098575">
+          <a class="filename" target="_blank" href="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js" title="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js">
+            jquery.min.js
+          </a>
+          <a onclick="remove_resource(2098575)" class="remove">
+            <i class="bts bt-minus-circle"></i>
+          </a>
+        </li>
+        <script type="text/javascript">resources.push(2098575)</script>
+      
+      </ul>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+  var default_text = 'JavaScript/CSS URL',
+      add_external_resource_url = "/_add_external_resource/";
+</script>
+
+            <h3 class="toggler">AJAX Requests</h3>
+<div class="element">
+  <div class="elementBody" style="padding-top: 0px; border-top: none; padding-bottom: 0px; border-bottom: none; overflow: hidden; opacity: 0; height: 0px;">
+    <div class="ebCont">
+
+      <p><code>/echo</code> simulates AJAX calls:<br>
+        JSON: <code>/echo/json/</code><br>
+        JSONP: <code>//jsfiddle.net/echo/jsonp/</code><br>
+        HTML: <code>/echo/html/</code><br>
+        XML: <code>/echo/xml/</code>
+      </p>
+      <p>See <a href="http://doc.jsfiddle.net/use/echo.html" target="_new">docs</a> for more info.</p>
+    </div>
+  </div>
+</div>
+
+            
+            <h3 class="toggler">Legal, Credits and Links</h3>
+<div class="element">
+  <div class="elementBody" style="padding-top: 0px; border-top: none; padding-bottom: 0px; border-bottom: none; overflow: hidden; opacity: 0; height: 0px;">
+    <div class="ebCont">
+      <p class="maintainers">Created and maintained by <a title="Piotr&#39;s twitter" href="http://twitter.com/zalun" target="_blank">Piotr</a> and <a title="UX and UI Designer" href="http://twitter.com/oskar" target="_blank">@oskar</a>.</p>
+      <p>Hosted on <a href="https://m.do.co/c/52e7a0ad196d" target="_blank"><strong>DigitalOcean</strong></a></p>
+      <p><strong>License</strong></p>
+      <p>All code belongs to the poster and no license is enforced.</p>
+      <p>JSFiddle or its authors are not responsible or liable for any loss or damage of any kind during the usage of provided code.</p>
+      <p><strong>Links</strong></p>
+      <p>
+        <a href="https://jsfiddle.net/about" target="_blank">About JSFiddle</a><br>
+        <!-- <a href="http://doc.jsfiddle.net/" target="_blank">Docs</a><br> -->
+        <a href="http://status.jsfiddle.net/" target="_blank">Status page</a> by <a href="https://updown.io/r/bzxdq" target="_blank">updown.io</a>
+      </p>
+    </div>
+  </div>
+</div>
+
+<style media="screen">
+  .maintainers {
+    position: absolute;
+    top: -900em;
+    left: -900em;
+  }
+</style>
+
+
+            <div id="roadmap">
+              <a href="https://trello.com/b/LakLkQBW/jsfiddle-roadmap" target="_blank">JSFiddle Roadmap <span>suggest and vote for features</span></a>
+            </div>
+          </section>
+          <section id="s-bottom">
+            <div class="twitterCont">
+              <script async="" type="text/javascript" src="./TwoJS_WebGL_Testing_files/carbon.js.download" id="_carbonads_js"></script><div id="carbonads"><span><span class="carbon-wrap"><a href="https://srv.carbonads.net/ads/click/x/GTND423YCASITKJMC6A4YKQWFTSIK5QNCWBI4Z3JCEAD553ICVYDLKJKC6BDE27UCT7IKK3EHJNCLSIZ?segment=placement:jsfiddlenet;" class="carbon-img" target="_blank"><img src="./TwoJS_WebGL_Testing_files/36625" alt="" border="0" height="100" width="130" style="max-width: 130px;"></a><a href="https://srv.carbonads.net/ads/click/x/GTND423YCASITKJMC6A4YKQWFTSIK5QNCWBI4Z3JCEAD553ICVYDLKJKC6BDE27UCT7IKK3EHJNCLSIZ?segment=placement:jsfiddlenet;" class="carbon-text" target="_blank">Don't let debugging ruin your day. Find errors before you deploy!</a></span><a href="http://carbonads.net/" class="carbon-poweredby" target="_blank">ads via Carbon</a></span></div>
+            </div>
+            <div id="keep-us-running">
+              <p>Like JSFiddle?</p>
+              <p>Keep us running by whitelisting JSFiddle in your ad blocker.</p>
+              <p>We're serving quality, tech-related ads only.</p>
+              <p>Thank you!</p>
+            </div>
+            <script type="text/javascript">
+              window.onload = function(){
+                setTimeout(function(){
+                  var info = document.getElementById("keep-us-running");
+                  var ads = document.getElementById("carbonads");
+
+                  if (ads === null){
+                    info.className = "show";
+                    info.addEvent("click", function(){
+                      info.className = "";
+                    });
+                  }
+                }, 2000)
+              }
+            </script>
+            
+          </section>
+        </div>
+        <div id="content" style="height: 703px; opacity: 1;">
+          
+          
+
+
+<input type="hidden" name="version" value="21" id="id_version">
+<input type="hidden" id="id_slug" name="slug" value="zwd3vp1a">
+
+<fieldset class="column left">
+  <div class="window top" id="panel_html" data-panel_type="html" style="height: 14.2248%;">
+    <textarea id="id_code_html" rows="10" cols="40" name="code_html" style="display: none;">&lt;div id='drawArea' style='width: 500px; height: 500px; border: solid gray 1px'&gt;
+&lt;/div&gt;</textarea>
+    <a href="https://jsfiddle.net/levabala/zwd3vp1a/24/#" class="windowLabel" data-panel="html">
+      <span class="label">HTML</span><i class="bts bt-gear"></i>
+    </a>
+  <div class="CodeMirror cm-s-default CodeMirror-wrap"><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 23.2px; left: 81px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;" tabindex="0"></textarea></div><div class="CodeMirror-vscrollbar" cm-not-content="true"><div style="min-width: 1px; height: 0px;"></div></div><div class="CodeMirror-hscrollbar" cm-not-content="true"><div style="height: 100%; min-height: 1px; width: 0px;"></div></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 35px; margin-bottom: -14px; border-right-width: 16px; min-height: 46px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines"><div style="position: relative; outline: none;"><div class="CodeMirror-measure"><pre><span>xxxxxxxxxx</span></pre><div class="CodeMirror-linenumber CodeMirror-gutter-elt"><div>2</div></div></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-cursors"><div class="CodeMirror-cursor" style="left: 46px; top: 19.2px; height: 19.2px;">&nbsp;</div></div><div class="CodeMirror-code"><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -35px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">1</div></div><pre class=" CodeMirror-line "><span style="padding-right: 0.1px;"><span class="cm-tag cm-bracket">&lt;</span><span class="cm-tag">div</span> <span class="cm-attribute">id</span>=<span class="cm-string">'drawArea'</span> <span class="cm-attribute">style</span>=<span class="cm-string">'width: 500px; height: 500px; border: solid gray 1px'</span><span class="cm-tag cm-bracket">&gt;</span></span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -35px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">2</div></div><pre class=" CodeMirror-line "><span style="padding-right: 0.1px;"><span class="cm-tag cm-bracket">&lt;/</span><span class="cm-tag">div</span><span class="cm-tag cm-bracket">&gt;</span></span></pre></div></div></div></div></div></div><div style="position: absolute; height: 16px; width: 1px; border-bottom: 0px solid transparent; top: 46px;"></div><div class="CodeMirror-gutters" style="height: 62px;"><div class="CodeMirror-gutter CodeMirror-linenumbers" style="width: 34px;"></div></div></div></div></div>
+  <div class="handler handler_horizontal" style="top: 101px;"></div>
+  <div class="window bottom" id="panel_js" data-panel_type="javascript" style="height: 85.7752%;">
+    <textarea id="id_code_js" rows="10" cols="40" name="code_js" style="display: none;">console.clear();
+
+var drawDiv = $('#drawArea')
+var two = new Two({width: drawDiv.width(), height: drawDiv.height(), type: Two.Types.webgl}).appendTo(drawDiv[0])
+
+var circles = [];
+for (var i = 0; i &lt; 2050; i++)
+	addCircle();
+  
+function addCircle(){
+	var basePos = [Math.random() * 150 - 75, Math.random() * 150 - 75]
+  var circle = two.makeCircle(basePos[0], basePos[1], 50)  
+  circle.fill = '#FF8000';
+  circle.stroke = 'orangered'; // Accepts all valid css color
+  circle.linewidth = 5;
+  circles.push({circle: circle, basePos: basePos})
+}
+
+function removeCircle(){
+	var index = Math.floor(Math.random() * (circles.length-1));
+	two.remove(circles[index].circle);
+  circles.splice(index,1);
+}
+
+var mousepos = {x: 0, y: 0}
+drawDiv[0].addEventListener('mousemove', function(e){	
+	var offset = drawDiv.offset();
+	mousepos = {x: e.clientX - offset.left, y: e.clientY - offset.top};  
+})
+
+setInterval(function(){
+	for (var c = 0; c &lt; circles.length; c++){
+		circles[c].basePos[0] += Math.random() * 10 - 5;
+    circles[c].basePos[1] += Math.random() * 10 - 5;
+   }
+},16)
+
+setInterval(function(){
+	console.log('Count:',circles.length,'Response time:', responseTime.toFixed(1) + 'ms')
+},500)
+
+setInterval(function(){
+	removeCircle();
+	addCircle();  
+},123);
+
+var lastTime = performance.now();
+var responseTime = 0;
+var lagggs = [];
+var lagggLimit = 7
+var responseTimeLimit = 23;
+two.bind('update', function(){
+	var nowTime = performance.now();
+  responseTime = nowTime - lastTime;
+  if (responseTime &gt; responseTimeLimit) { 
+  	lagggs.push(responseTime)
+    if (lagggs.length &gt; lagggLimit){
+      var count = Math.floor(circles.length / 50);
+      for (var i = 0; i &lt; count; i++)
+        removeCircle();      
+      var averageRT = 0;
+      for (var l in lagggs)
+      	averageRT += lagggs[l];
+      averageRT /= lagggs.length;      
+      lagggs = [];
+      console.log('Count:',circles.length,'Response time:',averageRT.toFixed(1) + 'ms (Average) KICK')
+      lastTime = performance.now();
+    }    
+  }
+  else lagggs = [];
+  lastTime = nowTime;
+	for (var c = 0; c &lt; circles.length; c++)
+		circles[c].circle.translation.set(circles[c].basePos[0] + mousepos.x, circles[c].basePos[1] + mousepos.y)
+}).play();</textarea>
+    <a href="https://jsfiddle.net/levabala/zwd3vp1a/24/#" class="windowLabel" data-panel="js">
+      <span class="label">JavaScript</span><i class="bts bt-gear"></i>
+    </a>
+  <div class="CodeMirror cm-s-default CodeMirror-wrap"><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 22.4px; left: 270px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;" tabindex="0"></textarea></div><div class="CodeMirror-vscrollbar" cm-not-content="true" style="display: block; bottom: 0px;"><div style="min-width: 1px; height: 1507px;"></div></div><div class="CodeMirror-hscrollbar" cm-not-content="true"><div style="height: 100%; min-height: 1px; width: 0px;"></div></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 35px; margin-bottom: -14px; border-right-width: 16px; min-height: 1506px; padding-right: 14px; padding-bottom: 0px;"><div style="position: relative; top: 576px;"><div class="CodeMirror-lines"><div style="position: relative; outline: none;"><div class="CodeMirror-measure"><pre>x</pre></div><div class="CodeMirror-measure"><pre class="CodeMirror-line"><span style="padding-right: 0.1px;"> &nbsp;<span class="cm-variable-2">circle</span>.<span class="cm-property">linewidth</span> <span class="cm-operator">=</span> <span class="cm-number">5</span>;</span></pre></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-cursors" style="visibility: hidden;"><div class="CodeMirror-cursor" style="left: 235px; top: 326.4px; height: 19.2px;">&nbsp;</div></div><div class="CodeMirror-code"><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -35px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">30</div></div><pre class=" CodeMirror-line "><span style="padding-right: 0.1px;"><span cm-text="">​</span></span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -35px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">31</div></div><pre class=" CodeMirror-line "><span style="padding-right: 0.1px;"><span class="cm-variable">setInterval</span>(<span class="cm-keyword">function</span>(){</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -35px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">32</div></div><pre class=" CodeMirror-line "><span style="padding-right: 0.1px;"><span class="cm-tab" role="presentation" cm-text="	">  </span><span class="cm-keyword">for</span> (<span class="cm-keyword">var</span> <span class="cm-def">c</span> <span class="cm-operator">=</span> <span class="cm-number">0</span>; <span class="cm-variable-2">c</span> <span class="cm-operator">&lt;</span> <span class="cm-variable">circles</span>.<span class="cm-property">length</span>; <span class="cm-variable-2">c</span><span class="cm-operator">++</span>){</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -35px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">33</div></div><pre class=" CodeMirror-line "><span style="padding-right: 0.1px;"><span class="cm-tab" role="presentation" cm-text="	">  </span><span class="cm-tab" role="presentation" cm-text="	">  </span><span class="cm-variable">circles</span>[<span class="cm-variable-2">c</span>].<span class="cm-property">basePos</span>[<span class="cm-number">0</span>] <span class="cm-operator">+=</span> <span class="cm-variable">Math</span>.<span class="cm-property">random</span>() <span class="cm-operator">*</span> <span class="cm-number">10</span> <span class="cm-operator">-</span> <span class="cm-number">5</span>;</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -35px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">34</div></div><pre class=" CodeMirror-line "><span style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-variable">circles</span>[<span class="cm-variable-2">c</span>].<span class="cm-property">basePos</span>[<span class="cm-number">1</span>] <span class="cm-operator">+=</span> <span class="cm-variable">Math</span>.<span class="cm-property">random</span>() <span class="cm-operator">*</span> <span class="cm-number">10</span> <span class="cm-operator">-</span> <span class="cm-number">5</span>;</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -35px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">35</div></div><pre class=" CodeMirror-line "><span style="padding-right: 0.1px;"> &nbsp; }</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -35px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">36</div></div><pre class=" CodeMirror-line "><span style="padding-right: 0.1px;">},<span class="cm-number">16</span>)</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -35px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">37</div></div><pre class=" CodeMirror-line "><span style="padding-right: 0.1px;"><span cm-text="">​</span></span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -35px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">38</div></div><pre class=" CodeMirror-line "><span style="padding-right: 0.1px;"><span class="cm-variable">setInterval</span>(<span class="cm-keyword">function</span>(){</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -35px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">39</div></div><pre class=" CodeMirror-line "><span style="padding-right: 0.1px;"><span class="cm-tab" role="presentation" cm-text="	">  </span><span class="cm-variable">console</span>.<span class="cm-property">log</span>(<span class="cm-string">'Count:'</span>,<span class="cm-variable">circles</span>.<span class="cm-property">length</span>,<span class="cm-string">'Response time:'</span>, <span class="cm-variable">responseTime</span>.<span class="cm-property">toFixed</span>(<span class="cm-number">1</span>) <span class="cm-operator">+</span> <span class="cm-string">'ms'</span>)</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -35px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">40</div></div><pre class=" CodeMirror-line "><span style="padding-right: 0.1px;">},<span class="cm-number">500</span>)</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -35px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">41</div></div><pre class=" CodeMirror-line "><span style="padding-right: 0.1px;"><span cm-text="">​</span></span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -35px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">42</div></div><pre class=" CodeMirror-line "><span style="padding-right: 0.1px;"><span class="cm-variable">setInterval</span>(<span class="cm-keyword">function</span>(){</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -35px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">43</div></div><pre class=" CodeMirror-line "><span style="padding-right: 0.1px;"><span class="cm-tab" role="presentation" cm-text="	">  </span><span class="cm-variable">removeCircle</span>();</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -35px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">44</div></div><pre class=" CodeMirror-line "><span style="padding-right: 0.1px;"><span class="cm-tab" role="presentation" cm-text="	">  </span><span class="cm-variable">addCircle</span>(); &nbsp;</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -35px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">45</div></div><pre class=" CodeMirror-line "><span style="padding-right: 0.1px;">},<span class="cm-number">123</span>);</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -35px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">46</div></div><pre class=" CodeMirror-line "><span style="padding-right: 0.1px;"><span cm-text="">​</span></span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -35px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">47</div></div><pre class=" CodeMirror-line "><span style="padding-right: 0.1px;"><span class="cm-keyword">var</span> <span class="cm-def">lastTime</span> <span class="cm-operator">=</span> <span class="cm-variable">performance</span>.<span class="cm-property">now</span>();</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -35px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">48</div></div><pre class=" CodeMirror-line "><span style="padding-right: 0.1px;"><span class="cm-keyword">var</span> <span class="cm-def">responseTime</span> <span class="cm-operator">=</span> <span class="cm-number">0</span>;</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -35px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">49</div></div><pre class=" CodeMirror-line "><span style="padding-right: 0.1px;"><span class="cm-keyword">var</span> <span class="cm-def">lagggs</span> <span class="cm-operator">=</span> [];</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -35px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">50</div></div><pre class=" CodeMirror-line "><span style="padding-right: 0.1px;"><span class="cm-keyword">var</span> <span class="cm-def">lagggLimit</span> <span class="cm-operator">=</span> <span class="cm-number">16</span></span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -35px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">51</div></div><pre class=" CodeMirror-line "><span style="padding-right: 0.1px;"><span class="cm-keyword">var</span> <span class="cm-def">responseTimeLimit</span> <span class="cm-operator">=</span> <span class="cm-number">23</span>;</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -35px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">52</div></div><pre class=" CodeMirror-line "><span style="padding-right: 0.1px;"><span class="cm-variable">two</span>.<span class="cm-property">bind</span>(<span class="cm-string">'update'</span>, <span class="cm-keyword">function</span>(){</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -35px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">53</div></div><pre class=" CodeMirror-line "><span style="padding-right: 0.1px;"><span class="cm-tab" role="presentation" cm-text="	">  </span><span class="cm-keyword">var</span> <span class="cm-def">nowTime</span> <span class="cm-operator">=</span> <span class="cm-variable">performance</span>.<span class="cm-property">now</span>();</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -35px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">54</div></div><pre class=" CodeMirror-line "><span style="padding-right: 0.1px;"> &nbsp;<span class="cm-variable">responseTime</span> <span class="cm-operator">=</span> <span class="cm-variable-2">nowTime</span> <span class="cm-operator">-</span> <span class="cm-variable">lastTime</span>;</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -35px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">55</div></div><pre class=" CodeMirror-line "><span style="padding-right: 0.1px;"> &nbsp;<span class="cm-keyword">if</span> (<span class="cm-variable">responseTime</span> <span class="cm-operator">&gt;</span> <span class="cm-variable">responseTimeLimit</span>) { </span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -35px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">56</div></div><pre class=" CodeMirror-line "><span style="padding-right: 0.1px;">  <span class="cm-tab" role="presentation" cm-text="	">  </span><span class="cm-variable">lagggs</span>.<span class="cm-property">push</span>(<span class="cm-variable">responseTime</span>)</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -35px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">57</div></div><pre class=" CodeMirror-line "><span style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-keyword">if</span> (<span class="cm-variable">lagggs</span>.<span class="cm-property">length</span> <span class="cm-operator">&gt;</span> <span class="cm-variable">lagggLimit</span>){</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -35px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">58</div></div><pre class=" CodeMirror-line "><span style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp;<span class="cm-keyword">var</span> <span class="cm-def">count</span> <span class="cm-operator">=</span> <span class="cm-variable">Math</span>.<span class="cm-property">floor</span>(<span class="cm-variable">circles</span>.<span class="cm-property">length</span> <span class="cm-operator">/</span> <span class="cm-number">50</span>);</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -35px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">59</div></div><pre class=" CodeMirror-line "><span style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp;<span class="cm-keyword">if</span> (<span class="cm-variable-2">count</span> <span class="cm-operator">==</span> <span class="cm-number">0</span> <span class="cm-operator">&amp;&amp;</span> <span class="cm-variable">circles</span>.<span class="cm-property">length</span> <span class="cm-operator">&gt;</span> <span class="cm-number">0</span>) <span class="cm-variable-2">count</span> <span class="cm-operator">=</span> <span class="cm-number">1</span>;</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -35px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">60</div></div><pre class=" CodeMirror-line "><span style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp;<span class="cm-keyword">for</span> (<span class="cm-keyword">var</span> <span class="cm-def">i</span> <span class="cm-operator">=</span> <span class="cm-number">0</span>; <span class="cm-variable-2">i</span> <span class="cm-operator">&lt;</span> <span class="cm-variable-2">count</span>; <span class="cm-variable-2">i</span><span class="cm-operator">++</span>)</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -35px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">61</div></div><pre class=" CodeMirror-line "><span style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-variable">removeCircle</span>(); &nbsp; &nbsp; &nbsp;</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -35px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">62</div></div><pre class=" CodeMirror-line "><span style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp;<span class="cm-keyword">var</span> <span class="cm-def">averageRT</span> <span class="cm-operator">=</span> <span class="cm-number">0</span>;</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -35px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">63</div></div><pre class=" CodeMirror-line "><span style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp;<span class="cm-keyword">for</span> (<span class="cm-keyword">var</span> <span class="cm-def">l</span> <span class="cm-keyword">in</span> <span class="cm-variable">lagggs</span>)</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -35px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">64</div></div><pre class=" CodeMirror-line "><span style="padding-right: 0.1px;"> &nbsp; &nbsp;  <span class="cm-tab" role="presentation" cm-text="	">  </span><span class="cm-variable-2">averageRT</span> <span class="cm-operator">+=</span> <span class="cm-variable">lagggs</span>[<span class="cm-variable-2">l</span>];</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -35px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">65</div></div><pre class=" CodeMirror-line "><span style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp;<span class="cm-variable-2">averageRT</span> <span class="cm-operator">/=</span> <span class="cm-variable">lagggs</span>.<span class="cm-property">length</span>; &nbsp; &nbsp; &nbsp;</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -35px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">66</div></div><pre class=" CodeMirror-line "><span style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp;<span class="cm-comment">//lagggs = [];</span></span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -35px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">67</div></div><pre class=" CodeMirror-line "><span style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp;<span class="cm-variable">console</span>.<span class="cm-property">log</span>(<span class="cm-string">'Count:'</span>,<span class="cm-variable">circles</span>.<span class="cm-property">length</span>,<span class="cm-string">'Response time:'</span>,<span class="cm-variable-2">averageRT</span>.<span class="cm-property">toFixed</span>(<span class="cm-number">1</span>) <span class="cm-operator">+</span> <span class="cm-string">'ms (Average) KICK'</span>)</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -35px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">68</div></div><pre class=" CodeMirror-line "><span style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp;<span class="cm-variable">lastTime</span> <span class="cm-operator">=</span> <span class="cm-variable">performance</span>.<span class="cm-property">now</span>();</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -35px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">69</div></div><pre class=" CodeMirror-line "><span style="padding-right: 0.1px;"> &nbsp;  } &nbsp; &nbsp;</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -35px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">70</div></div><pre class=" CodeMirror-line "><span style="padding-right: 0.1px;">  }</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -35px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">71</div></div><pre class=" CodeMirror-line "><span style="padding-right: 0.1px;"> &nbsp;<span class="cm-keyword">else</span> <span class="cm-variable">lagggs</span> <span class="cm-operator">=</span> [];</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -35px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">72</div></div><pre class=" CodeMirror-line "><span style="padding-right: 0.1px;"> &nbsp;<span class="cm-variable">lastTime</span> <span class="cm-operator">=</span> <span class="cm-variable-2">nowTime</span>;</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -35px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">73</div></div><pre class=" CodeMirror-line "><span style="padding-right: 0.1px;"><span class="cm-tab" role="presentation" cm-text="	">  </span><span class="cm-keyword">for</span> (<span class="cm-keyword">var</span> <span class="cm-def">c</span> <span class="cm-operator">=</span> <span class="cm-number">0</span>; <span class="cm-variable-2">c</span> <span class="cm-operator">&lt;</span> <span class="cm-variable">circles</span>.<span class="cm-property">length</span>; <span class="cm-variable-2">c</span><span class="cm-operator">++</span>)</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -35px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">74</div></div><pre class=" CodeMirror-line "><span style="padding-right: 0.1px;"><span class="cm-tab" role="presentation" cm-text="	">  </span><span class="cm-tab" role="presentation" cm-text="	">  </span><span class="cm-variable">circles</span>[<span class="cm-variable-2">c</span>].<span class="cm-property">circle</span>.<span class="cm-property">translation</span>.<span class="cm-property">set</span>(<span class="cm-variable">circles</span>[<span class="cm-variable-2">c</span>].<span class="cm-property">basePos</span>[<span class="cm-number">0</span>] <span class="cm-operator">+</span> <span class="cm-variable">mousepos</span>.<span class="cm-property">x</span>, <span class="cm-variable">circles</span>[<span class="cm-variable-2">c</span>].<span class="cm-property">basePos</span>[<span class="cm-number">1</span>] <span class="cm-operator">+</span> <span class="cm-variable">mousepos</span>.<span class="cm-property">y</span>)</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -35px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">75</div></div><pre class=" CodeMirror-line "><span style="padding-right: 0.1px;">}).<span class="cm-property">play</span>();</span></pre></div></div></div></div></div></div><div style="position: absolute; height: 16px; width: 1px; border-bottom: 0px solid transparent; top: 1506px;"></div><div class="CodeMirror-gutters" style="height: 1522px;"><div class="CodeMirror-gutter CodeMirror-linenumbers" style="width: 34px;"></div></div></div></div><ul class="warningTooltip"></ul></div>
+  <div class="shim"></div>
+</fieldset>
+
+<div class="handler" id="handler_vertical" style="left: 674px;"></div>
+
+<fieldset class="column right">
+  <div class="window top" id="panel_css" data-panel_type="css" style="height: 14.2248%;">
+    <textarea id="id_code_css" rows="10" cols="40" name="code_css" style="display: none;"></textarea>
+    <a href="https://jsfiddle.net/levabala/zwd3vp1a/24/#" class="windowLabel" data-panel="css">
+      <span class="label">CSS</span><i class="bts bt-gear"></i>
+    </a>
+  <div class="CodeMirror cm-s-default CodeMirror-wrap"><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 4px; left: 39px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;" tabindex="0"></textarea></div><div class="CodeMirror-vscrollbar" cm-not-content="true"><div style="min-width: 1px; height: 0px;"></div></div><div class="CodeMirror-hscrollbar" cm-not-content="true"><div style="height: 100%; min-height: 1px; width: 0px;"></div></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 35px; margin-bottom: -14px; border-right-width: 16px; min-height: 27px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines"><div style="position: relative; outline: none;"><div class="CodeMirror-measure"><pre><span>xxxxxxxxxx</span></pre><div class="CodeMirror-linenumber CodeMirror-gutter-elt"><div>1</div></div></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-cursors"><div class="CodeMirror-cursor" style="left: 4px; top: 0px; height: 19.2px;">&nbsp;</div></div><div class="CodeMirror-code"><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -35px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 21px;">1</div></div><pre class=" CodeMirror-line "><span style="padding-right: 0.1px;"><span cm-text="">​</span></span></pre></div></div></div></div></div></div><div style="position: absolute; height: 16px; width: 1px; border-bottom: 0px solid transparent; top: 27px;"></div><div class="CodeMirror-gutters" style="height: 43px;"><div class="CodeMirror-gutter CodeMirror-linenumbers" style="width: 34px;"></div></div></div></div></div>
+  <div class="handler handler_horizontal" style="top: 101px;"></div>
+  <div id="result" class="window bottom" style="height: 85.7752%;">
+    <iframe name="result" sandbox="allow-forms allow-scripts allow-same-origin allow-modals allow-popups" allowfullscreen="" frameborder="0" src="./TwoJS_WebGL_Testing_files/saved_resource(2).html"></iframe>
+    
+  </div>
+  <div class="shim"></div>
+</fieldset>
+
+<div class="windowSettings html">
+  <h3>Language</h3>
+<div class="selectCont">
+  <select name="panel_html" class="panelChoice" id="panel_html_choice" disabled="disabled" data-panel_id="id_code_html" data-panel="html">
+    
+      <option data-mime-type="text/html" value="0" selected="">HTML</option>
+    
+  </select>
+  <label for="js_lib"><i class="bts bt-angle-down"></i></label>
+</div> <!-- /selectCont -->
+
+<h3>Doctype</h3>
+<div class="selectCont">
+  <select name="doctype">
+    
+      <option id="dtd_XHTML 1.0 Strict" value="1">XHTML 1.0 Strict</option>
+    
+      <option id="dtd_XHTML 1.0 Transitional" value="2">XHTML 1.0 Transitional</option>
+    
+      <option selected="" id="dtd_HTML 5" value="3">HTML 5</option>
+    
+      <option id="dtd_HTML 4.01 Strict" value="4">HTML 4.01 Strict</option>
+    
+      <option id="dtd_HTML 4.01 Transitional" value="5">HTML 4.01 Transitional</option>
+    
+      <option id="dtd_HTML 4.01 Frameset" value="6">HTML 4.01 Frameset</option>
+    
+  </select>
+  <label for="doctype"><i class="bts bt-angle-down"></i></label>
+</div>
+
+<h3>Body tag</h3>
+<p>
+  <label>
+    <input id="id_body_tag" type="text" name="body_tag" maxlength="255">
+  </label>
+</p>
+
+</div> <!-- /windowSettings -->
+
+<div class="windowSettings js">
+  
+
+
+<h3>Language</h3>
+<div class="selectCont">
+  <select name="panel_js" class="panelChoice" id="panel_js_choice" data-panel_id="id_code_js" data-panel="js">
+    
+      <option data-mime-type="text/javascript" value="0" selected="">JavaScript</option>
+    
+      <option data-mime-type="text/x-coffeescript" value="1">CoffeeScript</option>
+    
+      <option data-mime-type="application/javascript;version=1.7" value="2">JavaScript 1.7</option>
+    
+      <option data-mime-type="text/babel" value="3">Babel</option>
+    
+      <option data-mime-type="text/typescript" value="4">TypeScript</option>
+    
+  </select>
+  <label for="js_lib"><i class="bts bt-angle-down"></i></label>
+</div> <!-- /selectCont -->
+
+<h3>Frameworks &amp; Extensions</h3>
+
+  
+    
+<div class="selectCont">
+  <select name="js_lib" id="js_lib">
+    
+    <optgroup label="AngularJS">
+      
+        <option value="281">AngularJS 2.0.0-alpha.47</option>
+      
+        <option value="283">AngularJS 1.4.8</option>
+      
+        <option value="180">AngularJS 1.2.1</option>
+      
+        <option value="137">AngularJS 1.1.1</option>
+      
+        
+      
+        
+      
+    </optgroup>
+    
+    <optgroup label="Bonsai">
+      
+        <option value="120">Bonsai 0.4.1</option>
+      
+    </optgroup>
+    
+    <optgroup label="Brick">
+      
+        <option value="176">Brick edge</option>
+      
+    </optgroup>
+    
+    <optgroup label="CreateJS">
+      
+        <option value="279">CreateJS 2015.05.21</option>
+      
+        <option value="170">CreateJS 2013.09.25</option>
+      
+        
+      
+    </optgroup>
+    
+    <optgroup label="D3">
+      
+        <option value="134">D3 3.x</option>
+      
+    </optgroup>
+    
+    <optgroup label="Dojo">
+      
+        <option value="87">Dojo (nightly)</option>
+      
+        <option value="240">Dojo 1.10.4</option>
+      
+        
+      
+        
+      
+        <option value="242">Dojo 1.9.7</option>
+      
+        
+      
+        
+      
+        
+      
+        <option value="244">Dojo 1.8.10</option>
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        <option value="246">Dojo 1.7.8</option>
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        <option value="196">Dojo 1.6.2</option>
+      
+        
+      
+        
+      
+        <option value="194">Dojo 1.5.3</option>
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </optgroup>
+    
+    <optgroup label="Ember">
+      
+        <option value="190">Ember (latest)</option>
+      
+        
+      
+        
+      
+        
+      
+    </optgroup>
+    
+    <optgroup label="Enyo">
+      
+        <option value="115">Enyo (nightly)</option>
+      
+        <option value="299">Enyo 2.7.0</option>
+      
+        <option value="238">Enyo 2.5.1</option>
+      
+        <option value="214">Enyo 2.4.0</option>
+      
+        <option value="145">Enyo 2.2.0</option>
+      
+        <option value="121">Enyo 2.1</option>
+      
+        <option value="116">Enyo 2.0.1</option>
+      
+        
+      
+    </optgroup>
+    
+    <optgroup label="ExtJS">
+      
+        <option value="338">ExtJS 6.2.0</option>
+      
+        <option value="256">ExtJS 5.1.0</option>
+      
+        <option value="258">ExtJS 5.0.0</option>
+      
+        <option value="147">ExtJS 4.2.0</option>
+      
+        <option value="80">ExtJS 4.1.1</option>
+      
+        <option value="107">ExtJS 4.1.0</option>
+      
+        
+      
+        <option value="109">ExtJS 3.4.0</option>
+      
+        <option value="23">ExtJS 3.1.0</option>
+      
+        
+      
+    </optgroup>
+    
+    <optgroup label="FabricJS">
+      
+        <option value="340">FabricJS 1.7.1</option>
+      
+        <option value="250">FabricJS 1.5.0</option>
+      
+        <option value="178">FabricJS 1.4.0</option>
+      
+        <option value="161">FabricJS 1.2.0</option>
+      
+        <option value="125">FabricJS 0.9</option>
+      
+    </optgroup>
+    
+    <optgroup label="Glow">
+      
+        
+      
+        
+      
+    </optgroup>
+    
+    <optgroup label="Inferno">
+      
+        <option value="336">Inferno 1.0.0-beta9</option>
+      
+    </optgroup>
+    
+    <optgroup label="jQuery">
+      
+        
+      
+        
+      
+        <option value="46">jQuery (edge)</option>
+      
+        <option value="333">jQuery 3.1.1</option>
+      
+        <option value="321">jQuery 3.1.0</option>
+      
+        
+      
+        
+      
+        <option value="311">jQuery 3.0.0</option>
+      
+        <option value="319">jQuery 2.2.4</option>
+      
+        <option value="305">jQuery 2.2.3</option>
+      
+        <option value="303">jQuery 2.2.2</option>
+      
+        <option value="295">jQuery 2.2.1</option>
+      
+        <option value="291">jQuery 2.2.0</option>
+      
+        
+      
+        <option value="248">jQuery 2.1.3</option>
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        <option value="131">jQuery 1.9.1</option>
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </optgroup>
+    
+    <optgroup label="jQuery Slim">
+      
+        <option value="335">jQuery Slim 3.1.1 Slim</option>
+      
+        <option value="323">jQuery Slim 3.1.0 Slim</option>
+      
+        <option value="313">jQuery Slim 3.0.0 Slim</option>
+      
+    </optgroup>
+    
+    <optgroup label="JSBlocks">
+      
+        <option value="252">JSBlocks (edge)</option>
+      
+    </optgroup>
+    
+    <optgroup label="jTypes">
+      
+        <option value="165">jTypes 2.1.0</option>
+      
+    </optgroup>
+    
+    <optgroup label="KineticJS">
+      
+        <option value="139">KineticJS 4.3.1</option>
+      
+        <option value="124">KineticJS 4.0.5</option>
+      
+    </optgroup>
+    
+    <optgroup label="Knockout.js">
+      
+        <option value="277">Knockout.js 3.4.0</option>
+      
+        <option value="172">Knockout.js 3.0.0</option>
+      
+        <option value="163">Knockout.js 2.3.0</option>
+      
+        <option value="122">Knockout.js 2.2.1</option>
+      
+        <option value="117">Knockout.js 2.1.0</option>
+      
+        <option value="104">Knockout.js 2.0.0</option>
+      
+    </optgroup>
+    
+    <optgroup label="Lo-Dash">
+      
+        <option value="167">Lo-Dash 2.2.1</option>
+      
+    </optgroup>
+    
+    <optgroup label="Minified">
+      
+        <option value="164">Minified 1.0 beta1</option>
+      
+    </optgroup>
+    
+    <optgroup label="MithrilJS">
+      
+        <option value="273">MithrilJS 0.2.0</option>
+      
+    </optgroup>
+    
+    <optgroup label="Mootools">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        <option value="59">Mootools (nightly)</option>
+      
+        <option value="327">Mootools 1.6.0 (compat)</option>
+      
+        <option value="325">Mootools 1.6.0</option>
+      
+        <option value="329">Mootools 1.5.2 (compat)</option>
+      
+        <option value="263">Mootools 1.5.2</option>
+      
+        
+      
+        
+      
+        <option value="216">Mootools 1.5.1</option>
+      
+        
+      
+        <option value="208">Mootools 1.5.0</option>
+      
+        <option value="96">Mootools 1.4.5 (compat)</option>
+      
+        <option value="95">Mootools 1.4.5</option>
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        <option value="63">Mootools 1.3.2 (compat)</option>
+      
+        <option value="62">Mootools 1.3.2</option>
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </optgroup>
+    
+    <optgroup label="No-Library">
+      
+        <option value="11" selected="selected">No-Library (pure JS)</option>
+      
+    </optgroup>
+    
+    <optgroup label="OpenUI5">
+      
+        <option value="271">OpenUI5 (latest, mobile)</option>
+      
+    </optgroup>
+    
+    <optgroup label="Paper.js">
+      
+        <option value="158">Paper.js 0.22</option>
+      
+    </optgroup>
+    
+    <optgroup label="Pixi">
+      
+        <option value="331">Pixi 4.0.0</option>
+      
+        <option value="315">Pixi 3.0.11</option>
+      
+    </optgroup>
+    
+    <optgroup label="Processing.js">
+      
+        <option value="206">Processing.js 1.4.7</option>
+      
+        <option value="135">Processing.js 1.4.1</option>
+      
+        <option value="81">Processing.js 1.3.6</option>
+      
+        <option value="67">Processing.js 1.2.3</option>
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </optgroup>
+    
+    <optgroup label="Prototype">
+      
+        
+      
+        <option value="265">Prototype 1.7.3</option>
+      
+        <option value="254">Prototype 1.7.2</option>
+      
+        <option value="54">Prototype 1.7.1</option>
+      
+        <option value="4">Prototype 1.6.1.0</option>
+      
+    </optgroup>
+    
+    <optgroup label="qooxdoo">
+      
+        <option value="126">qooxdoo 2.1</option>
+      
+        <option value="127">qooxdoo 2.0.3</option>
+      
+    </optgroup>
+    
+    <optgroup label="RactiveJS">
+      
+        
+      
+        
+      
+        <option value="287">RactiveJS 0.7.3</option>
+      
+    </optgroup>
+    
+    <optgroup label="Raphael">
+      
+        <option value="76">Raphael 2.1.0</option>
+      
+        <option value="36">Raphael 1.5.2 (min)</option>
+      
+        <option value="30">Raphael 1.4</option>
+      
+        
+      
+    </optgroup>
+    
+    <optgroup label="React">
+      
+        <option value="285">React 0.14.3</option>
+      
+        <option value="192">React 0.9.0</option>
+      
+        <option value="184">React 0.8.0</option>
+      
+        <option value="166">React 0.4.0</option>
+      
+        <option value="159">React 0.3.2</option>
+      
+    </optgroup>
+    
+    <optgroup label="RightJS">
+      
+        <option value="136">RightJS 2.3.1</option>
+      
+        <option value="45">RightJS 2.1.1</option>
+      
+    </optgroup>
+    
+    <optgroup label="Shipyard">
+      
+        <option value="99">Shipyard (nightly)</option>
+      
+        <option value="105">Shipyard 0.2</option>
+      
+        
+      
+    </optgroup>
+    
+    <optgroup label="svg.js">
+      
+        <option value="269">svg.js 2.1.1</option>
+      
+        
+      
+    </optgroup>
+    
+    <optgroup label="The X Toolkit">
+      
+        <option value="106">The X Toolkit edge</option>
+      
+    </optgroup>
+    
+    <optgroup label="Thorax">
+      
+        <option value="174">Thorax 2.0.0rc6</option>
+      
+        <option value="143">Thorax 2.0.0rc3</option>
+      
+    </optgroup>
+    
+    <optgroup label="Three.js">
+      
+        <option value="82">Three.js r54</option>
+      
+    </optgroup>
+    
+    <optgroup label="Underscore">
+      
+        <option value="267">Underscore 1.8.3</option>
+      
+        <option value="160">Underscore 1.4.4</option>
+      
+        <option value="133">Underscore 1.4.3</option>
+      
+        <option value="111">Underscore 1.3.3</option>
+      
+    </optgroup>
+    
+    <optgroup label="Vue">
+      
+        <option value="236">Vue (edge)</option>
+      
+        <option value="289">Vue 1.0.12</option>
+      
+        
+      
+    </optgroup>
+    
+    <optgroup label="WebApp Install">
+      
+        <option value="142">WebApp Install 0.1</option>
+      
+    </optgroup>
+    
+    <optgroup label="YUI">
+      
+        
+      
+        <option value="230">YUI 3.17.2</option>
+      
+        <option value="204">YUI 3.16.0</option>
+      
+        <option value="182">YUI 3.14.0</option>
+      
+        <option value="153">YUI 3.10.1</option>
+      
+        
+      
+        <option value="130">YUI 3.8.0</option>
+      
+        <option value="123">YUI 3.7.3</option>
+      
+        <option value="118">YUI 3.6.0</option>
+      
+        <option value="102">YUI 3.5.0</option>
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        <option value="9">YUI 2.8.0r4</option>
+      
+        
+      
+    </optgroup>
+    
+    <optgroup label="Zepto">
+      
+        <option value="90">Zepto 1.0rc1</option>
+      
+    </optgroup>
+    
+  </select>
+  <label for="js_lib"><i class="bts bt-angle-down"></i></label>
+</div>
+
+<ul id="js_dependency">
+  
+
+</ul>
+
+  
+
+
+<h3>Load type</h3>
+<div class="selectCont">
+  <select name="js_wrap" id="id_js_wrap">
+<option value="l" selected="selected">onLoad</option>
+<option value="d">onDomready</option>
+<option value="h">No wrap - in &lt;head&gt;</option>
+<option value="b">No wrap - in &lt;body&gt;</option>
+</select>
+  <label for="js_wrap"><i class="bts bt-angle-down"></i></label>
+</div>
+
+
+  <h3>Framework &lt;script&gt; attribute</h3>
+  <p class="libraryTagAttributes">
+    <label>
+      <input id="id_js_lib_option" type="text" name="js_lib_option" maxlength="255" placeholder="ie. data-type=&quot;&quot;" value="">
+    </label>
+  </p>
+
+
+<script type="text/javascript">
+  window.addEvent('load', function() {
+    $('js_lib').addEvent('change', function() {
+      mooshell.loadDependencies(this.value);
+    })
+    if ($('library_group')) $('library_group').addEvent('change', function() {
+      mooshell.loadLibraryVersions(this.value);
+    })
+  });
+</script>
+
+</div> <!-- /windowSettings -->
+
+<div class="windowSettings css">
+  <h3>Language</h3>
+<div class="selectCont">
+  <select name="panel_css" class="panelChoice" id="panel_css_choice" data-panel_id="id_code_css" data-panel="css">
+    
+      <option data-mime-type="text/x-scss" value="0" selected="">CSS</option>
+    
+      <option data-mime-type="text/x-scss" value="1">SCSS</option>
+    
+  </select>
+  <label for="js_lib"><i class="bts bt-angle-down"></i></label>
+</div> <!-- /selectCont -->
+
+<h3>Options</h3>
+<p id="normalize_check">
+  <label class="checkboxCont"><input type="checkbox" name="normalize_css" id="id_normalize_css"><span class="checkbox"><i class="bts bt-check"></i></span> Normalized CSS</label>
+</p>
+
+</div> <!-- /windowSettings -->
+
+        </div>
+      
+    </form>
+
+    
+
+<script>
+  TogetherJSConfig_enableAnalytics = true;
+  TogetherJSConfig_cloneClicks = "#run, .toggler";
+  TogetherJSConfig_toolName = "Collaboration"
+</script>
+<script defer="" src="./TwoJS_WebGL_Testing_files/togetherjs.js.download"></script>
+
+
+    
+
+
+    
+      <script type="text/javascript">
+        window.addEvent('load', function() {
+          
+        });
+      </script>
+    
+  
+
+<span class="CodeMirror-error-tooltip"></span><div></div><div id="HW_frame_cont" style="height: 371px;"><iframe id="HW_frame" src="./TwoJS_WebGL_Testing_files/1xGMJQ.html" sandbox="allow-same-origin allow-scripts allow-top-navigation allow-popups" style="height: 371px;"></iframe></div><style id="HW_styles_cont">#HW_badge_cont {
+  visibility: hidden;
+  pointer-events: none;
+  display: block;
+  height: 32px;
+  width: 32px;
+  cursor: pointer;
+  position: relative;
+}
+
+#HW_badge_cont.HW_visible {
+  visibility: visible;
+  pointer-events: auto;
+}
+
+#HW_badge {
+  display: block;
+  border-radius: 20px;
+  background: #CD4B5B;
+  height: 16px;
+  width: 16px;
+  color: #fff;
+  text-align: center;
+  line-height: 16px;
+  font-size: 11px;
+  cursor: pointer;
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  opacity: 0;
+  transform: scale(0);
+  transition: all 0.3s;
+}
+
+#HW_badge.HW_softHidden {
+  background: #d4d4d4;
+  opacity: 1;
+  transform: scale(0.6);
+}
+
+#HW_badge.HW_hidden {
+  opacity: 0;
+  transform: scale(0);
+}
+
+#HW_badge.HW_visible {
+  opacity: 1;
+  transform: scale(1.0);
+}
+
+#HW_frame_cont {
+  pointer-events: none;
+  border-radius: 4px;
+  box-shadow: 0 0 1px rgba(99, 114, 130, 0.32), 0 8px 16px rgba(27, 39, 51, 0.08);
+  background: #fff;
+  border: none;
+  position: absolute;
+  top: -900em;
+  z-index: 999;
+  width: 340px;
+  height: 300px;
+  opacity: 0;
+  will-change: height, margin-top, opacity;
+  margin-top: -10px;
+  transition: margin-top 0.15s ease-out, opacity 0.1s ease-out, height 0.3s ease-out;
+}
+
+#HW_frame_cont.HW_visible {
+  opacity: 1;
+  pointer-events: auto;
+  margin-top: 0px;
+}
+
+#HW_frame {
+  background: #fff;
+  border: none;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  border-radius: 4px;
+  position: relative;
+  z-index: 900;
+  transition: height 0.3s ease-out;
+}</style></body></html>

@@ -15,40 +15,79 @@
     <script src='./GameModel/GameObjects/GameObject.js'></script>
     <script src='../common.js'></script>
   <body>
-    <svg id='outputDOM' width=500 height=500 style='border: solid black 1px'></svg>    
-    <div id='tag1'></div>
-    <script src='./Render/SvgModels.js'></script>
+    <div id='outputDOM' style='border: solid black 1px;width: 90%; height: 800px; margin: auto'></div>        
+    <div id='SvgModels' style='display: none; padding: 10%; background-color: lightgray'></div>  
     <script>
+      
       //Models loader
       var dir = "./Render/Models";      
-      var fileextension = ".svg";
+      var fileextension = ".svg";      
       $.ajax({
           //This will retrieve the contents of the folder if the folder is configured as 'browsable'
           url: dir,
           success: function (data) {
-              //List all .png file names in the page              
-              $(data).find("a:contains(" + fileextension + ")").each(function () {
-                  var filename = this.href.replace("http://", "");
-                  console.log(this)
-                  $("body").append("<img src='" + filename + "'>");
-              });
+              //List all .png file names in the page     
+              var files = $(data).find("a:contains(" + fileextension + ")");
+              var count = 0;
+              files.each(function (e) {
+                  var filename = this.href.replace("http://", "");                                    
+                  $('#SvgModels').load(this.href, function(){
+                    count++;                    
+                    if (files.length == count) init();
+                  });                  
+                  //$("body").append("<img src='" + filename + "'>");                  
+              });              
+              //init();
           }
       });
     </script>
     <script>     
-      var outputDOM = document.getElementById('outputDOM');
+      var SVG_MODELS = {};
+      var core,gameModel,render;
+      function init(){
+        console.warn('init')
+        var outputDOM = document.getElementById('outputDOM');
+        var SvgModelsDOM = document.getElementById('SvgModels');        
+        var svgs = SvgModelsDOM.getElementsByTagNameNS('http://www.w3.org/2000/svg','svg');        
+        SVG_MODELS = {};              
+        for (var s = 0; s < svgs.length; svgs++){        
+          var type = svgs[s].getElementsByTagName('title')[0].innerHTML || 'Other';
+          if (!(type in SVG_MODELS)) SVG_MODELS[type] = [];
+          for (var c in svgs[s].childNodes){            
+            if (svgs[s].childNodes[c].nodeName == 'g')  
+              SVG_MODELS[type].push(svgs[s].childNodes[c]);                           
+          }
+        }                                      
 
-      var core = new Core();      
-      var gameModel = core.initGameModel();      
-      var render = core.createRender(outputDOM, Render);      
+        core = new Core();      
+        gameModel = core.initGameModel({map:new Map(240,240)});      
+        render = core.createRender(outputDOM, Render);      
+        
+        for (var x = 6; x < gameModel.map.width-15; x += 10)
+          for (var y = 6; y < gameModel.map.height-15; y += 10){
+            var simpleObject = new GameObject(new Pos(x,y),3,3,[1,0,0,0],1,{speed: 5})
+            gameModel.addObject(simpleObject)                
 
-      var simpleObject = new GameObject(new Pos(1,1),3,3,[1,0,0,0],1,{speed: 1})
-      gameModel.addObject(simpleObject)
-      simpleObject.actions.rotate([0,1,0,0]);
+            var path = [1,1,1,2,2,2,2,2,2,2,1,1,1,1,1,3,3,3,3,1,1,1,0,0,0,0,0];
+            simpleObject.actions.setPath(path);
+            simpleObject.actions.followPath(path);
+          }
+      }
 
-      var path = [1,1];
-      simpleObject.actions.setPath(path);
-      simpleObject.actions.followPath(path);
+      /*function rotateTop(){
+          simpleObject.actions.rotate([1,0,0,0]);
+          setTimeout(function rotateRight(){
+            simpleObject.actions.rotate([0,1,0,0]);
+            setTimeout(function rotateBottom(){
+              simpleObject.actions.rotate([0,0,1,0]);
+              setTimeout(function rotateRight(){
+                simpleObject.actions.rotate([0,0,0,1]);
+                setTimeout(rotateTop,1000);      
+              },1000)
+            },1000)
+          },1000)
+        }*/
+        //rotateTop();
     </script>
   </body>
 </html>
