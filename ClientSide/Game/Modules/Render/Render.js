@@ -9,7 +9,7 @@ function Render(outputDOM,core){
   this.outputDOM = outputDOM;
   this.jqDOM = $(outputDOM)
   this.InAnimating = {};
-  this.two = new Two({type: Two.Types.svg,width: $(outputDOM).width(), height: $(outputDOM).height()}).appendTo(outputDOM).play();    
+  this.two = new Two({autostart: true, type: Two.Types.svg,width: $(outputDOM).width(), height: $(outputDOM).height()}).appendTo(outputDOM)
   this.totalGroup = this.two.makeGroup();  
   this.totalMatrix = this.totalGroup._matrix;
   this.availableModels = {};
