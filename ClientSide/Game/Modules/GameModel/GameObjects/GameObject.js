@@ -55,7 +55,7 @@ function GameObject(pos,width,height,rotation,hp,other){
       return gobj;
     },
     'setPath': function(path){
-      gobj.pathProps = {
+      gobj.pathProps = { 
         isFollowing: false,
         index: 0,
         path: path
