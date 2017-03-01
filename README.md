@@ -19,7 +19,7 @@ You need installed NodeJs to launch signaling server.
 * Third, in project folder run the command
 
 ```
-npm install express node-static socket.io && node server.js 
+npm install express node-static socket.io serve-index && node server.js 
 ```
 
 Congratulation, you started signaling/web server.
