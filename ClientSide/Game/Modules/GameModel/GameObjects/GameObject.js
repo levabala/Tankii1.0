@@ -47,10 +47,12 @@ function GameObject(pos,width,height,rotation,hp,other){
           rotate(directionToRotation(direction));
         move();
       }
+      return gobj;
     },
     'rotate': function(rotation){
       if (!gobj.moveOn) rotate(rotation);
       else gobj.afterMoveActions.rotate = rotation;
+      return gobj;
     },
     'setPath': function(path){
       gobj.pathProps = {
@@ -59,6 +61,7 @@ function GameObject(pos,width,height,rotation,hp,other){
         path: path
       };
       rotate(directionToRotation(path[0]));
+      return gobj;
     },
     'followPath': function(){
       //setTimeout(function(){
@@ -66,6 +69,7 @@ function GameObject(pos,width,height,rotation,hp,other){
         gobj.pathProps.index++;
         move();
       //},Math.random() * 1000);
+      return gobj;
     },
     'stop': function(){
       gobj.moveOn = 0;
@@ -73,6 +77,7 @@ function GameObject(pos,width,height,rotation,hp,other){
         move: null,
         rotate: null
       }
+      return gobj;
     }
   }
 

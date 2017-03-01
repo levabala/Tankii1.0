@@ -10,7 +10,7 @@ function Render(outputDOM,core){
   this.jqDOM = $(outputDOM)
   this.InAnimating = {};
   this.two = new Two({autostart: true, type: Two.Types.svg,width: $(outputDOM).width(), height: $(outputDOM).height()}).appendTo(outputDOM)
-  this.totalGroup = this.two.makeGroup();  
+  this.totalGroup = this.two.makeGroup();    
   this.totalMatrix = this.totalGroup._matrix;
   this.availableModels = {};
 
@@ -62,7 +62,12 @@ function Render(outputDOM,core){
     map.fitToContainer(render.jqDOM.width(),render.jqDOM.height());
     render.map = map;    
     console.log('map scale:',map.xcoeff, map.ycoeff)    
-    render.totalGroup.scale = map.xcoeff;
+    render.totalGroup.scale = map.xcoeff;    
+    var ground = render.two.makeRectangle(map.width/2,map.height/2,map.width+1,map.height+1);    
+    ground.fill = 'lightgreen';
+    ground.opacity = 0.3;
+    ground.linewidth = 0.1;
+    render.totalGroup.add(ground)
     /*var littleCirclesGroup = render.two.makeGroup();
     for (var x = 0; x < map.width+1; x++)
       for (var y = 0; y < map.height+1; y++){
