@@ -6,9 +6,9 @@ function KeyboardC(){
   this.keyBindings = {
     keydown: {
       38: function(){kc.executeAction('move',[0])},
-      39: function(){kc.executeAction('move',[1])},
-      40: function(){kc.executeAction('move',[2])},
-      37: function(){kc.executeAction('move',[3])},
+      39: function(){kc.targetObject.actions.setPath([1,1,1,1]).actions.followPath();},
+      40: function(){kc.targetObject.actions.setPath([2,2,2,2]).actions.followPath();},
+      37: function(){kc.targetObject.actions.setPath([3,3,3,3]).actions.followPath();},
     },
     keypress: {},
     keyup: {
@@ -19,7 +19,7 @@ function KeyboardC(){
     }
   };
 
-  document.body.addEventListener('keydown',function(e){
+  document.body.addEventListener('keydown',function(e){    
     if (e.keyCode in kc.keyBindings.keydown)
       kc.keyBindings.keydown[e.keyCode]();
   });

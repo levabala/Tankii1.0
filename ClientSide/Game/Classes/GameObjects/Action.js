@@ -87,7 +87,7 @@ function MoveVertical(obj,distance,callbacks){
   var condition = (sign > 0) ? bottomMovingCondition : topMovingCondition;
 
   callbacks.start();
-  var p1 = performance.now();
+  var p1 = performance.now(); 
   move();
   function move(){
     y += dy;

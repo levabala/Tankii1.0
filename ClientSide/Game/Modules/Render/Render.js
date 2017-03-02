@@ -85,11 +85,13 @@ function Render(outputDOM,core){
   this.setObjects = function(arr){
     for (var o in arr)
       render.createGraphicalInstance(arr[o]);
-  }
+  } 
 
+  var frameCounter = $('frameCounter')[0];
   this.redraw = function(){
     for (var m in render.InAnimating) 
-      render.InAnimating[m].animate();
+      render.InAnimating[m].animate(render.two.frameCount);
+    frameCounter.value = render.two.frameCount;
   }
   this.two.bind('update',render.redraw);
 
@@ -101,6 +103,7 @@ function Render(outputDOM,core){
   }
   function ObjectMoveStart(config){
     //console.log('move start')
+    config.frame = render.two.frameCount;
     render.InAnimating[config.id] = render.instances[config.id];
     render.instances[config.id].moveStart(config);
     //render.onObjectMoveStart(config)

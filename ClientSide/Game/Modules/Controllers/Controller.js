@@ -4,6 +4,7 @@ function Controller(){
   this.targetObject = false;
   this.shortcuts = {
     stopMoving: function(){
+      console.log('stop')
       controller.executeAction('stop');  
     }
   } 

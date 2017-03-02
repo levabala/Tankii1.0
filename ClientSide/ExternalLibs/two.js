@@ -3756,7 +3756,7 @@
   // Request Animation Frame
 
   (function() {
-
+        
     requestAnimationFrame(arguments.callee);
 
     Two.Instances.forEach(function(t) {

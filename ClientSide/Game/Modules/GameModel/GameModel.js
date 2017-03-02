@@ -10,7 +10,9 @@ function GameModel(map){
 
   var counter = 0;
   this.objects = {};
+  this.inMoving = {};
   this.map = map;
+  var framesCount = 0;
 
   var checkCollisionFuns = [
     function topCollisionCheck(pos,width,height){
@@ -38,12 +40,14 @@ function GameModel(map){
 
   this.addObject = function(obj){
     obj.id = counter;
+    model.inMoving[obj.id] = false;
     obj.moveOnMap = function(time){
       var collRes = checkCollisionFuns[obj.rotationIndex](obj.pos,obj.width,obj.height);
       if (collRes){ //bumped to smth
-        return collRes;
+        return {nowFrame: framesCount, bumpedObject: collRes};
       }
       else {
+        model.inMoving[obj.id] = true;
         model.map.moveObjectByOneCell[obj.rotationIndex](obj);
         var lastPos = obj.pos.clone();
         obj.pos.X += obj.rotation[1] - obj.rotation[3];
@@ -52,7 +56,7 @@ function GameModel(map){
         model.dispatchEvent('objectMoveStart', {
           id: obj.id, 
           rotation: obj.rotation, 
-          time: time, 
+          frame: framesCount, 
           axis: (obj.rotation[1] || obj.rotation[3]) ? 'X' : 'Y',
           startPosition: lastPos,
           targetPosition: obj.pos,
@@ -60,9 +64,10 @@ function GameModel(map){
           speed: obj.speed,          
         });
       }
-      return false;
+      return {nowFrame: framesCount, bumpedObject: false};
     }
     obj.addEventListener('moved', function(){
+      model.inMoving[obj.id] = false;
       model.dispatchEvent('objectMoveEnd', {id: obj.id, rotation: obj.rotation, pos: obj.pos})
     });
     obj.addEventListener('change', function(config){
@@ -88,4 +93,20 @@ function GameModel(map){
     delete model.objects[id];
     model.dispatchEvent('objectRemoved',id)
   }
+
+  !function FramesCounter(){
+    framesCount++;
+    for (var id in model.inMoving)
+      if (model.inMoving[id]) model.objects[id].dispatchAfterMove(framesCount);
+
+    requestAnimationFrame(FramesCounter);
+  }();
+
+  !function afterMoveDispatcher(){
+    var time = performance.now();    
+    for (var id in model.inMoving)
+      if (model.inMoving[id]) model.objects[id].dispatchAfterMove(time);
+    //setTimeout(afterMoveDispatcher,0);
+    //requestAnimationFrame(afterMoveDispatcher);
+  }();
 }

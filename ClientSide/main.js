@@ -20,7 +20,7 @@ connector.addEventListener('roomInstanceCreated', function(room){
     console.warn(prefix, 'Initializaed as host')
     if (room.name == 'ChatRoom') return;
 
-    var map = new Map(223,123);
+    var map = new Map(123,63);
     window.getMap = function(){
       console.log(map.generateTextView())
     }
@@ -28,14 +28,15 @@ connector.addEventListener('roomInstanceCreated', function(room){
     //svg.append(map.generateMesh());
     var gameroom = new GameRoom(snap,map)
     var agos = [];
-    for (var i = 5; i < map.height-3; i += 5){
-      var ago = new Tank(new Pos(5,i),3,3,[0,0,1,0],5,snap,{
-        speed: 8,//1.5,
-        color: 'brown'
-      })
-      agos.push(ago)
-      gameroom.addObject(ago)
-    }
+    for (var x = 5; x < map.width-20; x += 5)
+      for (var y = 5; y < map.height-3; y += 5){
+        var ago = new Tank(new Pos(x,y),3,3,[0,0,1,0],5,snap,{
+          speed: 8,//1.5,
+          color: 'brown'
+        })
+        agos.push(ago)
+        gameroom.addObject(ago)
+      }
     console.warn('agos.length:',agos.length)
 
 
