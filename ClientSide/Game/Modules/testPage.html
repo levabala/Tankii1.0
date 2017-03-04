@@ -17,10 +17,10 @@
     <script src='./GameModel/GameObjects/GameObject.js'></script>
     <script src='../common.js'></script>
   <body>
-    <input type='text' id='frameCounter' size=6/>
     <div id='outputDOM' style='border: solid black 1px;width: 90%; height: 800px; margin: auto'></div>        
     <div id='SvgModels' style='display: none; padding: 10%; background-color: lightgray'></div>  
-    <script>      
+    <script>
+      
       //Models loader
       var dir = "./Render/Models";      
       var fileextension = ".svg";      
@@ -62,13 +62,13 @@
         }                                      
 
         core = new Core();      
-        gameModel = core.initGameModel({map:new Map(55,55)});//(83,83)});      
+        gameModel = core.initGameModel({map:new Map(35,35)});//(83,83)});      
         render = core.createRender(outputDOM, Render);      
         
         var simpleObjects = [];
         for (var x = 6; x < gameModel.map.width-25; x += 10)
           for (var y = 3; y < gameModel.map.height-4; y += 4){
-            var simpleObject = new GameObject(new Pos(x,y),3,3,[1,0,0,0],1,{speed: 0.1})
+            var simpleObject = new GameObject(new Pos(x,y),3,3,[1,0,0,0],1,{speed: 10})
             simpleObjects.push(simpleObject)
             gameModel.addObject(simpleObject)                
 

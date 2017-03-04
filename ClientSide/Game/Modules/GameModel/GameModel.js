@@ -12,12 +12,11 @@ function GameModel(map){
   this.objects = {};
   this.inMoving = {};
   this.map = map;
-  var framesCount = 0;
 
   var checkCollisionFuns = [
     function topCollisionCheck(pos,width,height){
-      for (var x = 0; x < width; x++){
-        if (model.map.field[pos.X+x][pos.Y-1].obj.physical) return obj; // && obj.id != model.id
+      for (var x = 0; x < width; x++){        
+        if (model.map.field[pos.X+x][pos.Y-1].obj.physical) return model.map.field[pos.X+x][pos.Y-1].obj; // && obj.id != model.id
       }
       return false;
     },
@@ -44,7 +43,7 @@ function GameModel(map){
     obj.moveOnMap = function(time){
       var collRes = checkCollisionFuns[obj.rotationIndex](obj.pos,obj.width,obj.height);
       if (collRes){ //bumped to smth
-        return {nowFrame: framesCount, bumpedObject: collRes};
+        return collRes;
       }
       else {
         model.inMoving[obj.id] = true;
@@ -56,7 +55,7 @@ function GameModel(map){
         model.dispatchEvent('objectMoveStart', {
           id: obj.id, 
           rotation: obj.rotation, 
-          frame: framesCount, 
+          time: time, 
           axis: (obj.rotation[1] || obj.rotation[3]) ? 'X' : 'Y',
           startPosition: lastPos,
           targetPosition: obj.pos,
@@ -64,7 +63,7 @@ function GameModel(map){
           speed: obj.speed,          
         });
       }
-      return {nowFrame: framesCount, bumpedObject: false};
+      return false;
     }
     obj.addEventListener('moved', function(){
       model.inMoving[obj.id] = false;
@@ -94,19 +93,11 @@ function GameModel(map){
     model.dispatchEvent('objectRemoved',id)
   }
 
-  !function FramesCounter(){
-    framesCount++;
-    for (var id in model.inMoving)
-      if (model.inMoving[id]) model.objects[id].dispatchAfterMove(framesCount);
-
-    requestAnimationFrame(FramesCounter);
-  }();
-
   !function afterMoveDispatcher(){
     var time = performance.now();    
     for (var id in model.inMoving)
       if (model.inMoving[id]) model.objects[id].dispatchAfterMove(time);
-    //setTimeout(afterMoveDispatcher,0);
+    setTimeout(afterMoveDispatcher,0);
     //requestAnimationFrame(afterMoveDispatcher);
   }();
 }

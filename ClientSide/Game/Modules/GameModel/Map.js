@@ -36,7 +36,7 @@ function Map(width,height){
   this.moveObjectByOneCell = [
     function toTop(obj){
       for (var dx = 0; dx < obj.width; dx++){
-        map.field[obj.pos.X + dx][obj.pos.Y + obj.height].obj = {physical: false};
+        map.field[obj.pos.X + dx][obj.pos.Y + obj.height - 1].obj = {physical: false};
         map.field[obj.pos.X + dx][obj.pos.Y - 1].obj = obj;
       }
     },

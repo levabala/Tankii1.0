@@ -77,7 +77,10 @@ function Render(outputDOM,core){
         littleCirclesGroup.add(circle);
       }    
     render.totalGroup.add(littleCirclesGroup)*/
-    render.onMapSet(map);
+
+    //setInterval(function(){console.log(map.generateTextView());},100);
+
+    render.onMapSet(map);    
   }
   this.onMapSet = function(){
 
@@ -85,13 +88,12 @@ function Render(outputDOM,core){
   this.setObjects = function(arr){
     for (var o in arr)
       render.createGraphicalInstance(arr[o]);
-  } 
+  }
 
-  var frameCounter = $('frameCounter')[0];
   this.redraw = function(){
+    var nowTime = performance.now();
     for (var m in render.InAnimating) 
-      render.InAnimating[m].animate(render.two.frameCount);
-    frameCounter.value = render.two.frameCount;
+      render.InAnimating[m].animate(nowTime);
   }
   this.two.bind('update',render.redraw);
 
@@ -103,7 +105,6 @@ function Render(outputDOM,core){
   }
   function ObjectMoveStart(config){
     //console.log('move start')
-    config.frame = render.two.frameCount;
     render.InAnimating[config.id] = render.instances[config.id];
     render.instances[config.id].moveStart(config);
     //render.onObjectMoveStart(config)

@@ -2,6 +2,7 @@ function GameObject(pos,width,height,rotation,hp,other){
   Reactor.apply(this,[]);
   this.registerEvent('move');
   this.registerEvent('moved');
+  this.registerEvent('stop');
   this.registerEvent('change');
   this.registerEvent('pathFinished');
 
@@ -19,7 +20,6 @@ function GameObject(pos,width,height,rotation,hp,other){
     move: null //null - no moving, other value - direction of rotating before moving
   }; //here we have rotation index of the next moving. -1 is equals to 'no next moving'
   this.afterMoveDispatchTime = 0;
-  this.afterMoveDispatchFrame = 0;
   this.rotationIndex = 0;
   this.rotationAngle = gobj.rotation[0] * 180 + gobj.rotation[1] * 270 + gobj.rotation[3] * 90;
   this.hp = (hp == 'immortal') ? 1 : hp;
@@ -61,8 +61,7 @@ function GameObject(pos,width,height,rotation,hp,other){
         isFollowing: false,
         index: 0,
         path: path
-      };
-      rotate(directionToRotation(path[0]));
+      };      
       return gobj;
     },
     'followPath': function(){      
@@ -70,8 +69,10 @@ function GameObject(pos,width,height,rotation,hp,other){
         gobj.pathProps.isFollowing = gobj.pathProps.path.length > 1;      
         gobj.pathProps.index++;
       }
-      if (!gobj.moveOn)
+      if (!gobj.moveOn){
+        rotate(directionToRotation(gobj.pathProps.path[0]));
         move();      
+      }
       return gobj;
     },
     'stop': function(){
@@ -106,26 +107,22 @@ function GameObject(pos,width,height,rotation,hp,other){
   var afterMoveTimeout;
   function move(){
     var time = performance.now();
-    var config = gobj.moveOnMap(time);
-    if (!config.bumpedObject) {
+    var bumpedObject = gobj.moveOnMap(time);
+    if (!bumpedObject) {
       //console.log('native move to',gobj.pos)
       gobj.moveOn = 1;
       //gobj.dispatchEvent('move',performance.now())
       var moveTime = 1 / (gobj.speed / 1000);      
-      var framesForMove = Math.floor(1 * (1 / gobj.speed));
       gobj.afterMoveDispatchTime = time + moveTime;
-      gobj.afterMoveDispatchFrame = config.nowFrame + framesForMove;      
-      //console.log(config, framesForMove)
       clearTimeout(afterMoveTimeout);
       //afterMoveTimeout = setTimeout(afterMove,moveTime);
     }
-    else console.log('native bumped to', config.bumpedObject)
+    else console.log('native bumped')// to', bumpedObject)
   }
 
-  this.dispatchAfterMove = function(nowFrame){
+  this.dispatchAfterMove = function(time){
     //console.log(Math.floor(time), Math.floor(gobj.afterMoveDispatchTime))
-    //console.log(nowFrame, gobj.afterMoveDispatchFrame)
-    if (nowFrame >= gobj.afterMoveDispatchFrame){      
+    if (time >= gobj.afterMoveDispatchTime){      
       //console.log(time - gobj.afterMoveDispatchTime)  
       afterMove();      
     }

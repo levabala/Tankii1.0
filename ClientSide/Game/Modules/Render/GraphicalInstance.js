@@ -29,15 +29,15 @@ function GraphicalInstance(obj,availableModels,totalGroup){
     from: 0,     
     speedms: 0,
     props: {}
-  }
+  }  
 
   this.remove = function(){
     for (var s in vi.snapParts)    
       vi.snapParts[s].remove(); 
   }
   this.moveStart = function(config){
-    animation.startFrame = config.frame;
-    animation.speed = config.speed;    
+    animation.startTime = config.time;
+    animation.speedms = config.speed / 1000;
     animation.from = config.startPosition;
     animation.props = {
       axis: config.axis,
@@ -47,10 +47,9 @@ function GraphicalInstance(obj,availableModels,totalGroup){
   this.moveEnd = function(config){
     vi.MoveGroup.translation.set(config.pos.X,config.pos.Y);
   }
-  this.animate = function(framesCount){
-    var nowTime = performance.now();
+  this.animate = function(nowTime){    
     var delta = {X: 0, Y: 0};
-    delta[animation.props.axis] += (framesCount - animation.startFrame) * animation.speed * animation.props.sign;        
+    delta[animation.props.axis] += (nowTime - animation.startTime) * animation.speedms * animation.props.sign;    
     vi.MoveGroup.translation.set(animation.from.X + delta.X,animation.from.Y + delta.Y);
   }
   this.change = function(prop,value){    
