@@ -14,7 +14,7 @@ function Core(){
     Interface: null
   }
   this.players = {};
-  this.history = [];
+  this.history = []; 
 
   this.initGameModel = function(config){
     core.modules.GameModel = new GameModel(config.map || new Map(12,12));
