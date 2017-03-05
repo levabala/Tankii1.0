@@ -6,7 +6,7 @@ var scripts = [
 ]
 importScripts.apply(this,scripts);
 
-log('Worker loaded')
+log('Worker loaded');
 
 var GameModel;
 
@@ -29,17 +29,25 @@ var messagesMap = {
       post('objectChanged',config)
     })
     log('GameModel created')
+  },
+  'addObject': function(config){ //config = {type: type, args: arguments}
+    var obj = construct(self[config.type],config.args)
+    GameModel.addObject(obj);
+    log(obj.id)
+  },
+  'objectAction': function(config){ //config = {id: obj_id, action: actionName, args: arguments}    
+    GameModel.objects[config.id].actions[config.action].apply(this,config.args);
   }
 }
-self.addEventListener('message', function(message){
-  message = Message.fromJSON(message.data);
+self.addEventListener('message', function(message){  
+  message = Message.fromJSON(message.data);  
   if (message.type in messagesMap)
     messagesMap[message.type](message.value)
   else GameModel[message.type](message.value);
 })
 
 function log(text){
-  self.postMessage(JSON.stringify({type: 'log', value: text})) //for speed
+  self.postMessage(JSON.stringify({type: 'log', value: text})); //for speed
 }
 function post(type,value){
   self.postMessage(new Message(type,value).toJSON())

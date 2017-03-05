@@ -101,3 +101,4 @@ function GameModel(map){
     //requestAnimationFrame(afterMoveDispatcher);
   }();
 }
+

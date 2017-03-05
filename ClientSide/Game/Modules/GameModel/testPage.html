@@ -3,33 +3,27 @@
     <script src='Map.js'></script>
     <script src='GameModel.js'></script>
     <script src='GameObjects/GameObject.js'></script>
+    <script src='../WebWorkerPresenter/WWPresenter.js'></script>
     <script src='../../common.js'></script>
   <body>
-    <script>
-      console.warn('Loaded');
+    <script>      
       var map = new Map(10,10);
-      var model = new GameModel(map);
+      var worker = new Worker('./GameModelWWorker.js');
+      worker.addEventListener('message',function(e){var mess = Message.fromJSON(e.data); console.log(mess.type,':\n',mess.value)})
+      var wwpresenter = new WWPresenter(worker);
+      wwpresenter.sendMessage(new Message('init',{width: 20, height: 10}));      
+      //var model = new GameModel(map);
 
-      var startTime, endTime;
-      model.addEventListener('objectChanged', function(config){
-        //console.log('object(id',config.obj.id+')','change:',config.property,'->',config.value)
-      })
-      model.addEventListener('objectMoveStart', function(){
-        startTime = performance.now();
-        //console.log('start move animation')
-      })
-      model.addEventListener('objectMoveEnd', function(){
-        endTime = performance.now();
-        //console.log('move animation finished:',endTime-startTime+'ms')
-      });
-
-      var simpleObject = new GameObject(new Pos(1,1),3,3,[1,0,0,0],1,{speed: 2})
-      model.addObject(simpleObject)
-      simpleObject.actions.rotate([0,1,0,0]);
+      //var simpleObject = new GameObject(new Pos(1,1),3,3,[1,0,0,0],1,{speed: 2})
+      //model.addObject(simpleObject)
+      wwpresenter.sendMessage(new Message('addObject',{type: 'GameObject', args: [new Pos(1,1),3,3,[1,0,0,0],1,{speed: 2}]}))            
+      //simpleObject.actions.rotate([0,1,0,0]);
 
       var path = [1,1,1,2,2,3,3,2];
-      simpleObject.actions.setPath(path);
-      simpleObject.actions.followPath(path);
+      //simpleObject.actions.setPath(path);
+      wwpresenter.sendMessage(new Message('objectAction',{id: 0, action: 'setPath', args: [path]}))      
+      //simpleObject.actions.followPath();
+      wwpresenter.sendMessage(new Message('objectAction',{id: 0, action: 'followPath', args: [path]}))      
     </script>
   </body>
 </html>

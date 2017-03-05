@@ -12,6 +12,18 @@ function Event(name){
   }
 }
 
+function newClass(Cls) {
+    return new (Function.prototype.bind.apply(Cls, arguments));    
+}
+
+function construct(constructor, args) {
+    function F() {
+        return constructor.apply(this, args);
+    }
+    F.prototype = constructor.prototype;
+    return new F();
+}
+
 function Message(type,value){
   var mess = this;
   this.type = type;
@@ -19,6 +31,9 @@ function Message(type,value){
 
   this.toJSON = function(){
     return JSON.stringify({type: mess.type, value: mess.value});
+  }
+  this.toString = function(){
+    return mess.type + ': ' + mess.value;
   }
 }
 

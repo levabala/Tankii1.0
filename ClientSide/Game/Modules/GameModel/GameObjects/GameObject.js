@@ -10,6 +10,7 @@ function GameObject(pos,width,height,rotation,hp,other){
 
   this.skin = 'GameObject';
 
+  if (!pos.clone) pos = new Pos(pos.X, pos.Y)
   this.pos = pos.clone();
   this.width = width;
   this.height = height;
@@ -36,7 +37,13 @@ function GameObject(pos,width,height,rotation,hp,other){
   for (var o in other) this[o] = other[o];
   this.moveOnMap = function(){
 
-  }
+  };
+
+  this.createSnap = function(){
+    var snap = [gobj.pos,gobj.width,gobj.height,gobj.rotation,gobj.hp,{}];
+    for (var o in other) snap[snap.length][o] = gobj[o];
+    return snap;
+  };
 
   this.actions = {
     'move': function(direction){
@@ -64,24 +71,21 @@ function GameObject(pos,width,height,rotation,hp,other){
       };      
       return gobj;
     },
-    'followPath': function(){      
-      if (!gobj.pathProps.isFollowing){
-        gobj.pathProps.isFollowing = gobj.pathProps.path.length > 1;      
-        gobj.pathProps.index++;
-      }
-      if (!gobj.moveOn){
-        rotate(directionToRotation(gobj.pathProps.path[0]));
-        move();      
-      }
+    'followPath': function(){
+      setTimeout(() => {      
+        if (!gobj.pathProps.isFollowing){
+          gobj.pathProps.isFollowing = gobj.pathProps.path.length > 1;      
+          gobj.pathProps.index++;
+        }
+        if (!gobj.moveOn){
+          rotate(directionToRotation(gobj.pathProps.path[0]));
+          move();      
+        }
+      }, Math.random() * 2000);
       return gobj;
     },
     'stop': function(){
-      gobj.moveOn = 0;
-      gobj.pathProps.isFollowing = false;
-      gobj.afterMoveActions = {
-        move: null,
-        rotate: null
-      }
+      stop();
       return gobj;
     }
   }
@@ -114,10 +118,22 @@ function GameObject(pos,width,height,rotation,hp,other){
       //gobj.dispatchEvent('move',performance.now())
       var moveTime = 1 / (gobj.speed / 1000);      
       gobj.afterMoveDispatchTime = time + moveTime;
-      clearTimeout(afterMoveTimeout);
+      //clearTimeout(afterMoveTimeout);
       //afterMoveTimeout = setTimeout(afterMove,moveTime);
     }
-    else console.log('native bumped')// to', bumpedObject)
+    else {
+      stop();
+      console.log('native bumped')// to', bumpedObject)
+    }
+  }
+
+  function stop(){
+    gobj.moveOn = 0;
+    gobj.pathProps.isFollowing = false;
+    gobj.afterMoveActions = {
+      move: null,
+      rotate: null
+    }
   }
 
   this.dispatchAfterMove = function(time){
