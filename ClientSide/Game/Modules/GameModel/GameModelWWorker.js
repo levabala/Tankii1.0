@@ -36,7 +36,7 @@ var messagesMap = {
       var property = config.path[p]
       temp = temp[property];
     }
-    temp.apply(config.args);    
+    temp.apply(config.args);     
   },
   'createObject': function(config){ //config = {type: type, args: arguments}
     var obj = construct(self[config.type],config.args)
