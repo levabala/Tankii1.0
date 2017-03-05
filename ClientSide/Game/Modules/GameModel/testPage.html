@@ -3,27 +3,33 @@
     <script src='Map.js'></script>
     <script src='GameModel.js'></script>
     <script src='GameObjects/GameObject.js'></script>
-    <script src='../WebWorkerPresenter/WWPresenter.js'></script>
+    <script src='../WebWorkerPresenter/WWInterface.js'></script>
     <script src='../../common.js'></script>
   <body>
     <script>      
-      var map = new Map(10,10);
-      var worker = new Worker('./GameModelWWorker.js');
-      worker.addEventListener('message',function(e){var mess = Message.fromJSON(e.data); console.log(mess.type,':\n',mess.value)})
-      var wwpresenter = new WWPresenter(worker);
-      wwpresenter.sendMessage(new Message('init',{width: 20, height: 10}));      
-      //var model = new GameModel(map);
+      //create GameModel WebWorker Interface
+      var gmInterface = new WWInterface(new GameModel(),new Worker('./GameModelWWorker.js'))
+      //listen for messages
+      gmInterface.worker.addEventListener('message',function(e){
+        var mess = Message.fromJSON(e.data); console.log(mess.type,':\n',mess.value)
+      });
+      //initialize GameModel
+      gmInterface.sendMessage('init',{width: 20, height: 10});      
 
-      //var simpleObject = new GameObject(new Pos(1,1),3,3,[1,0,0,0],1,{speed: 2})
-      //model.addObject(simpleObject)
-      wwpresenter.sendMessage(new Message('addObject',{type: 'GameObject', args: [new Pos(1,1),3,3,[1,0,0,0],1,{speed: 2}]}))            
-      //simpleObject.actions.rotate([0,1,0,0]);
-
+      /*--- Create GameObject ---*/      
+      //with shortcut
+      gmInterface.sendMessage('createObject',{type: 'GameObject', args: [new Pos(1,1),3,3,[1,0,0,0],1,{speed: 2}]});
+      //direct call      
+      gmInterface.callMethod(['createObject'],{type: 'GameObject', args: [new Pos(1,1),3,3,[1,0,0,0],1,{speed: 2}]})
+      
+      /*--- Call object's method ---*/      
       var path = [1,1,1,2,2,3,3,2];
-      //simpleObject.actions.setPath(path);
-      wwpresenter.sendMessage(new Message('objectAction',{id: 0, action: 'setPath', args: [path]}))      
-      //simpleObject.actions.followPath();
-      wwpresenter.sendMessage(new Message('objectAction',{id: 0, action: 'followPath', args: [path]}))      
+      //with shortcut
+      gmInterface.sendMessage('objectAction',{id: 0, action: 'setPath', args: [path]})            
+      gmInterface.sendMessage('objectAction',{id: 0, action: 'followPath', args: []}) 
+      //direct call      
+      gmInterface.callMethod(['objects',0,'actions','setPath'],[path])
+      gmInterface.callMethod(['objects',0,'actions','followPath'],[])
     </script>
   </body>
 </html>

@@ -1,4 +1,5 @@
 function GameModelWWInterface(workerUrl){
+  Reactor.apply(this,[]);
   var wwinterface = this;
   this.worker = new Worker(workerUrl);    
   var messagesCounter = 0;
@@ -20,7 +21,7 @@ function GameModelWWInterface(workerUrl){
   };
 
   this.getObjectSnap = function(id){
-    sendMessage()
+    sendMessage('getObjectSnap', id)
   };
 
   function sendMessage(type,value){    

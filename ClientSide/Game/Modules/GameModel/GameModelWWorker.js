@@ -1,5 +1,5 @@
 var scripts = [
-  './GameModel.js',
+  './gameModel.js',
   './Map.js',
   './GameObjects/GameObject.js',
   '../../common.js'
@@ -8,42 +8,50 @@ importScripts.apply(this,scripts);
 
 log('Worker loaded');
 
-var GameModel;
+var gameModel;
 
 var messagesMap = {
   'init': function(config){
-    GameModel = new GameModel(new Map(config.width,config.height))
-    GameModel.addEventListener('objectAdded', function(obj){
+    gameModel = new GameModel(new Map(config.width,config.height))
+    gameModel.addEventListener('objectAdded', function(obj){
       post('objectAdded',obj)
     })
-    GameModel.addEventListener('objectRemoved', function(id){
+    gameModel.addEventListener('objectRemoved', function(id){
       post('objectRemoved',id)
     })
-    GameModel.addEventListener('objectMoveStart', function(config){
+    gameModel.addEventListener('objectMoveStart', function(config){
       post('objectMoveStart',config)
     })
-    GameModel.addEventListener('objectMoveEnd', function(config){
+    gameModel.addEventListener('objectMoveEnd', function(config){
       post('objectMoveEnd',config)
     })
-    GameModel.addEventListener('objectChanged', function(config){
+    gameModel.addEventListener('objectChanged', function(config){
       post('objectChanged',config)
     })
-    log('GameModel created')
+    log('gameModel created')
   },
-  'addObject': function(config){ //config = {type: type, args: arguments}
+  'callMethod': function(config){    
+    var temp = gameModel;
+    for (var p in config.path){
+      var property = config.path[p]
+      temp = temp[property];
+    }
+    temp.apply(config.args);    
+  },
+  'createObject': function(config){ //config = {type: type, args: arguments}
     var obj = construct(self[config.type],config.args)
-    GameModel.addObject(obj);
-    log(obj.id)
+    gameModel.addObject(obj);
+    log('Created object with id: ' + obj.id)
   },
   'objectAction': function(config){ //config = {id: obj_id, action: actionName, args: arguments}    
-    GameModel.objects[config.id].actions[config.action].apply(this,config.args);
+    gameModel.objects[config.id].actions[config.action].apply(this,config.args);
   }
 }
 self.addEventListener('message', function(message){  
   message = Message.fromJSON(message.data);  
   if (message.type in messagesMap)
     messagesMap[message.type](message.value)
-  else GameModel[message.type](message.value);
+  else gameModel[message.type](message.value);
 })
 
 function log(text){

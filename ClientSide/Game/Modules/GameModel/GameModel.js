@@ -11,7 +11,7 @@ function GameModel(map){
   var counter = 0;
   this.objects = {};
   this.inMoving = {};
-  this.map = map;
+  this.map = map || new Map(1,1);
 
   var checkCollisionFuns = [
     function topCollisionCheck(pos,width,height){
@@ -36,7 +36,7 @@ function GameModel(map){
       return false;
     }
   ]
-
+  
   this.addObject = function(obj){
     obj.id = counter;
     model.inMoving[obj.id] = false;
